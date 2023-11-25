@@ -1,0 +1,46 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <h3 class="text-white">Links</h3>
+
+    <div class="table-responsive">
+      <table class="table" id="myTable">
+        <thead>
+          <tr>
+            <th class="text-white">Link</th>
+            <th class="text-white">Name</th>
+            <th class="text-white">Social Media</th>
+            <th class="text-white">Requires OTP</th>
+            <th class="text-white">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% links.forEach(l => {%>
+          <tr>
+            <td class="text-white">
+              <a target="_blank" href="<%=req.app.voteUrl%>/vote/<%= l.link %>"
+                ><%=req.app.voteUrl%>/vote/<%= l.link %></a
+              >
+            </td>
+            <td class="text-white"><%= l.name %></td>
+            <td class="text-white"><%= l.linkType %></td>
+            <td class="text-white"><%= l.otpEnabled ? 'Yes' : 'No' %></td>
+            <td class="text-white"><%= new Date(l.date).toDateString() %></td>
+          </tr>
+          <%})%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"
+></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+  new DataTable("#myTable");
+</script>

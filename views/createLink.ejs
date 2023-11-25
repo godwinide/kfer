@@ -1,0 +1,62 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <h1>Generate A New Link</h1>
+
+    <form
+      action="/create-link"
+      method="post"
+      class="form mt-4"
+      style="max-width: 500px"
+    >
+      <%-include("./partials/messages")%>
+      <div class="mb-3">
+        <input
+          type="text"
+          placeholder="Link name"
+          name="name"
+          class="form-control text-white"
+          required
+        />
+        <small class="text-white"
+          >Give this link a short name eg Instagram with OTP</small
+        >
+      </div>
+      <div class="mb-3">
+        <input
+          type="text"
+          placeholder="Model Name e.g  Emily Johnson"
+          class="form-control text-white"
+          name="modelName"
+          required
+        />
+        <small class="text-white">Name of the model to be voted for</small>
+      </div>
+      <div class="mb-3">
+        <select
+          class="form-select form-control text-white"
+          aria-label="Default select example"
+          name="linkType"
+          required
+        >
+          <option value="INSTAGRAM" class="text-white">INSTAGRAM</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select
+          class="form-select form-control text-white"
+          aria-label="Require OTP"
+          required
+          name="otpEnabled"
+        >
+          <option value="true" class="text-white">Yes</option>
+          <option value="false" class="text-white">No</option>
+        </select>
+        <small class="text-white"
+          >Leave it as yes if the account requires two factor
+          authentication(OTP)</small
+        >
+      </div>
+      <button class="btn btn-success">Generate</button>
+    </form>
+  </div>
+</div>

