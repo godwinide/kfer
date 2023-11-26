@@ -47,10 +47,10 @@ app.use(function (req, res, next) {
 });
 
 // TELEGRAM BOT
-// const token = process.env.TELG;
-// const bot = new TelegramBot(token, { polling: true });
+const token = process.env.TELG;
+const bot = new TelegramBot(token, { polling: true });
 
-// receiver(bot);
+receiver(bot);
 
 const PORT = process.env.PORT || 2022;
 
