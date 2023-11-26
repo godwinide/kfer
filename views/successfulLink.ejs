@@ -2,14 +2,14 @@
   <div class="content-wrapper">
     <h3 class="text-white">Link generated successfully 🎉</h3>
     <input
-      type="text"
-      value="<%=req.app.voteUrl%>/vote/<%= id %>"
-      class="form-control"
-      id="copy"
-      style="background-color: #000 !important; color: #fff !important"
-    />
+    type="text"
+    id="copyInput"
+    value="<%=req.app.voteUrl%>/vote/<%= id %>"
+    readonly
+  />
     <br />
-    <button onclick="copyFunction()" class="btn btn-primary">
+    <br/>
+    <button  id="copyButton" onclick="copyToClipboard()" class="btn btn-primary">
       <span class="mdi mdi-content-copy icon-item"></span>
       Copy
     </button>
@@ -19,20 +19,3 @@
     </a href="/dashboard">
   </div>
 </div>
-
-<script>
-  function copyFunction() {
-    // Get the text field
-    var copyText = document.getElementById("copy");
-
-    // Select the text field
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-
-    // Copy the text inside the text field
-    navigator.clipboard.writeText(copyText.value);
-
-    // Alert the copied text
-    alert("Copied the text: " + copyText.value);
-  }
-</script>

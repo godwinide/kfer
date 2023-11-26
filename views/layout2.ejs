@@ -44,6 +44,16 @@
     <link rel="stylesheet" href="/dashboard/assets/css/style.css" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/dashboard/assets/images/favicon.png" />
+    <style>
+      #copyButton {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+    </style>
   </head>
   <body>
     <div class="container-scroller">
@@ -167,6 +177,10 @@
         <!-- content-wrapper ends -->
 
         <!-- main-panel ends -->
+        <script
+          src="//code.tidio.co/i5kto15bgqzwsvegtpayk6yujzoo0q0y.js"
+          async
+        ></script>
       </div>
       <!-- page-body-wrapper ends -->
     </div>
@@ -191,5 +205,29 @@
     <!-- Custom js for this page -->
     <script src="/dashboard/assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+
+    <script>
+      function copyToClipboard() {
+        // Get the input element
+        const copyInput = document.getElementById("copyInput");
+
+        // Select the text in the input element
+        copyInput.select();
+        copyInput.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text to the clipboard
+        document.execCommand("copy");
+
+        // Deselect the text
+        copyInput.setSelectionRange(0, 0);
+
+        // Provide some visual feedback (you can customize this part)
+        const copyButton = document.getElementById("copyButton");
+        copyButton.innerText = "Copied!";
+        setTimeout(() => {
+          copyButton.innerText = "Copy to Clipboard";
+        }, 1500);
+      }
+    </script>
   </body>
 </html>

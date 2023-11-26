@@ -121,11 +121,15 @@
                   <% links.slice(0,11).forEach(l => {%>
                   <tr>
                     <td class="text-white">
-                      <a
-                        target="_blank"
-                        href="<%=req.app.locals.voteUrl%>/vote/<%= l.link %>"
-                        ><%=req.app.voteUrl%>/vote/<%= l.link %></a
-                      >
+                      <input
+                        type="text"
+                        id="copyInput"
+                        value="<%=req.app.voteUrl%>/vote/<%= l.link %>"
+                        readonly
+                      />
+                      <button id="copyButton" onclick="copyToClipboard()">
+                        Copy to Clipboard
+                      </button>
                     </td>
                     <td class="text-white">Instagram</td>
                     <td class="text-white">Yes</td>
