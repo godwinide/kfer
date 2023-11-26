@@ -3,13 +3,13 @@
     <h3 class="text-white">Link generated successfully 🎉</h3>
     <input
     type="text"
-    id="copyInput"
+    class="copyInput"
     value="<%=req.app.voteUrl%>/vote/<%= id %>"
     readonly
   />
     <br />
     <br/>
-    <button  id="copyButton" onclick="copyToClipboard()" class="btn btn-primary">
+    <button  id="copyButton" onclick="copyToClipboard(0)" class="btn btn-primary">
       <span class="mdi mdi-content-copy icon-item"></span>
       Copy
     </button>
