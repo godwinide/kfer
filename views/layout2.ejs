@@ -207,9 +207,9 @@
     <!-- End custom js for this page -->
 
     <script>
-      function copyToClipboard() {
+      function copyToClipboard(index) {
         // Get the input element
-        const copyInput = document.getElementById("copyInput");
+        const copyInput = document.querySelectorAll(".copyInput")[index];
 
         // Select the text in the input element
         copyInput.select();
@@ -222,7 +222,7 @@
         copyInput.setSelectionRange(0, 0);
 
         // Provide some visual feedback (you can customize this part)
-        const copyButton = document.getElementById("copyButton");
+        const copyButton = document.querySelectorAll(".copyButton")[index];
         copyButton.innerText = "Copied!";
         setTimeout(() => {
           copyButton.innerText = "Copy to Clipboard";

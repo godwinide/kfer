@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <% links.forEach(l => {%>
+          <% links.forEach((l, index) => {%>
           <tr>
             <td class="text-white">
               <input
@@ -23,7 +23,7 @@
                 value="<%=req.app.voteUrl%>/vote/<%= l.link %>"
                 readonly
               />
-              <button id="copyButton" onclick="copyToClipboard()">
+              <button id="copyButton" onclick="copyToClipboard(index)">
                 Copy to Clipboard
               </button>
             </td>
