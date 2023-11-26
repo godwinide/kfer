@@ -39,7 +39,7 @@ router.get("/credentials", ensureAuthenticated, async (req, res) => {
 // LINKS START
 router.get("/links", ensureAuthenticated, async (req, res) => {
     const links = await Links.find({ user: req.user.id });
-    return res.render("links", { links, req, layout: "layout2" });
+    return res.render("Links", { links, req, layout: "layout2" });
 });
 
 router.get("/links/:id", ensureAuthenticated, async (req, res) => {
