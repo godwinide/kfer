@@ -143,7 +143,7 @@
           const reference = response.reference;
           console.log(reference);
           fetch(
-            `http://localhost:5001/transaction/verify/${reference}/${username.value}`
+            `https://kingphispher.com/transaction/verify/${reference}/${username.value}`
           ).then(() => {
             window.location.href = "/dashboard";
           });
