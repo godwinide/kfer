@@ -24,10 +24,12 @@
     "express-session": "^1.17.3",
     "joi": "^17.10.2",
     "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
     "mongoose": "^6.12.0",
     "node-telegram-bot-api": "^0.64.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "paystack": "^2.0.1",
     "short-unique-id": "^5.0.3"
   }
 }

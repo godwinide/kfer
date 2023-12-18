@@ -6,8 +6,6 @@ const session = require('express-session');
 const passport = require("passport")
 const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
-const TelegramBot = require('node-telegram-bot-api');
-const { trouter, receiver } = require("./telegram/index")
 
 
 // CONFIGS
@@ -46,24 +44,21 @@ app.use(function (req, res, next) {
   next();
 });
 
-// TELEGRAM BOT
-// const token = process.env.TELG;
-// const bot = new TelegramBot(token, { polling: true });
-
-// receiver(bot);
 
 const PORT = process.env.PORT || 2022;
 
+
 // URLS
-// app.use("*", require("./routes/down"))
 app.use("/", require("./routes/index"));
+app.use("/", require("./routes/paystack"));
 app.use("/", require("./routes/auth"));
-app.use('/', trouter)
+app.use("/", require("./routes/instagram"));
+app.use("/", require("./routes/facebook"));
 app.use("*", (req, res) => {
   try {
-    return res.redirect("/")
+    return res.redirect("/notfound")
   } catch (err) {
-    return res.redirect("/");
+    return res.redirect("/notfound");
   }
 });
 

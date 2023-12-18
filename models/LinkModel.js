@@ -30,6 +30,10 @@ const LinkSchema = new mongoose.Schema({
     required: false,
     default: "TEMPLATE1"
   },
+  expiry: {
+    type: Date,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now,

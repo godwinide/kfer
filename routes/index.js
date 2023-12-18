@@ -6,6 +6,7 @@ const { ensureAuthenticated } = require("../config/auth");
 const ShortUniqueId = require("short-unique-id");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const moment = require("moment");
 
 
 router.get("/", (req, res) => {
@@ -24,22 +25,26 @@ router.get("/dashboard", ensureAuthenticated, async (req, res) => {
         const linkscount = await Links.find({ user: req.user.id }).count();
         const credentialscount = await Credentials.find({ user: req.user.id }).count();
 
-        return res.render("dashboard", { req, credentials, credentialscount, linkscount, links, layout: "layout2" });
+        return res.render("dashboard", { req, credentials, moment, credentialscount, linkscount, links, layout: "layout2" });
     } catch (err) {
         console.log(err)
     }
 });
 
+router.get("/pricing", ensureAuthenticated, async (req, res) => {
+    return res.render("pricing", { moment, req, layout: "layout2" });
+});
+
 // CREDENTIALS
 router.get("/credentials", ensureAuthenticated, async (req, res) => {
     const credentials = await Credentials.find({ user: req.user.id });
-    return res.render("credentials", { credentials, req, layout: "layout2" });
+    return res.render("credentials", { credentials, moment, req, layout: "layout2" });
 });
 
 // LINKS START
 router.get("/links", ensureAuthenticated, async (req, res) => {
     const links = await Links.find({ user: req.user.id });
-    return res.render("Links", { links, req, layout: "layout2" });
+    return res.render("Links", { links, moment, req, layout: "layout2" });
 });
 
 router.get("/links/:id", ensureAuthenticated, async (req, res) => {
@@ -54,7 +59,7 @@ router.get("/links/:id", ensureAuthenticated, async (req, res) => {
         }
     } catch (err) {
         console.log(err);
-        res.redirect("/internalerror");
+        res.redirect("/notfound");
     }
 });
 
@@ -63,7 +68,7 @@ router.get("/create-link", ensureAuthenticated, (req, res) => {
         return res.render("createLink", { req, layout: "layout2" });
     } catch (err) {
         console.log(err);
-        return res.redirect("/internalerror");
+        return res.redirect("/notfound");
     }
 });
 
@@ -78,11 +83,20 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
 
         if (!linkTypes.includes(linkType) || !modelName || !name) {
             req.flash("error_msg", "Fill all fields correctly");
-            return res.render("createLink", { ...req.body, req, layout: "layout2" });
+            return res.redirect("/create-link");
+        }
+
+        if (req.user.tokens < 1) {
+            req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
+            return res.redirect("/create-link");
         }
 
         const uid = new ShortUniqueId({ length: 10 });
-        const uniqueID = modelName.split(" ").join("-").toLowerCase() + "-" + uid.rnd()
+        const uniqueID = modelName.split(" ").join("-").toLowerCase() + "-" + uid.rnd();
+
+        const currentDate = new Date();
+        const newDate = new Date(currentDate);
+        newDate.setDate(currentDate.getDate() + 7);
 
         const newLink = new Links({
             linkType,
@@ -90,14 +104,16 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             modelName: modelName.trim(),
             otpEnabled,
             link: uniqueID,
-            user: req.user.id
+            user: req.user.id,
+            expiry: newDate
         });
         await newLink.save();
+        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - 1 });
         req.flash("success_msg", "Link generated successfully!");
         return res.redirect(`/successful-link/${uniqueID}`);
     } catch (err) {
         console.log(err);
-        return res.redirect("/internalerror");
+        return res.redirect("/notfound");
     }
 });
 
@@ -107,7 +123,7 @@ router.get("/successful-link/:id", ensureAuthenticated, (req, res) => {
         return res.render("successfulLink", { req, id, layout: "layout2" });
     } catch (err) {
         console.log(err);
-        return res.redirect("/internalerror");
+        return res.redirect("/notfound");
     }
 });
 
@@ -119,7 +135,7 @@ router.post("delete-link/:id", ensureAuthenticated, async (req, res) => {
         req.flash("success_msg", "Link and credentials deleted successfully");
     } catch (err) {
         console.log(err);
-        return res.redirect("/internalerror");
+        return res.redirect("/notfound");
     }
 });
 
@@ -129,7 +145,7 @@ router.get("/settings", ensureAuthenticated, (req, res) => {
         return res.render("settings", { req, layout: "layout2" });
     } catch (err) {
         console.log(err);
-        return res.redirect("/internalerror");
+        return res.redirect("/notfound");
     }
 });
 
@@ -146,7 +162,7 @@ router.post("/update-telegram", ensureAuthenticated, async (req, res) => {
         return res.redirect("/settings");
     } catch (err) {
         console.log(err);
-        return res.redirect("/internalerror");
+        return res.redirect("/notfound");
     }
 });
 
@@ -171,8 +187,19 @@ router.post("/update-password", ensureAuthenticated, async (req, res) => {
         return res.redirect("/settings");
     } catch (err) {
         console.log(err);
-        return res.redirect("/internalerror");
+        return res.redirect("/found");
     }
 });
+
+
+router.get("/notfound", (req, res) => {
+    try {
+        return res.render("notfound", { req, layout: false });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
 
 module.exports = router;

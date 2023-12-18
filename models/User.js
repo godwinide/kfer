@@ -5,6 +5,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    tokens: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
     telegramID: {
         type: String,
         required: true,

