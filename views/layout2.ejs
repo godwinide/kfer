@@ -184,6 +184,29 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <script
+      async
+      src="https://d2mpatx37cqexb.cloudfront.net/delightchat-whatsapp-widget/embeds/embed.min.js"
+    ></script>
+    <script>
+      var wa_btnSetting = {
+        btnColor: "#16BE45",
+        ctaText: "WhatsApp Us",
+        cornerRadius: 40,
+        marginBottom: 40,
+        marginLeft: 20,
+        marginRight: 20,
+        btnPosition: "left",
+        whatsAppNumber: "2349053110722",
+        welcomeMessage: "I sent <amount>, my username is <username>",
+        zIndex: 999999,
+        btnColorScheme: "light",
+      };
+      window.onload = () => {
+        _waEmbed(wa_btnSetting);
+      };
+    </script>
+
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="/dashboard/assets/vendors/js/vendor.bundle.base.js"></script>

@@ -1,0 +1,166 @@
+<style>
+  form button {
+    margin-top: 10px;
+    color: #fff;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  #submit2 img {
+    width: 1.3em;
+    animation-name: roll;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    color: white;
+  }
+
+  @keyframes roll {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+<div class="main-panel">
+  <div class="content-wrapper">
+    <h2>Purchase Tokens</h2>
+    <p>You need to purchase tokens to create phishing links</p>
+    <form class="form mt-4" id="paymentForm" style="max-width: 500px">
+      <%-include("./partials/messages")%>
+      <div class="mb-3">
+        <input
+          type="hidden"
+          id="username"
+          name="username"
+          value="<%=req.user.username%>"
+        />
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control text-white bg-dark"
+            name="email"
+            value=""
+            placeholder="Enter your email address"
+            required
+            id="email"
+          />
+          <small class="text-white">Enter your email</small>
+        </div>
+        <input
+          type="number"
+          placeholder="Enter the number of tokens you want to purchase"
+          name="tokens"
+          id="tokens"
+          value="1"
+          min="1"
+          max="50"
+          class="form-control text-white"
+          required
+        />
+        <small class="text-white"
+          >Enter the number of tokens you want to purchase</small
+        ><br />
+        <small>1 token = 1500</small>
+      </div>
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control text-white bg-dark"
+          name="price"
+          required
+          readonly
+          id="amount"
+          value="1500"
+        />
+        <small class="text-white">Price in NAIRA</small>
+      </div>
+      <div class="form-submit">
+        <button
+          onclick="payWithPaystack()"
+          type="submit"
+          name="submit"
+          class="LogInBTN btn btn-primary"
+          id="submit"
+        >
+          Buy Now
+        </button>
+        <button
+          type="button"
+          class="LogInBTN btn btn-primary"
+          id="submit2"
+          style="display: none"
+        >
+          <img src="/img/loading.svg" alt="" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const tokens = document.querySelector("#tokens");
+  const price = document.querySelector("#amount");
+
+  tokens.addEventListener("input", (e) => {
+    if (!isNaN(Number(tokens.value))) {
+      price.value = Number(tokens.value * 1500);
+    } else {
+      price = 1500;
+      tokens.value = 1;
+    }
+  });
+</script>
+
+<script>
+  const paymentForm = document.getElementById("paymentForm");
+
+  paymentForm.addEventListener("submit", payWithPaystack, false);
+
+  function payWithPaystack(e) {
+    e.preventDefault();
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const amount = document.getElementById("amount");
+    const submitBtn = document.getElementById("submit");
+    const submitBtn2 = document.getElementById("submit2");
+
+    if (email.value.length > 0 && amount.value.length > 0) {
+      submitBtn.style.display = "none";
+      submitBtn2.style.display = "block";
+      const handler = PaystackPop.setup({
+        key: "pk_live_63ff7c19c79a7fcc67265ab0beaf49737f4ce3bf", // Replace with your public key
+        email: email.value,
+        amount: amount.value * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+        currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
+        callback: function (response) {
+          const reference = response.reference;
+          console.log(reference);
+          fetch(
+            `https://kingphispher.com/transaction/verify/${reference}/${username.value}`
+          ).then(() => {
+            window.location.href = "/dashboard";
+          });
+        },
+        onClose: function () {
+          alert("Transaction was not completed.");
+          submitBtn.style.display = "block";
+          submitBtn2.style.display = "none";
+        },
+      });
+      handler.openIframe();
+    } else {
+      e.preventDefault();
+      return false;
+    }
+    return false;
+  }
+</script>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
