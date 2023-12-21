@@ -32,7 +32,7 @@ router.get("/dashboard", ensureAuthenticated, async (req, res) => {
 });
 
 router.get("/pricing", ensureAuthenticated, async (req, res) => {
-    return res.render("pricing2", { moment, req, layout: "layout2" });
+    return res.render("pricing", { moment, req, layout: "layout2" });
 });
 
 // CREDENTIALS
