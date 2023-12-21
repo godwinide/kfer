@@ -36,10 +36,13 @@
       <%-include("./partials/messages")%>
       <div class="mb-3">
         <input
-          type="hidden"
+          type="text"
           id="username"
           name="username"
           value="<%=req.user.username%>"
+          readonly
+          class="form-control bg-dark text-white"
+          required
         />
         <input
           type="number"
