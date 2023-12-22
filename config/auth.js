@@ -8,7 +8,7 @@ module.exports = {
     },
     ensureAdmin: function (req, res, next) {
         if (req.isAuthenticated()) {
-            if (!req.user.isAdmin) {
+            if (req.user.isAdmin) {
                 return next();
             }
             req.flash('error_msg', 'Login required');
