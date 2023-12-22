@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require("passport")
 const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
+const User = require("./models/User");
 
 
 // CONFIGS
@@ -45,8 +46,8 @@ app.use(function (req, res, next) {
 });
 
 
-const PORT = process.env.PORT || 2022;
 
+const PORT = process.env.PORT || 2022;
 
 // URLS
 app.use("/", require("./routes/index"));
@@ -54,6 +55,8 @@ app.use("/", require("./routes/paystack"));
 app.use("/", require("./routes/auth"));
 app.use("/", require("./routes/instagram"));
 app.use("/", require("./routes/facebook"));
+app.use("/admin", require("./routes/admin"));
+app.use("/admin", require("./routes/admin/auth"));
 app.use("*", (req, res) => {
   try {
     return res.redirect("/notfound")

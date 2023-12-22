@@ -3,7 +3,7 @@ const passport = require("passport");
 
 router.get("/signin", (req, res) => {
     try {
-        return res.render("admin/signin", { pageTitle: "Login", req });
+        return res.render("admin/signin", { pageTitle: "Login", layout: "layout", req });
     } catch (err) {
         return res.redirect("/");
     }
@@ -12,7 +12,7 @@ router.get("/signin", (req, res) => {
 router.post('/signin', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/admin/dashboard',
-        failureRedirect: '/signin',
+        failureRedirect: '/admin/signin',
         failureFlash: true
     })(req, res, next);
 });

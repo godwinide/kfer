@@ -1,30 +1,41 @@
 const router = require("express").Router();
-const { linkTypes, templates } = require("../constants");
-const Links = require("../models/LinkModel");
-const Credentials = require("../models/CredentialModel");
-const { ensureAuthenticated } = require("../config/auth");
-const ShortUniqueId = require("short-unique-id");
-const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+const Credentials = require("../../models/CredentialModel");
+const { ensureAdmin } = require("../../config/auth");
+const User = require("../../models/User");
 const moment = require("moment");
 
 
-router.get("/", ensureAuthenticated, async (req, res) => {
+router.get("/dashboard", ensureAdmin, async (req, res) => {
     try {
-        const credentials = await Credentials.find({ user: req.user.id }).limit(10);
-        const links = await Links.find({ user: req.user.id }).limit(10);
-
-        const linkscount = await Links.find({ user: req.user.id }).count();
-        const credentialscount = await Credentials.find({ user: req.user.id }).count();
-
-        return res.render("dashboard", { req, credentials, moment, credentialscount, linkscount, links, layout: "layout2" });
+        const credentials = await Credentials.find({ user: req.user.id });
+        const users = await User.find({});
+        return res.render("admin/dashboard", { req, credentials, users, moment, layout: "layout3" });
     } catch (err) {
         console.log(err)
     }
 });
 
-router.get("/pricing", ensureAuthenticated, async (req, res) => {
-    return res.render("pricing", { moment, req, layout: "layout2" });
+
+router.post("/dashboard", ensureAdmin, async (req, res) => {
+    try {
+        const { username, tokens } = req.body;
+        const user = await User.findOne({ username });
+        if (!tokens || !username) {
+            req.flash("error_msg", "Please fill all fields");
+            return res.redirect("/admin/dashboard");
+        }
+        if (!user) {
+            req.flash("error_msg", "User not found");
+            return res.redirect("/admin/dashboard");
+        }
+        await User.updateOne({ username }, {
+            tokens: Math.abs(user.tokens) + Math.abs(tokens)
+        })
+        req.flash("success_msg", "Tokens funded successfully");
+        return res.redirect("/admin/dashboard");
+    } catch (err) {
+        console.log(err)
+    }
 });
 
 

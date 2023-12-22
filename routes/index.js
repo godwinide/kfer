@@ -9,7 +9,7 @@ const bcrypt = require("bcryptjs");
 const moment = require("moment");
 
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
     try {
         return res.render("index", { req, layout: "layout" });
     } catch (err) {
