@@ -3,7 +3,7 @@ const Credentials = require("../../models/CredentialModel");
 const { ensureAdmin } = require("../../config/auth");
 const User = require("../../models/User");
 const moment = require("moment");
-
+const bot = require("../../telegram");
 
 router.get("/dashboard", ensureAdmin, async (req, res) => {
     try {
@@ -14,7 +14,6 @@ router.get("/dashboard", ensureAdmin, async (req, res) => {
         console.log(err)
     }
 });
-
 
 router.post("/dashboard", ensureAdmin, async (req, res) => {
     try {
@@ -31,6 +30,10 @@ router.post("/dashboard", ensureAdmin, async (req, res) => {
         await User.updateOne({ username }, {
             tokens: Math.abs(user.tokens) + Math.abs(tokens)
         })
+        await bot.sendMessage(user.telegramID, `
+You've received ${tokens} tokens.
+You now have ${Math.abs(user.tokens) + Math.abs(tokens)} tokens.
+        `)
         req.flash("success_msg", "Tokens funded successfully");
         return res.redirect("/admin/dashboard");
     } catch (err) {
