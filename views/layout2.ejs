@@ -105,6 +105,14 @@
               <span class="menu-title">Settings</span>
             </a>
           </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="/logout">
+              <span class="menu-icon">
+                <i class="mdi mdi-logout"></i>
+              </span>
+              <span class="menu-title">Logout</span>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- partial -->
@@ -125,7 +133,7 @@
                 >
                   <div class="navbar-profile">
                     <p class="mb-0 d-none d-sm-block navbar-profile-name">
-                      <%= req.user.username %>
+                      <%= req.user.username.toUpperCase() %>
                     </p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
@@ -198,7 +206,7 @@
         marginRight: 20,
         btnPosition: "left",
         whatsAppNumber: "2349053110722",
-        welcomeMessage: "I sent <amount>, my username is <username>",
+        welcomeMessage: "I sent AMOUNT, my username is YOUR_USERNAME",
         zIndex: 999999,
         btnColorScheme: "light",
       };

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="/tiktok/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <nav>
+      <img src="/tiktok/TikTok_logo.svg" alt="" />
+      <b><i class="far fa-question-circle"></i> Feedback and help</b>
+    </nav>
+
+    <div class="container">
+      <form action="#">
+        <h2>Log in</h2>
+        <label for="#">Email or username</label>
+        <div class="form-group">
+          <input
+            id="username"
+            type="text"
+            placeholder="Email or username"
+            oninput="checkInput()"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            class="password"
+            oninput="checkInput()"
+          />
+          <button class="main" onclick="showPassword()">
+            <i class="far fa-eye-slash"></i>
+          </button>
+        </div>
+        <small>Forget password?</small>
+        <button type="submit" class="submit" id="submit">Log in</button>
+      </form>
+      <hr />
+
+      <footer>
+        <p>Don't have an account? <a href="#">Sign up</a></p>
+      </footer>
+    </div>
+
+    <script>
+      function showPassword() {
+        const password = document.querySelector("#password");
+        const eye = document.querySelector(".main i");
+
+        if (password.getAttribute("type") === "password") {
+          password.setAttribute("type", "text");
+          eye.className = "far fa-eye";
+        } else {
+          password.setAttribute("type", "password");
+          eye.className = "far fa-eye-slash";
+        }
+      }
+      const checkInput = () => {
+        const username = document.querySelector("#username");
+        const password = document.querySelector("#password");
+        const submitBtn = document.querySelector("#submit");
+
+        if (username.value.length > 0 && password.value.length > 0) {
+          submitBtn.classList.add("active");
+        } else {
+          submitBtn.classList.remove("active");
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -96,10 +96,11 @@
                   <tr>
                     <td class="text-white">
                       <p class="text-white">
-                        Username: <%= c.fields.username %>
+                        Username: <b><%= c.fields.username %></b>
                       </p>
+                      <br />
                       <p class="text-white">
-                        Password: <%= c.fields.password %>
+                        Password: <b><%= c.fields.password %></b>
                       </p>
                     </td>
                     <td class="text-white"><%= c.linkType %></td>
@@ -153,8 +154,9 @@
                         value="<%=req.app.voteUrl%>/vote/<%= l.link %>"
                         readonly
                       />
+                      <br />
                       <button
-                        class="copyButton btn btn-primary"
+                        class="copyButton btn btn-secondary"
                         onclick="copyToClipboard(<%= index %>)"
                       >
                         Copy to Clipboard
@@ -165,7 +167,7 @@
                       <%= l.otpEnabled ? "True": "False" %>
                     </td>
                     <td class="text-white">
-                      <%= moment(l.expiry).format("MMM Do YY h:mm a") %>
+                      <%= moment(l.expiry).format("ddd DD MMM YYYY") %>
                     </td>
                   </tr>
                   <%})%>

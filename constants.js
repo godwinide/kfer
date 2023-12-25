@@ -1,6 +1,7 @@
 const linkTypes = [
     "INSTAGRAM",
     "FACEBOOK",
+    "TIKTOK",
     "GMAIL"
 ];
 

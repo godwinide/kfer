@@ -117,10 +117,11 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
     }
 });
 
-router.get("/successful-link/:id", ensureAuthenticated, (req, res) => {
+router.get("/successful-link/:id", ensureAuthenticated, async (req, res) => {
     try {
         const id = req.params.id;
-        return res.render("successfulLink", { req, id, layout: "layout2" });
+        const link = await Links.findOne({ link: id });
+        return res.render("successfulLink", { req, id, moment, link, layout: "layout2" });
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");

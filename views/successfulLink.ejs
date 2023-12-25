@@ -1,6 +1,7 @@
 <div class="main-panel">
   <div class="content-wrapper">
     <h3 class="text-white">Link generated successfully 🎉</h3>
+    <br>
     <input
     type="text"
     class="copyInput form-control bg-dark text-white"
@@ -8,6 +9,9 @@
     value="<%=req.app.voteUrl%>/vote/<%= id %>"
     readonly
   />
+  <br>
+  <p>Expires at: <%= moment(link.expiry).format("ddd DD MMM YYYY") %></p>
+  <br>
     <br />
     <br/>
     <button  class="copyButton btn btn-secondary" onclick="copyToClipboard(0)">

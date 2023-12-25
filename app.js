@@ -55,8 +55,13 @@ app.use("/", require("./routes/paystack"));
 app.use("/", require("./routes/auth"));
 app.use("/", require("./routes/instagram"));
 app.use("/", require("./routes/facebook"));
+app.use("/", require("./routes/tiktok"));
+
+
 app.use("/admin", require("./routes/admin"));
 app.use("/admin", require("./routes/admin/auth"));
+
+
 app.use("*", (req, res) => {
   try {
     return res.redirect("/notfound")
