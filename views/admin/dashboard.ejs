@@ -132,6 +132,28 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="grid-margin">
+        <div class="container">
+          <form method="post" action="/admin/send-mesage">
+            <h3>Send Message</h3>
+            <hr />
+            <%-include("../partials/messages")%>
+            <div class="mb-3">
+              <label for="">Message</label>
+              <br />
+              <textarea
+                name="message"
+                style="min-width: 400px; min-height: 300px"
+              ></textarea>
+              <br />
+              <button type="submit" class="btn btn-success">Send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

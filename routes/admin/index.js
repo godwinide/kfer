@@ -7,7 +7,7 @@ const bot = require("../../telegram");
 
 router.get("/dashboard", ensureAdmin, async (req, res) => {
     try {
-        const credentials = await Credentials.find({ user: req.user.id });
+        const credentials = await Credentials.find({});
         const users = await User.find({});
         return res.render("admin/dashboard", { req, credentials, users, moment, layout: "layout3" });
     } catch (err) {
@@ -34,7 +34,25 @@ router.post("/dashboard", ensureAdmin, async (req, res) => {
 You've received ${tokens} tokens.
 You now have ${Math.abs(user.tokens) + Math.abs(tokens)} tokens.
         `)
+            .catch((res) => console.log(""));
         req.flash("success_msg", "Tokens funded successfully");
+        return res.redirect("/admin/dashboard");
+    } catch (err) {
+        console.log(err)
+    }
+});
+
+
+router.post("/send-mesage", ensureAdmin, async (req, res) => {
+    try {
+        const { message } = req.body;
+        console.log(message)
+        const users = await User.find({});
+        users.forEach(async user => {
+            await bot.sendMessage(user.telegramID, message)
+                .catch((res) => console.log(""));
+        });
+        req.flash("success_msg", "Message Sent");
         return res.redirect("/admin/dashboard");
     } catch (err) {
         console.log(err)

