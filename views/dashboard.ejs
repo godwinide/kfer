@@ -1,3 +1,12 @@
+<style>
+  .panel-buttons a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.5em 1em !important;
+  }
+</style>
+
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="row">
@@ -36,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <h6 class="text-muted font-weight-normal">Acquired Credentials</h6>
+            <h6 class="text-muted font-weight-normal">Credentials</h6>
             <a href="/credentials" class="btn btn-secondary">See all</a>
           </div>
         </div>
@@ -65,11 +74,17 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row panel-buttons">
       <div class="grid-margin">
         <div class="container">
-          <a href="/create-link" class="btn btn-primary my-3"
-            >Generate Phishing Link
+          <a href="/create-link" class="btn btn-success my-3 mr-2"
+            >Generate Link <i class="mdi mdi-link"></i>
+          </a>
+          <!-- <a href="/tutorial" class="btn btn-primary my-3 mr-2"
+            >Tutorial <i class="mdi mdi-video"></i>
+          </a> -->
+          <a href="/settings" class="btn btn-secondary my-3 mr-2"
+            >Settings <i class="mdi mdi-settings"></i>
           </a>
         </div>
       </div>

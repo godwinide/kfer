@@ -3,12 +3,39 @@
     <h1>Settings</h1>
 
     <form
+      action="/update-notification"
+      method="post"
+      class="form mt-4"
+      style="max-width: 500px"
+    >
+      <h4 class="mb-3">Notification Settings</h4>
+      <%-include("./partials/messages")%>
+      <div class="mb-3">
+        <div class="form-group">
+          <label class="text-white">Visitor Notification</label>
+          <select class="form-control text-white" name="notification">
+            <option value="<%=req.user.notification%>">select</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <small class="text-white"
+          >Turn off notification when someone clicks your link, you will still
+          receive notification when someone logs in or enter OTP
+        </small>
+      </div>
+      <button class="btn btn-success">Update</button>
+    </form>
+
+    <br />
+
+    <form
       action="/update-telegram"
       method="post"
       class="form mt-4"
       style="max-width: 500px"
     >
-      <%-include("./partials/messages")%>
+      <h4 class="mb-3">Account Settings</h4>
       <div class="mb-3">
         <input
           type="text"
@@ -30,12 +57,15 @@
       <button class="btn btn-success">Update</button>
     </form>
 
+    <br />
+
     <form
       action="/update-password"
       method="post"
       class="form mt-4"
       style="max-width: 500px"
     >
+      <h4 class="text-white mb-3">Password Settings</h4>
       <div class="mb-3">
         <input
           type="password"

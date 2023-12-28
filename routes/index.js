@@ -167,6 +167,23 @@ router.post("/update-telegram", ensureAuthenticated, async (req, res) => {
     }
 });
 
+router.post("/update-notification", ensureAuthenticated, async (req, res) => {
+    try {
+        const {
+            notification
+        } = req.body;
+        await User.updateOne({ _id: req.user.id }, {
+            notification
+        });
+        req.flash("success_msg", "Notification seetings updated successfully");
+        return res.redirect("/settings");
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+
 router.post("/update-password", ensureAuthenticated, async (req, res) => {
     try {
         const {
