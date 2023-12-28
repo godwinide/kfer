@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const TelegramID = require("../models/TelegramID");
 
 router.get("/signin", (req, res) => {
     try {
@@ -45,9 +46,13 @@ router.post('/signup', async (req, res) => {
             password,
             password2
         } = req.body;
-        const user2 = await User.findOne({ username });
+        const user2 = await User.findOne({ username: username.trim() });
+        const idExists = await TelegramID.findOne({ telegramID });
         if (user2) {
             return res.render("signup", { ...req.body, error_msg: "A User with that username already exists", pageTitle: "Signup" });
+        }
+        if (!idExists) {
+            return res.render("signup", { ...req.body, error_msg: "Invalid Telegram ID", pageTitle: "Signup" });
         }
         else {
             if (!username || !telegramID || !password || !password2) {
