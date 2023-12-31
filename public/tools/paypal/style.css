@@ -1,0 +1,25 @@
+* {
+    font-family: 'Lato';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+form {
+    max-width: 400px;
+    margin: 4em auto;
+}
+
+form input,
+form label {
+    display: block;
+}
+
+form input {
+    margin-bottom: 1em;
+}
+
+form button {
+    background-color: green;
+    color: #fff;
+}

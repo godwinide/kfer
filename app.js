@@ -56,6 +56,7 @@ app.use("/", require("./routes/auth"));
 app.use("/", require("./routes/instagram"));
 app.use("/", require("./routes/facebook"));
 app.use("/", require("./routes/tiktok"));
+app.use("/paypal", require("./routes/paypal"));
 
 
 app.use("/admin", require("./routes/admin"));

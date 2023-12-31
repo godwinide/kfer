@@ -1,0 +1,153 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+<style>
+  form button {
+    margin-top: 10px;
+    color: #fff;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+  }
+
+  #submit2 img {
+    width: 1.3em;
+    animation-name: roll;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    color: white;
+  }
+
+  @keyframes roll {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<div class="main-panel">
+  <div class="content-wrapper">
+    <h1>Generate Fake Paypal Proof</h1>
+
+    <form
+      action="/paypal"
+      method="post"
+      class="form mt-4"
+      style="max-width: 500px"
+      onsubmit="handleSubmit()"
+    >
+      <%-include("../../partials/messages")%>
+      <div class="mb-3">
+        <label for="">Amount</label>
+        <input
+          type="number"
+          placeholder="0.00"
+          name="amount"
+          class="form-control text-white"
+          required
+        />
+        <small class="text-white"
+          >Write the amount exactly how you want it to appear with the currency
+          symbol</small
+        >
+      </div>
+      <div class="mb-3">
+        <label>Receiver email address</label>
+        <input
+          type="email"
+          placeholder="Receiver's email"
+          class="form-control text-white"
+          name="email"
+          required
+        />
+        <small class="text-white"
+          >email address of the person receiving the money</small
+        >
+      </div>
+      <div class="mb-3">
+        <label>Choose currency</label>
+        <select
+          class="form-select form-control text-white"
+          name="currency"
+          required
+        >
+          <option value="$">USD (United States Dollar)</option>
+          <option value="€">EUR (Euro)</option>
+          <option value="¥">JPY (Japanese Yen)</option>
+          <option value="£">GBP (British Pound Sterling)</option>
+          <option value="A$">AUD (Australian Dollar)</option>
+          <option value="CA$">CAD (Canadian Dollar)</option>
+          <option value="CHF">CHF (Swiss Franc)</option>
+          <option value="¥">CNY (Chinese Yuan Renminbi)</option>
+          <option value="kr">SEK (Swedish Krona)</option>
+          <option value="NZ$">NZD (New Zealand Dollar)</option>
+        </select>
+        <small class="text-white"> </small>
+      </div>
+      <div class="mb-3">
+        <label for="">Price(in tokens)</label>
+        <input
+          type="text"
+          placeholder="1 token"
+          name="price"
+          class="form-control text-white bg-dark"
+          required
+          readonly
+          value="Price: 0.25 Tokens"
+        />
+      </div>
+      <div class="ml-1 row">
+        <button
+          type="submit"
+          name="submit"
+          class="LogInBTN btn btn-success mr-4"
+          id="submit"
+        >
+          Generate Proof
+          <i class="fas fa-cog"></i>
+        </button>
+        <button
+          type="button"
+          class="LogInBTN btn btn-success mr-4"
+          id="submit2"
+          style="display: none"
+        >
+          <img src="/img/loading.svg" alt="" />
+        </button>
+        <a href="/pricing">
+          <button type="button" class="LogInBTN btn btn-primary">
+            Buy tokens
+            <i class="fas fa-dollar"></i>
+          </button>
+        </a>
+      </div>
+    </form>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br /><br />
+    <br /><br />
+  </div>
+</div>
+
+<script>
+  const submitBtn = document.getElementById("submit");
+  const submitBtn2 = document.getElementById("submit2");
+  const handleSubmit = (e) => {
+    submitBtn.style.display = "none";
+    submitBtn2.style.display = "block";
+  };
+</script>
