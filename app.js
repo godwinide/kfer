@@ -6,7 +6,6 @@ const session = require('express-session');
 const passport = require("passport")
 const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
-const User = require("./models/User");
 
 
 // CONFIGS
