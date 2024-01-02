@@ -1,5 +1,6 @@
 <div class="main-panel">
   <div class="content-wrapper">
+    <%-include("./partials/messages")%>
     <h3 class="text-white">Links</h3>
 
     <div class="table-responsive">
@@ -30,6 +31,17 @@
               >
                 Copy to Clipboard
               </button>
+              <br />
+              <br /><br />
+              <% if(l.otpEnabled == true) {%>
+              <a href="/disable-otp/<%=l._id%>" class="btn btn-primary"
+                >Disable OTP</a
+              >
+              <% }else{%>
+              <a href="/enable-otp/<%=l._id%>" class="btn btn-primary"
+                >Enable OTP</a
+              >
+              <%}%>
             </td>
             <td class="text-white"><%= l.linkType %></td>
             <td class="text-white"><%= l.name %></td>
@@ -54,5 +66,7 @@
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-  new DataTable("#myTable");
+  new DataTable("#myTable", {
+    ordering: false,
+  });
 </script>

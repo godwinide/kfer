@@ -128,12 +128,45 @@ router.get("/successful-link/:id", ensureAuthenticated, async (req, res) => {
     }
 });
 
-router.post("delete-link/:id", ensureAuthenticated, async (req, res) => {
+router.get("/successful-vote", async (req, res) => {
+    try {
+        return res.render("voted", { req, layout: false });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.post("/delete-link/:id", ensureAuthenticated, async (req, res) => {
     try {
         const { id } = req.params;
         await Links.deleteOne({ _id: id });
         await Credentials.deleteMany({ link: id });
         req.flash("success_msg", "Link and credentials deleted successfully");
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.get("/disable-otp/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Links.updateOne({ _id: id }, { otpEnabled: false });
+        req.flash("success_msg", "OTP disabled successfully");
+        res.redirect("/links");
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.get("/enable-otp/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Links.updateOne({ _id: id }, { otpEnabled: true });
+        req.flash("success_msg", "OTP enabled successfully");
+        res.redirect("/links");
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");

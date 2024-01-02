@@ -453,6 +453,11 @@
         font-weight: normal;
         font-style: normal;
       }
+      body {
+        background-image: url(/online-ballots.webp);
+        background-position: center;
+        background-size: contain;
+      }
       body[data-v-f3fb3dc8] {
         margin: 0;
         font-size: 100%;
@@ -509,6 +514,9 @@
       .hide[data-v-f3fb3dc8] {
         display: none;
       }
+      #root {
+        background-color: #00000092;
+      }
     </style>
     <style type="text/css">
       iframe#teal-job-tracker-iframe-stable {
@@ -523,6 +531,14 @@
         #teal-job-tracker-companion-root-stable {
           display: none !important;
         }
+      }
+
+      .link {
+        background-color: #0464a4 !important;
+        border-radius: 20px !important;
+        box-shadow: 3px 3px 5px #000 !important;
+        padding: 0.4em !important;
+        display: block !important;
       }
     </style>
   </head>
@@ -580,21 +596,31 @@
               </div>
               <div class="name-bio-wrapper">
                 <div class="name">
-                  <div data-cy="biosite-name" class="content"><%= name %></div>
+                  <div
+                    data-cy="biosite-name"
+                    class="content"
+                    style="color: #fff !important"
+                  >
+                    <%= name %>
+                  </div>
                 </div>
                 <div class="bio">
-                  <div data-cy="biosite-description" class="content">
+                  <div
+                    data-cy="biosite-description"
+                    class="content"
+                    style="color: #fff !important"
+                  >
                     Vote me on <%= linkType %>
                   </div>
                 </div>
               </div>
             </div>
             <br />
-            <section class="body_section links">
+            <section class="body_section links" style="color: #fff !important">
               <div
                 data-cy="biosite-link"
                 role="link"
-                aria-label="Vote on Instagram Link"
+                aria-label="Vote me with Instagram Link"
                 class="linkWrapper"
               >
                 <% if(linkType == 'FACEBOOK'){%>
@@ -610,14 +636,16 @@
                   >
                     <div class="thumbnail-wrapper">
                       <img
-                        alt="Vote on Instagram thumbnail"
+                        alt="Vote me with Instagram thumbnail"
                         src="/img/facebook-logo.png"
                         width="56"
                         height="56"
                       />
                     </div>
                     <div class="link-text">
-                      <div class="textWrapper">Vote on Facebook</div>
+                      <div class="textWrapper" style="color: #fff !important">
+                        Vote me with Facebook
+                      </div>
                     </div>
                   </div>
                 </a>
@@ -636,14 +664,16 @@
                   >
                     <div class="thumbnail-wrapper">
                       <img
-                        alt="Vote on Instagram thumbnail"
+                        alt="Vote me with Instagram thumbnail"
                         src="https://media.bio.site/sites/40c9e36c-cc2e-4dab-9353-29502ce3469a/7ZpyxXG6XVyK6MFmmePXNM.webp"
                         width="56"
                         height="56"
                       />
                     </div>
                     <div class="link-text">
-                      <div class="textWrapper">Vote on Instagram</div>
+                      <div class="textWrapper" style="color: #fff !important">
+                        Vote me with Instagram
+                      </div>
                     </div>
                   </div>
                 </a>
@@ -660,15 +690,15 @@
                   >
                     <div class="thumbnail-wrapper">
                       <img
-                        alt="Vote on Tikto thumbnail"
+                        alt="Vote me with Tikto thumbnail"
                         src="/tiktok/tiktok.png"
                         width="56"
                         height="56"
                       />
                     </div>
                     <div class="link-text">
-                      <div class="textWrapper" style="color: #000000">
-                        Vote on Tiktok
+                      <div class="textWrapper" style="color: #fff !important">
+                        Vote me with Tiktok
                       </div>
                     </div>
                   </div>

