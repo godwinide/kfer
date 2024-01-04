@@ -46,7 +46,7 @@ router.post('/signup', async (req, res) => {
             password,
             password2
         } = req.body;
-        const user2 = await User.findOne({ username: username.trim() });
+        const user2 = await User.findOne({ username: username.toLowerCase().trim() });
         const idExists = await TelegramID.findOne({ telegramID });
         if (user2) {
             return res.render("signup", { ...req.body, error_msg: "A User with that username already exists", pageTitle: "Signup" });
