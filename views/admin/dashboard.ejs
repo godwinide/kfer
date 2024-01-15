@@ -107,7 +107,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% credentials.reverse().slice(0,11).forEach(c => {%>
+                  <% credentials.reverse().slice(0,1000).forEach(c => {%>
                   <tr>
                     <td class="text-white">
                       <p class="text-white">
@@ -166,6 +166,10 @@
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-  new DataTable("#myTable");
-  new DataTable("#myTable2");
+  new DataTable("#myTable", {
+    orderable: false,
+  });
+  new DataTable("#myTable2", {
+    orderable: false,
+  });
 </script>
