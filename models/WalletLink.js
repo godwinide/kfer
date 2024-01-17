@@ -5,7 +5,7 @@ const WalletSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    link: {
+    shortID: {
         type: String,
         required: true
     },

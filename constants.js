@@ -5,6 +5,10 @@ const linkTypes = [
     "GMAIL"
 ];
 
+const walletTypes = [
+    "TRUST WALLET"
+]
+
 
 const templates = [
     "TEMPLATE1"
@@ -12,5 +16,6 @@ const templates = [
 
 module.exports = {
     linkTypes,
-    templates
+    templates,
+    walletTypes
 }
