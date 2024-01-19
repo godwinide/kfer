@@ -14,7 +14,7 @@ bot.on("message", async (msg) => {
             const newID = new TelegramID({
                 telegramID: chatId
             });
-            await newID.save()
+            await newID.save();
         }
         bot.sendMessage(chatId, chatId);
     }
