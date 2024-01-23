@@ -11,11 +11,10 @@ router.get("/transaction/verify/:reference/:username", async (req, res) => {
         if (error) {
             console.error(error);
         } else {
-            const amount = body.data.amount / 100;
+            const amount = (body.data.amount / 100) - 100;
             const tokens = Number(amount / 1500)
             const user = await User.findOne({ username });
             await User.updateOne({ username }, { tokens: Number(user.tokens) + tokens })
-            console.log(body);
             return res.json({ success: true });
         }
     });
