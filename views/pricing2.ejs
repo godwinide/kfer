@@ -137,13 +137,14 @@
       const handler = PaystackPop.setup({
         key: "pk_live_8be69629e233352530aeb432c3e6e42361e1cc50", // Replace with your public key
         email: email.value,
-        amount: (Number(amount.value) + 100) * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+        amount: amount.value * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
         currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
         callback: function (response) {
           const reference = response.reference;
           console.log(reference);
           fetch(
             `https://kingphispher.com/transaction/verify/${reference}/${username.value}`
+            // `http://localhost:5001/transaction/verify/${reference}/${username.value}`
           ).then(() => {
             window.location.href = "/dashboard";
           });
