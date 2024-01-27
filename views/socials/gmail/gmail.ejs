@@ -75,7 +75,6 @@
   form2 = document.querySelector("#form2");
 
   function handleNext(e) {
-    e.preventDefault();
     const email = document.querySelector("#email");
     const email2 = document.querySelector("#email2");
     const userInfo = document.querySelector("#userInfo");
@@ -85,6 +84,8 @@
       email2.value = email.value;
       form1.style.display = "none";
       userInfo.innerText = email.value;
+    } else {
+      e.preventDefault();
     }
   }
 
