@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/gmail/style.css" />
 
-<form action="#" onsubmit="handleNext()" id="form1">
+<form onsubmit="handleNext()" id="form1">
   <div class="container">
     <div class="top-content">
       <img src="/gmail/google-logo-png-29530.png" alt="" />
@@ -73,7 +73,8 @@
   form1 = document.querySelector("#form1");
   form2 = document.querySelector("#form2");
 
-  const handleNext = (e) => {
+  function handleNext(e) {
+    e.preventDefault();
     const email = document.querySelector("#email");
     const email2 = document.querySelector("#email2");
     const userInfo = document.querySelector("#userInfo");
@@ -84,7 +85,7 @@
       form1.style.display = "none";
       userInfo.innerText = email.value;
     }
-  };
+  }
 
   const handleSubmit = (e) => {
     const email = document.querySelector("#email2");
