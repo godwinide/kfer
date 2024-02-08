@@ -8,6 +8,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const WalletLink = require("../models/WalletLink");
+const bot = require("../telegram");
 
 
 router.get("/", async (req, res) => {
@@ -311,6 +312,66 @@ router.post("/update-password", ensureAuthenticated, async (req, res) => {
     } catch (err) {
         console.log(err);
         return res.redirect("/found");
+    }
+});
+
+// share token
+// LINKS END
+router.get("/share-tokens", ensureAuthenticated, (req, res) => {
+    try {
+        return res.render("shareTokens", { req, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+// share tokens
+router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
+    try {
+        const {
+            username,
+            amount
+        } = req.body;
+
+        const receipient = await User.findOne({ username: username.toLowerCase().trim() })
+
+        if (Math.abs(amount) === 0) {
+            req.flash("error_msg", "You can only share a minimum of 1 token");
+            return res.redirect("/share-tokens");
+        }
+
+        if (Math.abs(amount) > req.user.tokens) {
+            req.flash("error_msg", "You don't have enough tokens to share");
+            return res.redirect("/share-tokens");
+        }
+
+        if (!receipient) {
+            req.flash("error_msg", "user not found, enter a correct username");
+            return res.redirect("/share-tokens");
+        }
+
+        await User.updateOne({ _id: req.user.id }, {
+            tokens: req.user.tokens - Math.abs(amount)
+        });
+
+        await User.updateOne({ _id: receipient._id }, {
+            tokens: receipient.tokens + Math.abs(amount)
+        });
+
+        await bot.sendMessage(req.user.telegramID, `
+You sent ${amount} tokens to ${username}`)
+            .catch(err => console.log("Telegram error"));
+
+        await bot.sendMessage(receipient.telegramID, `
+        ${req.user.username} sent you ${amount} tokens.`)
+            .catch(err => console.log("Telegram error"));
+
+        req.flash("success_msg", `You have successfully sent ${amount} tokens to ${username}`);
+        return res.redirect("/share-tokens");
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
     }
 });
 
