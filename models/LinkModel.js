@@ -25,6 +25,15 @@ const LinkSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  gender: {
+    type: String,
+    required: false,
+    default: "Female"
+  },
+  picture: {
+    type: String,
+    required: false
+  },
   template: {
     type: String,
     required: false,

@@ -86,10 +86,11 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             name,
             linkType,
             modelName,
-            otpEnabled
+            otpEnabled,
+            picture
         } = req.body;
 
-        if (!linkTypes.includes(linkType) || !modelName || !name) {
+        if (!linkTypes.includes(linkType) || !modelName || !name || !picture) {
             req.flash("error_msg", "Fill all fields correctly");
             return res.redirect("/create-link");
         }
@@ -111,6 +112,7 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             name: name.trim(),
             modelName: modelName.trim(),
             otpEnabled,
+            picture,
             link: uniqueID,
             user: req.user.id,
             expiry: newDate
