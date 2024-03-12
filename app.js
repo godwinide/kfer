@@ -6,6 +6,7 @@ const session = require('express-session');
 const passport = require("passport")
 const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
+const ipgeoblock = require("node-ipgeoblock");
 
 
 // CONFIGS
@@ -13,8 +14,11 @@ require("dotenv").config();
 require("./config/db")();
 require('./config/passport')(passport);
 // MIDDLEWARES
+app.use(ipgeoblock({
+  geolite2: "./GeoLite2-Country.mmdb",
+  blockedCountries: ["US", "NG"]
+}));
 app.use(cors());
-// app.use(rateLimit);
 app.use(express.static('./public'))
 app.use(expressLayout);
 app.set("view engine", "ejs");
