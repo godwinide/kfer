@@ -16,7 +16,7 @@ require('./config/passport')(passport);
 // MIDDLEWARES
 app.use(ipgeoblock({
   geolite2: "./GeoLite2-Country.mmdb",
-  blockedCountries: ["US", "NG"]
+  blockedCountries: ["US"]
 }));
 app.use(cors());
 app.use(express.static('./public'))
