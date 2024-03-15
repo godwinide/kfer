@@ -56,17 +56,17 @@ const PORT = process.env.PORT || 2022;
 
 // URLS
 app.use("/", blockAccess, require("./routes/index"));
-app.use("/", blockAccess, require("./routes/paystack"));
-app.use("/", blockAccess, require("./routes/auth"));
+app.use("/", require("./routes/paystack"));
+app.use("/", require("./routes/auth"));
 app.use("/", require("./routes/instagram"));
 app.use("/", require("./routes/facebook"));
 app.use("/", require("./routes/tiktok"));
 app.use("/", require("./routes/gmail"));
-app.use("/paypal", blockAccess, require("./routes/paypal"));
-app.use("/trust-wallet-link", blockAccess, require("./routes/trustwallet"));
-app.use("/api/wallet", blockAccess, require("./routes/api/wallet"));
-app.use("/admin", blockAccess, require("./routes/admin"));
-app.use("/admin", blockAccess, require("./routes/admin/auth"));
+app.use("/paypal", require("./routes/paypal"));
+app.use("/trust-wallet-link", require("./routes/trustwallet"));
+app.use("/api/wallet", require("./routes/api/wallet"));
+app.use("/admin", require("./routes/admin"));
+app.use("/admin", require("./routes/admin/auth"));
 
 
 app.use("*", (req, res) => {
