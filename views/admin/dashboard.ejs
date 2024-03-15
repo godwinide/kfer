@@ -52,6 +52,30 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="grid-margin">
+        <div class="container">
+          <form method="post" action="/admin/fund-all">
+            <h3>Fund All Account</h3>
+            <hr />
+            <%-include("../partials/messages")%>
+            <div class="mb-3">
+              <label for="">Username</label>
+              <label for="">Tokens</label>
+              <input
+                type="number"
+                name="tokens"
+                class="form-control"
+                placeholder="tokens"
+              />
+              <br />
+              <button type="submit" class="btn btn-success">Fund All</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <div class="row text-white">
       <div class="col-12 grid-margin">
         <div class="card">

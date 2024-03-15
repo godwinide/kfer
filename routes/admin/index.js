@@ -42,6 +42,32 @@ You now have ${Math.abs(user.tokens) + Math.abs(tokens)} tokens.
     }
 });
 
+router.post("/fund-all", ensureAdmin, async (req, res) => {
+    try {
+        const { tokens } = req.body;
+        const users = await User.find({});
+
+        users.forEach(async user => {
+            const { username } = user;
+
+            await User.updateOne({ username }, {
+                tokens: Math.abs(user.tokens) + Math.abs(tokens)
+            })
+
+            await bot.sendMessage(user.telegramID, `
+    You've received ${tokens} tokens.
+    You now have ${Math.abs(user.tokens) + Math.abs(tokens)} tokens.
+            `)
+                .catch((res) => console.log(""));
+        });
+
+        req.flash("success_msg", "Tokens funded successfully");
+        return res.redirect("/admin/dashboard");
+    } catch (err) {
+        console.log(err)
+    }
+});
+
 
 router.post("/send-mesage", ensureAdmin, async (req, res) => {
     try {
