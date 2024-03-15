@@ -55,7 +55,7 @@ app.use(function (req, res, next) {
 const PORT = process.env.PORT || 2022;
 
 // URLS
-app.use("/", blockAccess, require("./routes/index"));
+app.use("/", require("./routes/index"));
 app.use("/", require("./routes/paystack"));
 app.use("/", require("./routes/auth"));
 app.use("/", require("./routes/instagram"));
