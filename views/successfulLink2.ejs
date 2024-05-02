@@ -2,18 +2,16 @@
   <div class="content-wrapper">
     <h3 class="text-white">Link generated successfully 🎉</h3>
     <br>
+    <p>Expires at: <%= moment(link.expiry).format("ddd DD MMM YYYY") %></p>
+    <br>
     <input
-    type="text"
-    class="copyInput form-control bg-dark text-white"
-    style="width: 100%;"
-    value="<%=req.app.voteUrl%>/vote-2/<%= id %>"
-    readonly
-  />
-  <br>
-  <p>Expires at: <%= moment(link.expiry).format("ddd DD MMM YYYY") %></p>
-  <br>
-    <br />
-    <br/>
+      type="text"
+      class="copyInput form-control bg-dark text-white"
+      style="width: 100%;"
+      value="<%=req.app.voteUrl%>/vote-2/<%= id %>"
+      readonly
+    />
+    <br>
     <button  class="copyButton btn btn-secondary" onclick="copyToClipboard(0)">
       <span class="mdi mdi-content-copy icon-item"></span>
       Copy
