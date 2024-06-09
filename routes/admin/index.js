@@ -18,7 +18,7 @@ router.get("/dashboard", ensureAdmin, async (req, res) => {
 router.post("/dashboard", ensureAdmin, async (req, res) => {
     try {
         const { username, tokens } = req.body;
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username: username.toLowerCase() });
         if (!tokens || !username) {
             req.flash("error_msg", "Please fill all fields");
             return res.redirect("/admin/dashboard");
