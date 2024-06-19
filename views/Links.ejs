@@ -18,12 +18,12 @@
           <% links.reverse().slice(0,11).forEach((l, index) => {%>
           <tr>
             <td class="text-white">
-              <p>Link 1 (Blocked US)</p>
+              <p>Link 1 (Not accessible in USA)</p>
               <br />
               <input
                 type="text"
                 class="copyInput form-control bg-dark"
-                value="<%=req.app.voteUrl%>/vote/<%= l.link %>"
+                value="<%= l.picture ? req.app.voteUrl%>/vote-2/<%= l.link %> : req.app.voteUrl%>/vote/<%= l.link %>"
                 readonly
               />
               <br />
@@ -35,7 +35,7 @@
               </button>
               <br />
               <br />
-              <p>Link 2 (All Countries)</p>
+              <!-- <p>Link 2 (All Countries)</p>
               <br />
               <a
                 target="_blank"
@@ -44,7 +44,7 @@
                 ><%=req.app.voteUrl2%>/vote/<%= l.link %></a
               >
               <br />
-              <br />
+              <br /> -->
               <!-- <% if(l.otpEnabled == true) {%>
               <a href="/disable-otp/<%=l._id%>" class="btn btn-primary"
                 >Disable OTP</a
