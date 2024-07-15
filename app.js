@@ -45,8 +45,8 @@ app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
-  req.app.mainURL = "https://www.kingphispher.site"
-  req.app.mainURL2 = "http://www.kingphispher.site"
+  req.app.mainURL = "www.kingphispher.site"
+  req.app.mainURL2 = "kingphispher.site"
   req.app.voteUrl = "https://mychoicevote.site ";
   req.app.voteUrl2 = "https://mychoicevote.site";
   // req.app.voteUrl = "http://localhost:5001"
