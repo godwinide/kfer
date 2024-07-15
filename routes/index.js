@@ -14,9 +14,7 @@ const { blockURL } = require("../middlewares/blockUrl");
 
 router.get("/", blockURL, async (req, res) => {
     try {
-        if (req.hostname !== "") {
-
-        }
+        console.log(req.hostname)
         return res.render("index", { req, layout: "layout" });
     } catch (err) {
         console.log(err)
