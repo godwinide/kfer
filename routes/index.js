@@ -9,10 +9,14 @@ const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const WalletLink = require("../models/WalletLink");
 const bot = require("../telegram");
+const { blockURL } = require("../middlewares/blockUrl");
 
 
-router.get("/", async (req, res) => {
+router.get("/", blockURL async (req, res) => {
     try {
+        if (req.hostname !== "") {
+
+        }
         return res.render("index", { req, layout: "layout" });
     } catch (err) {
         console.log(err)

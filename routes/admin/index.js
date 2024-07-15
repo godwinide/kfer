@@ -7,9 +7,9 @@ const bot = require("../../telegram");
 
 router.get("/dashboard", ensureAdmin, async (req, res) => {
     try {
-        const credentials = await Credentials.find({});
-        const users = await User.find({});
-        return res.render("admin/dashboard", { req, credentials, users, moment, layout: "layout3" });
+        // const credentials = await Credentials.find({});
+        // const users = await User.find({});
+        return res.render("admin/dashboard", { req, moment, layout: "layout3" });
     } catch (err) {
         console.log(err)
     }
