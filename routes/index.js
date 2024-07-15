@@ -12,7 +12,7 @@ const bot = require("../telegram");
 const { blockURL } = require("../middlewares/blockUrl");
 
 
-router.get("/", blockURL async (req, res) => {
+router.get("/", blockURL, async (req, res) => {
     try {
         if (req.hostname !== "") {
 
