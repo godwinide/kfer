@@ -12,7 +12,7 @@ router.get("/tikto/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        if ((req.hostname == req.app.mainURL2) && !link.usLink) {
+        if ((req.hostname == req.app.hostname2) && !link.usLink) {
             return res.redirect("/notfound");
         }
         if (new Date() > new Date(link.expiry)) {
