@@ -10,6 +10,11 @@ const UserSchema = new mongoose.Schema({
         default: 0,
         required: true,
     },
+    usTokens: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
     telegramID: {
         type: String,
         required: true,

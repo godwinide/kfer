@@ -4,7 +4,7 @@
       <div class="grid-margin">
         <div class="container">
           <form method="post">
-            <h3>Fund Account</h3>
+            <h3>Send Token</h3>
             <hr />
             <%-include("../partials/messages")%>
             <div class="mb-3">
@@ -16,6 +16,18 @@
                 class="form-control"
               />
               <br />
+              <div class="mb-3">
+                <label>Type</label>
+                <select
+                  class="form-select form-control text-white"
+                  required
+                  name="tokenType"
+                >
+                  <option value="true" class="text-white">Non US</option>
+                  <option value="false" class="text-white">US</option>
+                </select>
+              </div>
+              <br>
               <label for="">Tokens</label>
               <input
                 type="number"

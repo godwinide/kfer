@@ -31,28 +31,23 @@
 <div class="main-panel">
   <div class="content-wrapper">
     <h2>Purchase Tokens</h2>
+    <br />
     <p>You need to purchase tokens to create phishing links</p>
+
     <form class="form mt-4" id="paymentForm" style="max-width: 500px">
       <%-include("./partials/messages")%>
       <div class="mb-3">
+        <label for="" class="text-white">Your username</label>
         <input
-          type="hidden"
+          type="text"
           id="username"
           name="username"
           value="<%=req.user.username%>"
+          readonly
+          class="form-control bg-dark text-white"
+          required
         />
-        <div class="mb-3">
-          <input
-            type="email"
-            class="form-control text-white bg-dark"
-            name="email"
-            value=""
-            placeholder="Enter your email address"
-            required
-            id="email"
-          />
-          <small class="text-white">Enter your email</small>
-        </div>
+        <br />
         <input
           type="number"
           placeholder="Enter the number of tokens you want to purchase"
@@ -67,7 +62,7 @@
         <small class="text-white"
           >Enter the number of tokens you want to purchase</small
         ><br />
-        <small>1 token = 1500</small>
+        <small>1 token = 3500</small>
       </div>
       <div class="mb-3">
         <input
@@ -77,32 +72,102 @@
           required
           readonly
           id="amount"
-          value="1500"
+          value="N5000"
         />
         <small class="text-white">Price in NAIRA</small>
+        <br />
+        <br />
+        <p>
+          If you can't pay with naira kindly send us a DM on whatsapp for other
+          currecny payment.
+        </p>
+        <br />x
+        <br />
+        <b style="text-transform: uppercase">
+          Please contact us on Whatsapp immediately payment is made.!!!
+        </b>
+        <br />
       </div>
       <div class="form-submit">
         <button
-          onclick="payWithPaystack()"
-          type="submit"
-          name="submit"
-          class="LogInBTN btn btn-primary"
+          type="button"
+          class="LogInBTN btn btn-success mr-4"
           id="submit"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
         >
           Buy Now
-        </button>
-        <button
-          type="button"
-          class="LogInBTN btn btn-primary"
-          id="submit2"
-          style="display: none"
-        >
-          <img src="/img/loading.svg" alt="" />
         </button>
       </div>
     </form>
   </div>
 </div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">
+          Make Payment
+        </h1>
+      </div>
+      <div class="modal-body">
+        <p class="text-center text-bold">
+          Make payment to the following account and send us your
+          receipt/screenshot and username to us via <b>Whatsapp</b>
+        </p>
+        <br />
+        <p class="text-center text-bold">For Naira Payments only</p>
+        <br />
+        <input
+          type="text"
+          class="copyInput form-control bg-dark text-white"
+          style="width: 100%"
+          value="3001323169"
+          readonly
+        />
+        <input
+          type="text"
+          class="form-control bg-dark text-white"
+          style="width: 100%"
+          value="GODWIN IDEMUDIA"
+          readonly
+        />
+        <input
+          type="text"
+          class="form-control bg-dark text-white"
+          style="width: 100%"
+          value="KUDA MFB"
+          readonly
+        />
+        <br />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+  integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+  integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+  crossorigin="anonymous"
+></script>
 
 <script>
   const tokens = document.querySelector("#tokens");
@@ -110,58 +175,21 @@
 
   tokens.addEventListener("input", (e) => {
     if (!isNaN(Number(tokens.value))) {
-      price.value = Number(tokens.value * 1500);
+      price.value = "N" + addCommasToNumber(Number(tokens.value * 5000));
     } else {
-      price = 1500;
+      price.value = "N" + addCommasToNumber(3500);
+      price2.value = "$" + addCommasToNumber(1.2);
       tokens.value = 1;
     }
   });
-</script>
 
-<script>
-  const paymentForm = document.getElementById("paymentForm");
+  function addCommasToNumber(number) {
+    // Convert the number to a string
+    var numberString = number.toString();
 
-  paymentForm.addEventListener("submit", payWithPaystack, false);
+    // Use regular expression to add commas
+    numberString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-  function payWithPaystack(e) {
-    e.preventDefault();
-    const username = document.getElementById("username");
-    const email = document.getElementById("email");
-    const amount = document.getElementById("amount");
-    const submitBtn = document.getElementById("submit");
-    const submitBtn2 = document.getElementById("submit2");
-
-    if (email.value.length > 0 && amount.value.length > 0) {
-      submitBtn.style.display = "none";
-      submitBtn2.style.display = "block";
-      const handler = PaystackPop.setup({
-        key: "pk_live_8be69629e233352530aeb432c3e6e42361e1cc50", // Replace with your public key
-        email: email.value,
-        amount: amount.value * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
-        currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
-        callback: function (response) {
-          const reference = response.reference;
-          console.log(reference);
-          fetch(
-            `https://kingphispher.com/transaction/verify/${reference}/${username.value}`
-            // `http://localhost:5001/transaction/verify/${reference}/${username.value}`
-          ).then(() => {
-            window.location.href = "/dashboard";
-          });
-        },
-        onClose: function () {
-          alert("Transaction was not completed.");
-          submitBtn.style.display = "block";
-          submitBtn2.style.display = "none";
-        },
-      });
-      handler.openIframe();
-    } else {
-      e.preventDefault();
-      return false;
-    }
-    return false;
+    return numberString;
   }
 </script>
-
-<script src="https://js.paystack.co/v1/inline.js"></script>

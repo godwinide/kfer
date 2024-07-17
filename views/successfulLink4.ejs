@@ -1,0 +1,34 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+      <h3 class="text-white">Link generated successfully 🎉</h3>
+      <br>
+      <p>Expires at: <%= moment(link.expiry).format("ddd DD MMM YYYY") %></p>
+      <br>
+      <br>
+      <i >Due to increased reports rates, these links will be changed after a few days.</i>
+      <br>
+      <br>
+      <p>LINK 1 (Not accessible in USA)</p>
+      <input
+      type="text"
+      class="copyInput form-control bg-dark text-white"
+      style="width: 100%;"
+      value="<%=req.app.voteUrl2%>/vote-2/<%= id %>"
+      readonly
+    />
+      <br />
+      <button  class="copyButton btn btn-secondary" onclick="copyToClipboard(0)">
+        <span class="mdi mdi-content-copy icon-item"></span>
+        Copy
+      </button>
+
+  
+  
+  
+      <a href="/dashboard" class="btn btn-primary">
+        <span class="mdi mdi-home icon-item"></span>
+        Dashboard
+      </a href="/dashboard">
+    </div>
+  </div>
+  

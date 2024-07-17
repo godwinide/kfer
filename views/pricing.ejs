@@ -172,14 +172,10 @@
 <script>
   const tokens = document.querySelector("#tokens");
   const price = document.querySelector("#amount");
-  const price2 = document.querySelector("#amount2");
 
   tokens.addEventListener("input", (e) => {
     if (!isNaN(Number(tokens.value))) {
       price.value = "N" + addCommasToNumber(Number(tokens.value * 3500));
-      price2.value =
-        "$" +
-        addCommasToNumber(Number(tokens.value * 3500 * 0.00076923).toFixed(1));
     } else {
       price.value = "N" + addCommasToNumber(3500);
       price2.value = "$" + addCommasToNumber(1.2);

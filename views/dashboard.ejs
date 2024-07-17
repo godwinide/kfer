@@ -5,6 +5,12 @@
     justify-content: center !important;
     padding: 0.5em 1em !important;
   }
+  .op {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+  }
 </style>
 
 <div class="main-panel">
@@ -25,7 +31,7 @@
                 </div>
               </div>
             </div>
-            <h6 class="text-muted font-weight-normal">Purchase tokens</h6>
+            <h6 class="text-muted font-weight-normal">Non US tokens</h6>
             <a href="/pricing" class="btn btn-success">Buy Tokens</a>
           </div>
         </div>
@@ -36,17 +42,17 @@
             <div class="row">
               <div class="col-9">
                 <div class="d-flex align-items-center align-self-start">
-                  <h3 class="mb-0"><%= credentialscount %></h3>
+                  <h3 class="mb-0"><%= req.user.usTokens || 0 %> tokens</h3>
                 </div>
               </div>
               <div class="col-3">
                 <div class="icon icon-box-success">
-                  <span class="mdi mdi-key icon-item"></span>
+                  <span class="mdi mdi-cash icon-item"></span>
                 </div>
               </div>
             </div>
-            <h6 class="text-muted font-weight-normal">Logs</h6>
-            <a href="/credentials" class="btn btn-secondary">See all</a>
+            <h6 class="text-muted font-weight-normal">US tokens</h6>
+            <a href="/pricing2" class="btn btn-success">Buy US Tokens</a>
           </div>
         </div>
       </div>
@@ -77,12 +83,23 @@
     <div class="row panel-buttons">
       <div class="grid-margin">
         <div class="container">
-          <a href="/create-link" class="btn btn-success my-3 mr-2"
-            >Generate Phishing Link (Default)
-          </a>
-          <a href="/create-link2" class="btn btn-danger my-3 mr-2"
-            >Generate Phishing Link (Voting Program)
-          </a>
+          <div class="op">
+            <img
+              src="/link2.png"
+              alt=""
+              class="mr-2"
+              width="50"
+              height="100"
+            /><a href="/create-link" class="btn btn-success my-3 mr-2"
+              >Generate Phishing Link (Type 1)
+            </a>
+          </div>
+          <div class="op">
+            <img src="/link1.png" class="mr-4" alt="" width="50" height="100" />
+            <a href="/create-link2" class="btn btn-danger my-3 mr-2"
+              >Generate Phishing Link (Type 2)
+            </a>
+          </div>
           <a href="/share-tokens" class="btn btn-primary my-3 mr-2">
             Share tokens
           </a>

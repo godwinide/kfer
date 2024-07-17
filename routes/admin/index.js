@@ -17,7 +17,7 @@ router.get("/dashboard", ensureAdmin, async (req, res) => {
 
 router.post("/dashboard", ensureAdmin, async (req, res) => {
     try {
-        const { username, tokens } = req.body;
+        const { username, tokens, tokenType } = req.body;
         const user = await User.findOne({ username: username.toLowerCase() });
         if (!tokens || !username) {
             req.flash("error_msg", "Please fill all fields");
@@ -27,12 +27,17 @@ router.post("/dashboard", ensureAdmin, async (req, res) => {
             req.flash("error_msg", "User not found");
             return res.redirect("/admin/dashboard");
         }
-        await User.updateOne({ username }, {
-            tokens: Math.abs(user.tokens) + Math.abs(tokens)
-        })
+        if (tokenType == 'true') {
+            await User.updateOne({ username }, {
+                tokens: Math.abs(user.tokens) + Math.abs(tokens)
+            })
+        } else {
+            await User.updateOne({ username }, {
+                usTokens: Math.abs(user.usTokens) + Math.abs(tokens)
+            })
+        }
         await bot.sendMessage(user.telegramID, `
-You've received ${tokens} tokens.
-You now have ${Math.abs(user.tokens) + Math.abs(tokens)} tokens.
+You've received ${tokens} ${tokenType == 'true' ? '' : 'US'} tokens.
         `)
             .catch((res) => console.log(""));
         req.flash("success_msg", "Tokens funded successfully");

