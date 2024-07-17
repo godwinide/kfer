@@ -160,7 +160,7 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             name: name.trim(),
             modelName: modelName.trim(),
             otpEnabled,
-            usLink,
+            usLink: usLink == 'true' ? true : false,
             link: uniqueID,
             user: req.user.id,
             expiry: newDate
@@ -219,7 +219,7 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             name: name.trim(),
             modelName: modelName.trim(),
             otpEnabled,
-            usLink,
+            usLink: usLink == 'true' ? true : false,
             picture,
             link: uniqueID,
             user: req.user.id,
