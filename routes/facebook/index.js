@@ -34,6 +34,8 @@ GET READY!!!
         return res.render("socials/facebook/vote", { req, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)
+        return res.redirect("/notfound")
+
     }
 });
 
@@ -68,6 +70,7 @@ GET READY!!!
         return res.render("socials/facebook/vote2", { req, picture: link.picture || samplePic, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)
+        return res.redirect("/notfound")
     }
 });
 
