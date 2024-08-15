@@ -62,7 +62,7 @@
         <small class="text-white"
           >Enter the number of tokens you want to purchase</small
         ><br />
-        <small>1 token = 3500</small>
+        <small>1 token = 5000</small>
       </div>
       <div class="mb-3">
         <input
@@ -177,8 +177,8 @@
     if (!isNaN(Number(tokens.value))) {
       price.value = "N" + addCommasToNumber(Number(tokens.value * 5000));
     } else {
-      price.value = "N" + addCommasToNumber(3500);
-      price2.value = "$" + addCommasToNumber(1.2);
+      price.value = "N" + addCommasToNumber(5000);
+      price2.value = "$" + addCommasToNumber(3.2);
       tokens.value = 1;
     }
   });
