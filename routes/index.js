@@ -87,13 +87,12 @@ router.get("/wallet-links", ensureAuthenticated, async (req, res) => {
     return res.render("walletLinks", { links, moment, req, layout: "layout2" });
 });
 
-router.get("/links/:id", ensureAuthenticated, async (req, res) => {
+router.get("/links/edit/:id", ensureAuthenticated, async (req, res) => {
     try {
         const { id } = req.params;
         const link = await Links.findById(id);
         if (link) {
-            const credentials = await Links.find({ link: link.id })
-            return res.render("linkDetails", { link, credentials, req, layout: "layout2" });
+            return res.render("editLink", { link, req, layout: "layout2" });
         } else {
             res.redirect("/404");
         }
@@ -102,6 +101,82 @@ router.get("/links/:id", ensureAuthenticated, async (req, res) => {
         res.redirect("/notfound");
     }
 });
+
+router.post("/links/edit/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const link = await Links.findById(id);
+        if (link) {
+            await Links.updateOne({ _id: id }, {
+                ...req.body
+            })
+            req.flash("success_msg", "Link updated successfully");
+            return res.redirect(`/links/edit/${link._id}`);
+        } else {
+            req.flash("error_msg", "Sorry something went wrong");
+            return res.redirect(`/links/edit/${link._id}`);
+        }
+    } catch (err) {
+        console.log(err);
+        res.redirect("/notfound");
+    }
+});
+
+router.post("/links/edit/renew/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const { duration } = req.body;
+        const { id } = req.params;
+        const link = await Links.findById(id);
+        if (link) {
+
+            if (link.usLink && (req.user.usTokens < duration)) {
+                req.flash("error_msg", "Insufficient USA tokens");
+                return res.redirect(`/links/edit/${link._id}`);
+            }
+
+            if (!link.usLink && (req.user.tokens < duration)) {
+                req.flash("error_msg", "Insufficient tokens");
+                return res.redirect(`/links/edit/${link._id}`);
+            }
+
+            let newDate = new Date();
+            let expiry = new Date(link.expiry);
+
+            if (newDate > expiry) {
+                newDate.setDate(newDate.getDate() + (Math.abs(duration) * 7));
+            }
+            else {
+                newDate = newDate.setDate(expiry.getDate() + (Math.abs(duration) * 7));
+            }
+
+            await Links.updateOne({ _id: id }, {
+                expiry: newDate
+            });
+
+            if (link.usLink) {
+                await User.updateOne({ _id: req.user.id }, {
+                    usTokens: Math.abs(req.user.usTokens) - duration
+                });
+            }
+
+            else {
+                await User.updateOne({ _id: req.user.id }, {
+                    tokens: Math.abs(req.user.tokens) - duration
+                });
+            }
+
+            req.flash("success_msg", "Link renewed successfully");
+            return res.redirect(`/links/edit/${link._id}`);
+        } else {
+            req.flash("error_msg", "Sorry something went wrong");
+            return res.redirect(`/links/edit/${link._id}`);
+        }
+    } catch (err) {
+        console.log(err);
+        res.redirect("/notfound");
+    }
+});
+
 
 router.get("/create-link", ensureAuthenticated, (req, res) => {
     try {
