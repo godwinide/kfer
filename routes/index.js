@@ -196,6 +196,15 @@ router.get("/create-link2", ensureAuthenticated, (req, res) => {
     }
 });
 
+router.get("/create-link3", ensureAuthenticated, (req, res) => {
+    try {
+        return res.render("createLink3", { req, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
 router.post("/create-link", ensureAuthenticated, async (req, res) => {
     try {
         const {
@@ -315,6 +324,69 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
     }
 });
 
+router.post("/create-link3", ensureAuthenticated, async (req, res) => {
+    try {
+        const {
+            name,
+            linkType,
+            modelName,
+            otpEnabled,
+            usLink,
+            picture,
+            backgroundPicture,
+            writeup,
+            duration
+        } = req.body;
+
+        if (!linkTypes.includes(linkType) || !modelName || !backgroundPicture || !writeup || !name || !picture || !duration) {
+            req.flash("error_msg", "Fill all fields correctly");
+            return res.redirect("/create-link3");
+        }
+
+        if (usLink == "false" & (req.user.tokens < Math.abs(duration))) {
+            req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
+            return res.redirect("/create-link3");
+        }
+
+        if (usLink == 'true' && (req.user.usTokens < Math.abs(duration))) {
+            req.flash("error_msg", "Insufficient US tokens, purchase tokens to continue");
+            return res.redirect("/create-link3");
+        }
+
+        const uid = new ShortUniqueId({ length: 10 });
+        const uniqueID = modelName.split(" ").join("-").toLowerCase() + "-" + uid.rnd();
+
+        const currentDate = new Date();
+        const newDate = new Date(currentDate);
+        newDate.setDate(currentDate.getDate() + (Math.abs(duration) * 7));
+        const newLink = new Links({
+            linkType,
+            name: name.trim(),
+            modelName: modelName.trim(),
+            otpEnabled,
+            usLink: usLink == 'true' ? true : false,
+            picture,
+            backgroundPicture,
+            writeup,
+            link: uniqueID,
+            user: req.user.id,
+            expiry: newDate
+        });
+        await newLink.save();
+        req.flash("success_msg", "Link generated successfully!");
+        if (usLink == 'true') {
+            await User.updateOne({ username: req.user.username }, { usTokens: req.user.usTokens - Math.abs(duration) });
+            return res.redirect(`/successful-link5/${uniqueID}`);
+        } else {
+            await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
+            return res.redirect(`/successful-link5/${uniqueID}`);
+        }
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
 router.get("/create-wallet-link", ensureAuthenticated, (req, res) => {
     try {
         return res.render("walletLink", { req, layout: "layout2" });
@@ -407,6 +479,17 @@ router.get("/successful-link4/:id", ensureAuthenticated, async (req, res) => {
         const id = req.params.id;
         const link = await Links.findOne({ link: id });
         return res.render("successfulLink4", { req, id, moment, link, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.get("/successful-link5/:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const link = await Links.findOne({ link: id });
+        return res.render("successfullLink5", { req, id, moment, link, layout: "layout2" });
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");

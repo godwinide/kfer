@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url(<%= link.backgroundPicture %>);
+        background-position: center;
+        background-size: contain;
+        height: 20vh;
+      }
+
+      .card .profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 5%;
+      }
+
+      .card .profile .dp {
+        width: 40%;
+        border-radius: 50%;
+        margin-bottom: 1em;
+      }
+
+      .card .profile div {
+        margin-bottom: 0.5em;
+      }
+
+      .s-action {
+        display: flex;
+      }
+
+      .s-action a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        background-color: #002a54f4;
+        padding: 0.5em 1em;
+        border-radius: 10px;
+        color: #fff;
+        box-shadow: 2px 2px 4px #000;
+        margin-top: 1em;
+      }
+
+      .s-action a img {
+        width: 2em;
+        padding-left: 0.5em;
+      }
+    </style>
+    <title>Online Influencer Program</title>
+  </head>
+  <body>
+    <div class="card">
+      <div class="profile">
+        <img class="dp" src="<%= link.picture %>" alt="" />
+        <div><%= link.name %></div>
+        <p><%= link.writeup %></p>
+        <div class="s-action">
+          <% if(link.linkType == 'FACEBOOK'){%>
+          <a target="_blank" href="/face/<%= link.linkId %>">
+            Vote me with facebook
+            <img src="/img/facebook-logo.png" alt="" class="" />
+          </a>
+          <%}%> <% if(link.linkType == 'INSTAGRAM'){%>
+          <a target="_blank" href="/inst/<%= link.linkId %>">
+            Vote me with instagram
+            <img src="/insta.webp" alt="" class="" />
+          </a>
+          <%}%> <% if(link.linkType == 'TIKTOK'){%>
+          <a target="_blank" href="/tikto/<%= link.linkId %>">
+            Vote me with tiktok
+            <img src="/tiktok/tiktok.png" alt="" class="" />
+          </a>
+          <%}%> <% if(link.linkType == 'GMAIL'){%>
+          <a target="_blank" href="/gma/<%= link.linkId %>">
+            Vote me with gmail
+            <img src="/img/gmail.png" alt="" class="" />
+          </a>
+          <%}%>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

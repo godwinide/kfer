@@ -41,7 +41,7 @@
     <h1>Generate A New Link</h1>
 
     <form
-      action="/create-link2"
+      action="/create-link3"
       method="post"
       class="form mt-4"
       style="max-width: 500px"
@@ -64,9 +64,12 @@
       <div class="mb-3">
         <label for="">Profile Picture URL</label>
         <p>
-          Visit:
-          <a href="https://postimages.org/" target="_blank">this website</a>,
-          upload the image and paste the <strong>direct link</strong>. The
+          <a
+            class="btn btn-success"
+            href="https://postimages.org/"
+            target="_blank"
+            >Click here</a
+          >, upload the image and paste the <strong>direct link</strong>. The
           second link is the direct link!
         </p>
         <br />
@@ -79,17 +82,44 @@
         />
       </div>
       <div class="mb-3">
-        <label>Contestant's Full Name</label>
+        <label for="">Background Picture</label>
+        <p>
+          <a
+            class="btn btn-success"
+            href="https://postimages.org/"
+            target="_blank"
+            >Click here</a
+          >, upload the image and paste the <strong>direct link</strong>. The
+          second link is the direct link!
+        </p>
+        <br />
         <input
           type="text"
-          placeholder="Model Name e.g  Emily Johnson"
+          placeholder="paste direct link here"
+          name="backgroundPicture"
+          class="form-control text-white"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label>Title</label>
+        <input
+          type="text"
+          placeholder="Title eg Person's name, business name"
           class="form-control text-white"
           name="modelName"
           required
         />
-        <small class="text-white"
-          >Name of the social media account you will be using to spam phisphing
-          links</small
+      </div>
+      <div class="mb-3">
+        <label>Custom Write up</label>
+        <textarea
+          name="writeup"
+          maxlength="1000"
+          required
+          class="form-control text-white"
+        >
+describe your link...</textarea
         >
       </div>
       <div class="mb-3">
@@ -170,7 +200,7 @@
           value="1 token(s)"
         />
       </div>
-      <div class="ml-1 row">
+      <div class="ml-2 row mb-3">
         <button
           type="submit"
           name="submit"

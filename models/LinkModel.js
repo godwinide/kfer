@@ -30,12 +30,20 @@ const LinkSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  writeup: {
+    type: String,
+    required: false
+  },
   gender: {
     type: String,
     required: false,
     default: "Female"
   },
   picture: {
+    type: String,
+    required: false
+  },
+  backgroundPicture: {
     type: String,
     required: false
   },
