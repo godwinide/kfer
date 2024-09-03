@@ -489,7 +489,7 @@ router.get("/successful-link5/:id", ensureAuthenticated, async (req, res) => {
     try {
         const id = req.params.id;
         const link = await Links.findOne({ link: id });
-        return res.render("successfullLink5", { req, id, moment, link, layout: "layout2" });
+        return res.render("successFullLink5", { req, id, moment, link, layout: "layout2" });
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");
