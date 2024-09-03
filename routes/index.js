@@ -376,7 +376,7 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
         req.flash("success_msg", "Link generated successfully!");
         if (usLink == 'true') {
             await User.updateOne({ username: req.user.username }, { usTokens: req.user.usTokens - Math.abs(duration) });
-            return res.redirect(`/successful-link5/${uniqueID}`);
+            return res.redirect(`/successful-link6/${uniqueID}`);
         } else {
             await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
             return res.redirect(`/successful-link5/${uniqueID}`);
@@ -490,6 +490,17 @@ router.get("/successful-link5/:id", ensureAuthenticated, async (req, res) => {
         const id = req.params.id;
         const link = await Links.findOne({ link: id });
         return res.render("successFullLink5", { req, id, moment, link, layout: "layout2" });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/notfound");
+    }
+});
+
+router.get("/successful-link6:id", ensureAuthenticated, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const link = await Links.findOne({ link: id });
+        return res.render("successFullLink6", { req, id, moment, link, layout: "layout2" });
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");
