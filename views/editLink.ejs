@@ -81,9 +81,12 @@
       <div class="mb-3">
         <label for="">Profile Picture URL</label>
         <p>
-          Visit:
-          <a href="https://postimages.org/" target="_blank">this website</a>,
-          upload the image and paste the <strong>direct link</strong>. The
+          <a
+            class="btn btn-success"
+            href="https://postimages.org/"
+            target="_blank"
+            >Click here</a
+          >, upload the image and paste the <strong>direct link</strong>. The
           second link is the direct link!
         </p>
         <br />
@@ -95,6 +98,40 @@
           value="<%= link.picture %>"
           required
         />
+      </div>
+      <%}%> <% if(link.backgroundPicture){%>
+      <div class="mb-3">
+        <label for="">Profile Picture URL</label>
+        <p>
+          <a
+            class="btn btn-success"
+            href="https://postimages.org/"
+            target="_blank"
+            >Click here</a
+          >, upload the image and paste the <strong>direct link</strong>. The
+          second link is the direct link!
+        </p>
+        <br />
+        <input
+          type="text"
+          placeholder="paste direct link here"
+          name="backgroundPicture"
+          class="form-control text-white"
+          value="<%= link.backgroundPicture %>"
+          required
+        />
+      </div>
+      <%}%> <% if(link.writeup){%>
+      <div class="mb-3">
+        <label>Custom Write up</label>
+        <textarea
+          name="writeup"
+          maxlength="1000"
+          required
+          class="form-control text-white"
+        >
+<%= link.writeup %></textarea
+        >
       </div>
       <%}%>
       <div class="mb-3">

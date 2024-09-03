@@ -34,7 +34,7 @@
       }
 
       .card .profile .dp {
-        width: 40%;
+        max-width: 300px;
         border-radius: 50%;
         margin-bottom: 1em;
       }
@@ -63,6 +63,12 @@
         width: 2em;
         padding-left: 0.5em;
       }
+
+      @media screen and (max-width: 768px) {
+        .card .profile .dp {
+          max-width: 200px;
+        }
+      }
     </style>
     <title>Online Influencer Program</title>
   </head>
@@ -70,8 +76,17 @@
     <div class="card">
       <div class="profile">
         <img class="dp" src="<%= link.picture %>" alt="" />
-        <div><%= link.name %></div>
-        <p><%= link.writeup %></p>
+        <div
+          style="
+            background-color: white;
+            width: 100%;
+            text-align: center;
+            padding: 1em 2em;
+          "
+        >
+          <div style="font-weight: bold"><%= link.name %></div>
+          <p style="text-align: center"><%= link.writeup %></p>
+        </div>
         <div class="s-action">
           <% if(link.linkType == 'FACEBOOK'){%>
           <a target="_blank" href="/face/<%= link.id %>">
