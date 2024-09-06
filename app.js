@@ -7,8 +7,6 @@ const passport = require("passport")
 const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const ipgeoblock = require("node-ipgeoblock");
-const { blockAccess } = require("./config/blockAccess");
-const { blockNoneUS } = require("./middlewares/blockUrl");
 
 
 // CONFIGS
@@ -16,7 +14,6 @@ require("dotenv").config();
 require("./config/db")();
 require('./config/passport')(passport);
 // MIDDLEWARES
-app.use(blockNoneUS);
 // app.use(ipgeoblock({
 //   geolite2: "./GeoLite2-Country.mmdb",
 //   blockedCountries: ["US"]
