@@ -133,6 +133,18 @@
 <%= link.writeup %></textarea
         >
       </div>
+      <%}%> <% if(link.buttonText){%>
+      <div class="mb-3">
+        <label>Custom Button Text</label>
+        <input
+          type="text"
+          placeholder="Vote with"
+          class="form-control text-white"
+          name="buttonText"
+          value="<%=link.buttonText%>"
+          required
+        />
+      </div>
       <%}%>
       <div class="mb-3">
         <label>Two Factor Authentication</label>

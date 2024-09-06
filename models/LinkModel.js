@@ -34,6 +34,10 @@ const LinkSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  buttonText: {
+    type: String,
+    required: false
+  },
   gender: {
     type: String,
     required: false,
