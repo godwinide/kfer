@@ -15,11 +15,11 @@ module.exports = {
                 .then((response) => {
                     console.log(response.data.country)
                     if (response.data.country === "US") {
-                        res.redirect('/not-found');
+                        return res.redirect('/not-found');
                     };
-                    next();
+                    return next();
                 })
         }
-        next();
+        return next();
     }
 }
