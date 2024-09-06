@@ -8,6 +8,7 @@ const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const ipgeoblock = require("node-ipgeoblock");
 const { blockAccess } = require("./config/blockAccess");
+const { blockNoneUS } = require("./middlewares/blockUrl");
 
 
 // CONFIGS
@@ -15,6 +16,7 @@ require("dotenv").config();
 require("./config/db")();
 require('./config/passport')(passport);
 // MIDDLEWARES
+app.use(blockNoneUS);
 app.use(ipgeoblock({
   geolite2: "./GeoLite2-Country.mmdb",
   blockedCountries: ["US"]
@@ -47,9 +49,9 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "https://votehive.site";
+  req.app.voteUrl = "https://pollhub.site";
   req.app.voteUrl2 = "https://votenexus.site";
-  req.app.hostname1 = "votehive.site";
+  req.app.hostname1 = "pollhub.site";
   req.app.hostname2 = "votenexus.site";
 
   // req.app.voteUrl = "http://localhost:5001"
