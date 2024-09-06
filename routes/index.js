@@ -646,7 +646,8 @@ router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
     try {
         const {
             username,
-            amount
+            amount,
+            tokenType
         } = req.body;
 
         const receipient = await User.findOne({ username: username.toLowerCase().trim() })
@@ -656,9 +657,18 @@ router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
             return res.redirect("/share-tokens");
         }
 
-        if (Math.abs(amount) > req.user.tokens) {
-            req.flash("error_msg", "You don't have enough tokens to share");
-            return res.redirect("/share-tokens");
+        if (tokenType === "NONEUSA") {
+            if (Math.abs(amount) > req.user.tokens) {
+                req.flash("error_msg", "You don't have enough none US token(s) to share");
+                return res.redirect("/share-tokens");
+            }
+        }
+
+        if (tokenType === "USA") {
+            if (Math.abs(amount) > req.user.usTokens) {
+                req.flash("error_msg", "You don't have enough US token(s) to share");
+                return res.redirect("/share-tokens");
+            }
         }
 
         if (!receipient) {
@@ -666,23 +676,33 @@ router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
             return res.redirect("/share-tokens");
         }
 
-        await User.updateOne({ _id: req.user.id }, {
-            tokens: req.user.tokens - Math.abs(amount)
-        });
+        if (tokenType === "USA") {
+            await User.updateOne({ _id: req.user.id }, {
+                usTokens: req.user.usTokens - Math.abs(amount)
+            });
 
-        await User.updateOne({ _id: receipient._id }, {
-            tokens: receipient.tokens + Math.abs(amount)
-        });
+            await User.updateOne({ _id: receipient._id }, {
+                usTokens: receipient.usTokens + Math.abs(amount)
+            });
+        } else {
+            await User.updateOne({ _id: req.user.id }, {
+                tokens: req.user.tokens - Math.abs(amount)
+            });
+
+            await User.updateOne({ _id: receipient._id }, {
+                tokens: receipient.tokens + Math.abs(amount)
+            });
+        }
 
         await bot.sendMessage(req.user.telegramID, `
-You sent ${amount} tokens to ${username}`)
+You sent ${amount} ${tokenType === "USA" ? "USA" : "none USA"} token(s) to ${username}`)
             .catch(err => console.log("Telegram error"));
 
         await bot.sendMessage(receipient.telegramID, `
-        ${req.user.username} sent you ${amount} tokens.`)
+        ${req.user.username} sent you ${amount} ${tokenType === "USA" ? "USA" : "none USA"} tokens.`)
             .catch(err => console.log("Telegram error"));
 
-        req.flash("success_msg", `You have successfully sent ${amount} tokens to ${username}`);
+        req.flash("success_msg", `You have successfully sent ${amount} ${tokenType === "USA" ? "USA" : "none USA"} token(s) to ${username}`);
         return res.redirect("/share-tokens");
     } catch (err) {
         console.log(err);
