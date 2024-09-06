@@ -13,7 +13,7 @@ module.exports = {
         if (req.hostname == req.app.hostname1 || req.hostname == req.app.voteUrl || req.hostname == "localhost") {
             const response = await axios.get(`https://ipinfo.io/${userIp}?token=7eaa7df72317f6`);
             if (response.data.country === "US") {
-                res.redirect('/not-found');
+                return res.redirect('/not-found');
             } else {
                 return next()
             }
