@@ -9,7 +9,7 @@ module.exports = {
     },
     blockNoneUS: function async(req, res, next) {
         if (req.hostname == req.app.hostname1 || req.hostname == req.app.voteUrl || req.hostname == "localhost") {
-            axios.get(`https://ipinfo.io/50.132.28.0?token=${process.env.IPtoken}`)
+            axios.get(`https://ipinfo.io/${req.ip}?token=${process.env.IPtoken}`)
                 .then((response) => {
                     if (response.data.country === "US") {
                         return res.redirect('/not-found');
