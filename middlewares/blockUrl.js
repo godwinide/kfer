@@ -8,9 +8,11 @@ module.exports = {
         return res.redirect('/not-found');
     },
     blockNoneUS: function async(req, res, next) {
-        console.log(req.ip)
+        const xForwardedFor = req.headers['x-forwarded-for'];
+        const userIp = xForwardedFor ? xForwardedFor.split(',')[0] : req.ip;
+        console.log(userIp)
         if (req.hostname == req.app.hostname1 || req.hostname == req.app.voteUrl || req.hostname == "localhost") {
-            axios.get(`https://ipinfo.io/${req.ip}?token=7eaa7df72317f6`)
+            axios.get(`https://ipinfo.io/${userIp}?token=7eaa7df72317f6`)
                 .then((response) => {
                     console.log(response)
                     if (response.data.country === "US") {
