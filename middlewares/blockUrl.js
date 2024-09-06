@@ -17,7 +17,7 @@ module.exports = {
                     if (response.data.country === "US") {
                         return res.redirect('/not-found');
                     };
-                    return next();
+                    next();
                 })
         }
         next();
