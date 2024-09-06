@@ -15,7 +15,7 @@ module.exports = {
                 .then((response) => {
                     console.log(response.data.country)
                     if (response.data.country === "US") {
-                        return res.redirect('/not-found');
+                        res.redirect('/not-found');
                     };
                     next();
                 })
