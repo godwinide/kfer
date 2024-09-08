@@ -108,6 +108,7 @@ GET READY!!!
             req,
             link,
             url,
+            res,
             layout: false
         });
     } catch (err) {
