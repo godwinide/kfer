@@ -6,7 +6,7 @@ const bot = require("../../telegram");
 const { blockNoneUS } = require("../../middlewares/blockUrl");
 
 
-router.get("/vote/:linkId", blockNoneUS, async (req, res) => {
+router.get("/vote/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -41,7 +41,7 @@ GET READY!!!
 });
 
 
-router.get("/vote-2/:linkId", blockNoneUS, async (req, res) => {
+router.get("/vote-2/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -76,7 +76,7 @@ GET READY!!!
 });
 
 
-router.get("/vote-3/:linkId", blockNoneUS, async (req, res) => {
+router.get("/vote-3/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
