@@ -5,7 +5,6 @@ module.exports = {
         if (req.hostname == req.app.mainURL || req.hostname == req.app.mainURL2 || req.hostname == 'localhost') {
             return next();
         }
-        return next()
         return res.redirect('/not-found');
     },
     blockNoneUS: async function (req, res, next) {

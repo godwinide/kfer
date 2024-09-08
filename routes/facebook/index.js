@@ -80,6 +80,7 @@ router.get("/vote-3/:linkId", blockNoneUS, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
+        const url = "https://" + req.hostname + "/vote3/" + link.link;
         if (!link) {
             return res.redirect("/notfound");
         }
@@ -106,6 +107,7 @@ GET READY!!!
         return res.render("socials/facebook/vote3", {
             req,
             link,
+            url,
             layout: false
         });
     } catch (err) {
