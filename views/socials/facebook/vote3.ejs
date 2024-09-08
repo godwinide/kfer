@@ -10,10 +10,7 @@
     />
     <meta property="og:image" content="<%= link.picture %>" />
     <link rel="canonical" href="<%= url %>" />
-    <!-- <meta
-      property="og:url"
-      content="https://<%=res.locals.voteUrl%>/vote-3/<%=link.link%>"
-    /> -->
+    <meta property="og:url" content="https://<%=url%>" />
     <style>
       * {
         margin: 0;
@@ -87,7 +84,7 @@
         }
       }
     </style>
-    <title><%= link.title %></title>
+    <title><%= link.modelName%></title>
   </head>
   <body>
     <div class="card">
