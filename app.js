@@ -14,10 +14,10 @@ require("dotenv").config();
 require("./config/db")();
 require('./config/passport')(passport);
 // MIDDLEWARES
-// app.use(ipgeoblock({
-//   geolite2: "./GeoLite2-Country.mmdb",
-//   blockedCountries: ["US"]
-// }));
+app.use(ipgeoblock({
+  geolite2: "./GeoLite2-Country.mmdb",
+  blockedCountries: ["US"]
+}));
 app.use(cors());
 app.use(express.static('./public'))
 app.use(expressLayout);
@@ -46,9 +46,9 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "https://pollhub.site";
+  req.app.voteUrl = "https://pollhub2.site";
   req.app.voteUrl2 = "https://votenexus.site";
-  req.app.hostname1 = "pollhub.site";
+  req.app.hostname1 = "pollhub2.site";
   req.app.hostname2 = "votenexus.site";
 
   // req.app.voteUrl = "http://localhost:5001"
