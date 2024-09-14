@@ -18,11 +18,6 @@
           <% links.reverse().slice(0,11).forEach((l, index) => {%>
           <tr>
             <td class="text-white">
-              <% if(l.usLink){%>
-              <p>Accessible in USA</p>
-              <%}else{%>
-              <p>Not accessible in USA</p>
-              <%}%>
               <br />
               <% if(l.usLink){%> <% if(l.picture && l.backgroundPicture) {%>
               <input
