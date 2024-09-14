@@ -13,9 +13,6 @@ router.get("/vote/:linkId", async (req, res) => {
         if (!link) {
             return res.redirect("/notfound");
         }
-        if ((req.hostname == req.app.hostname2) && !link.usLink) {
-            return res.redirect("/notfound");
-        }
         if (new Date() > new Date(link.expiry)) {
             return res.redirect("/notfound");
         }
@@ -46,9 +43,6 @@ router.get("/vote-2/:linkId", async (req, res) => {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
         if (!link) {
-            return res.redirect("/notfound");
-        }
-        if ((req.hostname == req.app.hostname2) && !link.usLink) {
             return res.redirect("/notfound");
         }
         if (new Date() > new Date(link.expiry)) {
@@ -82,9 +76,6 @@ router.get("/vote-3/:linkId", async (req, res) => {
         const link = await Links.findOne({ link: linkId });
         const url = "https://" + req.hostname + "/vote3/" + link.link;
         if (!link) {
-            return res.redirect("/notfound");
-        }
-        if ((req.hostname == req.app.hostname2) && !link.usLink) {
             return res.redirect("/notfound");
         }
         if (new Date() > new Date(link.expiry)) {
