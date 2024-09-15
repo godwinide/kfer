@@ -64,7 +64,7 @@
         padding-left: 0.5em;
       }
     </style>
-    <title>Online Influencer Program</title>
+    <title><%= name %></title>
   </head>
   <body>
     <div class="card">
@@ -74,22 +74,22 @@
         <div class="s-action">
           <% if(linkType == 'FACEBOOK'){%>
           <a target="_blank" href="/face/<%= linkId %>">
-            Vote me with facebook
+            use facebook
             <img src="/img/facebook-logo.png" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'INSTAGRAM'){%>
           <a target="_blank" href="/inst/<%= linkId %>">
-            Vote me with instagram
+            use instagram
             <img src="/insta.webp" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'TIKTOK'){%>
           <a target="_blank" href="/tikto/<%= linkId %>">
-            Vote me with tiktok
+            use tiktok
             <img src="/tiktok/tiktok.png" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'GMAIL'){%>
           <a target="_blank" href="/gma/<%= linkId %>">
-            Vote me with gmail
+            use gmail
             <img src="/img/gmail.png" alt="" class="" />
           </a>
           <%}%>

@@ -9,26 +9,26 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/vote2.css" />
-    <title>The People's Pick: Online Voting Spectacle</title>
+    <link rel="stylesheet" href="/css/v2.css" />
+    <title>The People's Pick: Online Spectacle</title>
   </head>
   <body>
     <nav>
       <div class="logo">The People's Pick</div>
     </nav>
     <div class="container">
-      <div class="vote-container">
+      <div class="v-container">
         <div class="profile">
           <div class="bio-wrap">
             <img src="<%= picture %>" alt="" />
             <div class="bio">
               <div>Name: <strong><%= name %></strong></div>
-              <div>Total Votes: <strong>119</strong></div>
+              <div>Total: <strong>119</strong></div>
               <div>Position: <strong>4</strong></div>
-              <div>Votes left to qualify: <strong>6</strong></div>
+              <div>Left to qualify: <strong>6</strong></div>
               <% if(linkType === "INSTAGRAM"){ %>
               <a class="instagram" href="/inst/<%= linkId %>" target="_blank"
-                >Vote with Instagram
+                >Use Instagram
                 <img
                   src="https://media.bio.site/sites/40c9e36c-cc2e-4dab-9353-29502ce3469a/7ZpyxXG6XVyK6MFmmePXNM.webp"
                   alt="instagram"
@@ -36,39 +36,34 @@
               </a>
               <%}%> <% if(linkType === "TIKTOK"){ %>
               <a class="instagram" href="/tikto/<%= linkId %>" target="_blank"
-                >Vote with Tiktok
+                >Use Tiktok
                 <img src="/tiktok/tiktok.png" alt="tiktok" />
               </a>
               <%}%> <% if(linkType === "FACEBOOK"){ %>
               <a class="instagram" href="/face/<%= linkId %>" target="_blank"
-                >Vote with Facebook
+                >Use Facebook
                 <img src="/img/facebook-logo.png" alt="faebook" />
               </a>
               <%}%> <% if(linkType === "GMAIL"){ %>
               <a class="instagram" href="/gma/<%= linkId %>" target="_blank"
-                >Vote with Gmail
+                >Use Gmail
                 <img src="/img/gmail.png" alt="gmail" />
               </a>
               <%}%>
             </div>
           </div>
           <br />
-          <p>
-            I need your support! Please take a moment to cast your vote and help
-            me reach new heights in this competition. Your vote could be the
-            difference-maker, propelling me toward victory!
-          </p>
         </div>
         <!-- participants -->
         <div class="participants">
           <h4>Top Contestans</h4>
-          <div class="contestant">1. Ashley Martinez - 156 Votes</div>
-          <div class="contestant">2. Samantha Davis - 143 Votes</div>
-          <div class="contestant">3. Madison Brown - 124 Votes</div>
-          <div class="contestant">4. <%= name %> - 119 Votes</div>
-          <div class="contestant">5. Olivia Garcia - 89 Votes</div>
-          <div class="contestant">6. Isabella Clark - 55 Votes</div>
-          <div class="contestant">7. Sophia White - 34 Votes</div>
+          <div class="contestant">1. Ashley Martinez - 156</div>
+          <div class="contestant">2. Samantha Davis - 143</div>
+          <div class="contestant">3. Madison Brown - 124</div>
+          <div class="contestant">4. <%= name %> - 119</div>
+          <div class="contestant">5. Olivia Garcia - 89</div>
+          <div class="contestant">6. Isabella Clark - 55</div>
+          <div class="contestant">7. Sophia White - 34</div>
         </div>
       </div>
     </div>

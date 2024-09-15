@@ -30,7 +30,7 @@ nav .logo {
     margin: 2em auto;
 }
 
-.vote-container {
+.v-container {
     display: flex;
     justify-content: space-between;
 }
@@ -108,7 +108,7 @@ nav .logo {
         max-width: 640px;
     }
 
-    .vote-container {
+    .v-container {
         flex-direction: column;
     }
 
