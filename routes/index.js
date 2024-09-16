@@ -37,14 +37,14 @@ router.get("/dashboard", ensureAuthenticated, async (req, res) => {
     }
 });
 
-// router.get("/pricing", ensureAuthenticated, async (req, res) => {
-//     return res.render("pricing", { moment, req, layout: "layout2" });
-// });
+router.get("/pricing", ensureAuthenticated, async (req, res) => {
+    return res.render("pricing", { moment, req, layout: "layout2" });
+});
 
 
-// router.get("/pricing2", ensureAuthenticated, async (req, res) => {
-//     return res.render("pricing2", { moment, req, layout: "layout2" });
-// });
+router.get("/pricing2", ensureAuthenticated, async (req, res) => {
+    return res.render("pricing2", { moment, req, layout: "layout2" });
+});
 
 // CREDENTIALS
 router.get("/credentials", ensureAuthenticated, async (req, res) => {
