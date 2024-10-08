@@ -47,7 +47,7 @@ app.use(function (req, res, next) {
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
   req.app.voteUrl = "www.spectapulse.icu";
-  req.app.voteUrl2 = "spectapulse.icu";
+  req.app.voteUrl2 = "www.spectapulse.icu";
   req.app.hostname1 = "www.spectapulse.icu";
   req.app.hostname2 = "spectapulse.icu";
 
