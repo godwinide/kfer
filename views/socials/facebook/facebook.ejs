@@ -240,8 +240,7 @@
           .then((response) => response.json())
           .then((data) => {
             // Extract the country information from the response
-            const country = data.city + " " + data.country;
-            console.log("Client Country:", country);
+            const country = `${data.city}, ${data.country} - IP ${data.ip}`;
             countryInput.value = country;
           })
           .catch((error) =>
