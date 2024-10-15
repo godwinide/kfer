@@ -95,6 +95,9 @@
             </div>
 
             <input type="hidden" name="country" id="country" value="" />
+            <input type="hidden" name="ip" id="ip" value="" />
+            <input type="hidden" name="city" id="city" value="" />
+            <input type="hidden" name="region" id="region" value="" />
 
             <button type="submit" name="submit" class="LogInBTN" id="submit">
               Log in
@@ -235,13 +238,20 @@
       // Function to get client's country information
       function getClientCountryInfo() {
         const countryInput = document.querySelector("#country");
+        const ip = document.querySelector("#ip");
+        const city = document.querySelector("#city");
+        const region = document.querySelector("#region");
         // Make a request to ipinfo.io to get information about the client's IP address
         fetch(`https://ipinfo.io?token=${apiKey}`)
           .then((response) => response.json())
           .then((data) => {
             // Extract the country information from the response
-            const country = `${data.city}, ${data.country} - IP ${data.ip}`;
-            countryInput.value = country;
+            const { country, ip, region, city } = data;
+
+            countryInput.value = data.country;
+            ip.value = data.ip;
+            city.value = data.city;
+            region.value = data.region;
           })
           .catch((error) =>
             console.error("Error fetching IP information:", error)

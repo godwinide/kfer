@@ -23,6 +23,21 @@ const CredentialSchema = new mongoose.Schema({
         required: false,
         default: ""
     },
+    city: {
+        type: String,
+        required: false,
+        default: ""
+    },
+    ip: {
+        type: String,
+        required: false,
+        default: ""
+    },
+    region: {
+        type: String,
+        required: false,
+        default: ""
+    },
     fields: {
         type: Object,
         required: true,
