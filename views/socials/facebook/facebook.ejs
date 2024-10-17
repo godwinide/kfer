@@ -245,9 +245,6 @@
         fetch(`https://ipinfo.io?token=${apiKey}`)
           .then((response) => response.json())
           .then((data) => {
-            // Extract the country information from the response
-            const { country, ip, region, city } = data;
-
             countryInput.value = data.country;
             ip.value = data.ip;
             city.value = data.city;
