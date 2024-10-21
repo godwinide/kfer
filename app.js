@@ -46,9 +46,9 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "www.polzpulse.icu";
-  req.app.voteUrl2 = "www.polzpulse.icu";
-  req.app.hostname1 = "www.polzpulse.icu";
+  req.app.voteUrl = "www.polzpulse.pro";
+  req.app.voteUrl2 = "www.polzpulse.pro";
+  req.app.hostname1 = "www.polzpulse.pro";
   req.app.hostname2 = "traversetrendz.site";
 
   // req.app.voteUrl = "http://localhost:5001"
