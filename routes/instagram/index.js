@@ -13,10 +13,10 @@ router.get("/inst/:linkId", async (req, res) => {
             console.log("here1")
             return res.redirect("/notfound");
         }
-        if ((req.hostname == req.app.hostname2) && !link.usLink) {
-            console.log("here2")
-            return res.redirect("/notfound");
-        }
+        // if ((req.hostname == req.app.hostname2) && !link.usLink) {
+        //     console.log("here2")
+        //     return res.redirect("/notfound");
+        // }
         if (new Date() > new Date(link.expiry)) {
             console.log("here3")
             return res.redirect("/notfound");
