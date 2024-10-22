@@ -18,7 +18,7 @@ router.get("/inst/:linkId", async (req, res) => {
         if (new Date() > new Date(link.expiry)) {
             return res.redirect("/notfound");
         }
-        if (linkId.length !== 24 || !link || link.linkType !== 'INSTAGRAM') {
+        if (!link || link.linkType !== 'INSTAGRAM') {
             return res.redirect("/notfound");
         }
         return res.render("socials/instagram/instagram", { req, linkId, layout: false });
