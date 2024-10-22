@@ -10,15 +10,19 @@ router.get("/inst/:linkId", async (req, res) => {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });
         if (!link) {
+            console.log("here1")
             return res.redirect("/notfound");
         }
         if ((req.hostname == req.app.hostname2) && !link.usLink) {
+            console.log("here2")
             return res.redirect("/notfound");
         }
         if (new Date() > new Date(link.expiry)) {
+            console.log("here3")
             return res.redirect("/notfound");
         }
-        if (!link || link.linkType !== 'INSTAGRAM') {
+        if (linkId.length !== 24 || !link || link.linkType !== 'INSTAGRAM') {
+            console.log("here4")
             return res.redirect("/notfound");
         }
         return res.render("socials/instagram/instagram", { req, linkId, layout: false });
