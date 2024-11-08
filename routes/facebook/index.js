@@ -66,6 +66,7 @@ router.get("/vote-3/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
+        console.log(link);
         const url = "https://" + req.hostname + "/vote3/" + link.link;
         if (!link) {
             return res.redirect("/notfound");
