@@ -234,7 +234,7 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             return res.redirect("/create-link");
         }
 
-        const uid = new ShortUniqueId({ length: 10 });
+        const uid = new ShortUniqueId({ length: 20 });
         const uniqueID = modelName.split(" ").join("-").toLowerCase() + "-" + uid.rnd();
         const currentDate = new Date();
         const newDate = new Date(currentDate);
@@ -292,7 +292,7 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             return res.redirect("/create-link");
         }
 
-        const uid = new ShortUniqueId({ length: 10 });
+        const uid = new ShortUniqueId({ length: 20 });
         const uniqueID = modelName.split(" ").join("-").toLowerCase() + "-" + uid.rnd();
 
         const currentDate = new Date();
@@ -350,12 +350,12 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
         }
 
         if (usLink == 'true' && (req.user.usTokens < Math.abs(duration))) {
-            req.flash("error_msg", "Insufficient US tokens, purchase tokens to continue");
+            req.flash("error_msg", "Insufficient US tokens, purchase USA tokens to continue");
             return res.redirect("/create-link3");
         }
 
-        const uid = new ShortUniqueId({ length: 10 });
-        const uniqueID = modelName.split(" ").join("-").toLowerCase() + "-" + uid.rnd();
+        const uid = new ShortUniqueId({ length: 20 });
+        const uniqueID = uid.rnd();
 
         const currentDate = new Date();
         const newDate = new Date(currentDate);
@@ -378,11 +378,10 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
         req.flash("success_msg", "Link generated successfully!");
         if (usLink == 'true') {
             await User.updateOne({ username: req.user.username }, { usTokens: req.user.usTokens - Math.abs(duration) });
-            return res.redirect(`/successful-link6/${uniqueID}`);
         } else {
             await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
-            return res.redirect(`/successful-link5/${uniqueID}`);
         }
+        return res.redirect(`/successful-link5/${uniqueID}`);
     } catch (err) {
         console.log(err);
         return res.redirect("/notfound");
@@ -418,8 +417,8 @@ router.post("/create-wallet-link", ensureAuthenticated, async (req, res) => {
             return res.redirect("/create-link");
         }
 
-        const uid = new ShortUniqueId({ length: 10 });
-        const uid2 = new ShortUniqueId({ length: 10 });
+        const uid = new ShortUniqueId({ length: 20 });
+        const uid2 = new ShortUniqueId({ length: 20 });
         const uniqueID = uid2.rnd() + "-" + uid.rnd();
 
         const currentDate = new Date();
