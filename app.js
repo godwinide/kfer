@@ -18,6 +18,13 @@ require('./config/passport')(passport);
 //   geolite2: "./GeoLite2-Country.mmdb",
 //   blockedCountries: ["US"]
 // }));
+app.use((req, res, next) => {
+  const userAgent = req.headers['user-agent'] || "";
+  if (userAgent.includes("Instagram")) {
+    return res.status(403).send("Please open this website in your default browser.");
+  }
+  next();
+});
 app.use(cors());
 app.use(express.static('./public'))
 app.use(expressLayout);
