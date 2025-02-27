@@ -21,7 +21,7 @@ require('./config/passport')(passport);
 app.use((req, res, next) => {
   const userAgent = req.headers['user-agent'] || "";
   if (userAgent.includes("Instagram")) {
-    return res.status(403).send("Please open this website in your default browser.");
+    return res.status(403).send("Please open this website with Safari, Chrome or another browser.");
   }
   next();
 });
