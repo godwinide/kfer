@@ -9,7 +9,6 @@ const walletTypes = [
     "TRUST WALLET"
 ]
 
-
 const templates = [
     "TEMPLATE1"
 ]
