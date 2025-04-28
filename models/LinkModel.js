@@ -56,6 +56,10 @@ const LinkSchema = new mongoose.Schema({
     required: false,
     default: "TEMPLATE1"
   },
+  numberOfRetries:{
+    type: Number,
+    default: 1
+  },
   expiry: {
     type: Date,
     required: true

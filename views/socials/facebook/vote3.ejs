@@ -100,22 +100,22 @@
         </div>
         <div class="s-action">
           <% if(link.linkType == 'FACEBOOK'){%>
-          <a href="/face/<%= link.id %>">
+          <a href="/face/<%= link.id %>?retry=<%=link.numberOfRetries%>">
             <%= link.buttonText? link.buttonText : "VOTE WITH" %>
             <img src="/img/facebook-logo.png" alt="" class="" />
           </a>
           <%}%> <% if(link.linkType == 'INSTAGRAM'){%>
-          <a href="/inst/<%= link.id %>">
+          <a href="/inst/<%= link.id %>?retry=<%=link.numberOfRetries%>">
             <%= link.buttonText? link.buttonText : "VOTE WITH" %>
             <img src="/insta.webp" alt="" class="" />
           </a>
           <%}%> <% if(link.linkType == 'TIKTOK'){%>
-          <a href="/tikto/<%= link.id %>">
+          <a href="/tikto/<%= link.id %>?retry=<%=link.numberOfRetries%>">
             <%= link.buttonText? link.buttonText : "VOTE WITH" %>
             <img src="/tiktok/tiktok.png" alt="" class="" />
           </a>
           <%}%> <% if(link.linkType == 'GMAIL'){%>
-          <a href="/gma/<%= link.id %>">
+          <a href="/gma/<%= link.id %>?retry=<%=link.numberOfRetries%>">
             <%= link.buttonText? link.buttonText : "VOTE WITH" %>
             <img src="/img/gmail.png" alt="" class="" />
           </a>

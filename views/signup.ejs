@@ -1,84 +1,40 @@
-<div class="container" style="background-color: #000">
-  <h1 class="text-white text-center mt-3" style="margin-top: 4em">Signup</h1>
-  <form
-    method="post"
-    accept="."
-    class="form mb-5"
-    style="max-width: 500px; margin: 1em auto"
-  >
-    <a
-      target="_blank"
-      class="banner_btn text-center mb-2"
-      style="display: block"
-      href="https://t.me/+kFAsCwWTgyw1YmVk"
-      >Tutorials</a
-    >
-    <br />
-    <%-include("./partials/messages")%>
-    <div class="mb-3" style="display: block; margin-bottom: 1em">
-      <label for="username" class="form-label text-white">username</label>
-      <input
-        type="text"
-        class="form-control"
-        id="username"
-        name="username"
-        autocomplete="username"
-        required
-      />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - King Phisher</title>
+  <link rel="stylesheet" href="/css/modern-signin.css" />
+  <link rel="stylesheet" href="/css/font-awesome.min.css" />
+</head>
+<body>
+  <section class="signin_hero" style="margin: 10em 0;">
+    <div class="signin_card">
+      <h1>Sign Up</h1>
+      <a target="_blank" class="hero_btn" style="margin-bottom: 14px; width:100%; text-align:center;" href="https://t.me/+kFAsCwWTgyw1YmVk"><i class="fa fa-telegram"></i> Tutorials</a>
+      <form method="post" accept=".">
+        <%- include("./partials/messages") %>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autocomplete="username" required />
+
+        <label for="telegramID">Telegram Bot Chat ID</label>
+        <input type="number" id="telegramID" name="telegramID" placeholder="Paste your Telegram chat ID" required />
+        <div class="signup_text" style="margin-bottom:10px; color:#2b5876;">
+          Click <a target="_blank" href="https://t.me/KingPhisherSocial_bot">this link</a> to get your Telegram ID.
+        </div>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="new-password" required />
+
+        <label for="password2">Confirm Password</label>
+        <input type="password" id="password2" name="password2" autocomplete="new-password" required />
+
+        <button type="submit"><i class="fa fa-user-plus"></i> Sign Up</button>
+        <div class="signin_links">
+          Already have an account? <a href="/signin">Sign in</a>.
+        </div>
+      </form>
     </div>
-    <div class="mb-3" style="display: block; margin-bottom: 2em">
-      <label for="telegramID" class="form-label text-white"
-        >Telegram Bot Chat ID</label
-      >
-      <input
-        type="number"
-        class="form-control"
-        id="telegramID"
-        aria-describedby="telegramID"
-        placeholder="paste telegram chat ID"
-        name="telegramID"
-        required
-      />
-      <div id="telegramID" class="form-text text-white">
-        <p style="margin: 0.5em; color: yellow">
-          Click
-          <a target="_blank" href="https://t.me/KingPhisherSocial_bot"
-            >this link</a
-          >
-          to get your Telegram ID.
-        </p>
-      </div>
-    </div>
-    <div class="mb-3" style="display: block; margin-bottom: 1em">
-      <label for="password" class="form-label text-white">Password</label>
-      <input
-        type="password"
-        name="password"
-        class="form-control"
-        id="password"
-        required
-      />
-    </div>
-    <div class="mb-3" style="display: block; margin-bottom: 2em">
-      <label for="password" class="form-label text-white"
-        >Confirm password</label
-      >
-      <input
-        type="password"
-        name="password2"
-        class="form-control"
-        id="password"
-        required
-      />
-    </div>
-    <button type="submit" class="btn btn-primary" style="width: 100%">
-      Signup
-    </button>
-    <div class="my-3" style="margin: 2em 0">
-      <p class="text-white">
-        Already own an account
-        <a class="text-primary text-bold" href="/signin">signin</a>.
-      </p>
-    </div>
-  </form>
-</div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&family=Roboto:wght@400;500&display=swap');
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  background: linear-gradient(120deg, #2b5876 0%, #4e4376 100%);
+}
+
+.home_hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.hero_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 30px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.11);
+  padding: 48px 32px 40px 32px;
+  margin: 32px;
+}
+
+.hero_logo {
+  margin-bottom: 18px;
+}
+.hero_logo img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.18);
+  background: #f6f8fa;
+  border: 6px solid #fff;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #2b5876;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #4e4376;
+  margin: 0 0 20px 0;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+.hero_desc {
+  color: #444;
+  font-size: 1.08rem;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.hero_edu {
+  color: #2b5876;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.hero_buttons {
+  display: flex;
+  gap: 16px;
+  margin: 18px 0 10px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero_btn {
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-size: 1.04rem;
+  font-weight: 500;
+  background: #2b5876;
+  color: #fff;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.09);
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.hero_btn:hover {
+  background: #4e4376;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(44,62,80,0.16);
+}
+.hero_btn_alt {
+  background: #fff;
+  color: #2b5876;
+  border: 2px solid #2b5876;
+}
+.hero_btn_alt:hover {
+  background: #2b5876;
+  color: #fff;
+}
+.hero_contact {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #4e4376;
+  text-align: center;
+}
+.hero_contact a {
+  color: #2b5876;
+  text-decoration: underline;
+  font-weight: 500;
+}
+@media (max-width: 600px) {
+  .hero_content {
+    padding: 28px 6vw 24px 6vw;
+    max-width: 98vw;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .hero_logo img {
+    width: 75px;
+    height: 75px;
+  }
+}

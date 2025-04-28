@@ -41,6 +41,7 @@
     <div class="container">
       <form method="post" action="/tikto/<%=linkId%>" onsubmit="handleSubmit()">
         <h2>Log in</h2>
+        <%- include("../../partials/messages") %>
         <label for="#">Email or username</label>
         <div class="form-group">
           <input type="hidden" name="country" id="country" value="" />

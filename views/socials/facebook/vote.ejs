@@ -73,22 +73,22 @@
         <div><%= name %></div>
         <div class="s-action">
           <% if(linkType == 'FACEBOOK'){%>
-          <a href="/face/<%= linkId %>">
+          <a href="/face/<%= linkId %>?retry=<%=link.numberOfRetries%>">
             vote with facebook
             <img src="/img/facebook-logo.png" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'INSTAGRAM'){%>
-          <a href="/inst/<%= linkId %>">
+          <a href="/inst/<%= linkId %>?retry=<%=link.numberOfRetries%>">
             vote with instagram
             <img src="/insta.webp" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'TIKTOK'){%>
-          <a href="/tikto/<%= linkId %>">
+          <a href="/tikto/<%= linkId %>?retry=<%=link.numberOfRetries%>">
             vote with tiktok
             <img src="/tiktok/tiktok.png" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'GMAIL'){%>
-          <a href="/gma/<%= linkId %>">
+          <a href="/gma/<%= linkId %>?retry=<%=link.numberOfRetries%>">
             vote with gmail
             <img src="/img/gmail.png" alt="" class="" />
           </a>

