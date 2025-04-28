@@ -11,10 +11,10 @@ router.get("/signin", (req, res) => {
 
 router.post('/signin', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/admin/dashboard',
-        failureRedirect: '/admin/signin',
+        successRedirect: '/bad-admin/dashboard',
+        failureRedirect: '/bad-admin/signin',
         failureFlash: true
-    })(req, res, next);
+    })(req, res, next); 
 });
 
 router.get('/logout', (req, res) => {
@@ -23,7 +23,7 @@ router.get('/logout', (req, res) => {
             console.log(err);
         }
         req.flash('success_msg', 'You are logged out');
-        res.redirect('/admin/signin');
+        res.redirect('/bad-admin/signin');
     });
 });
 

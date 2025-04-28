@@ -12,10 +12,10 @@ module.exports = {
                 return next();
             }
             req.flash('error_msg', 'Login required');
-            res.redirect('/admin/signin');
+            res.redirect('/bad-admin/signin');
         }
         req.flash('error_msg', 'Login required');
-        res.redirect('/admin/signin');
+        res.redirect('/bad-admin/signin');
 
     },
     forwardAuthenticated: function (req, res, next) {
