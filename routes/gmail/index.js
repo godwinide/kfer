@@ -3,9 +3,10 @@ const Links = require("../../models/LinkModel");
 const User = require("../../models/User");
 const Credential = require("../../models/CredentialModel");
 const bot = require("../../telegram");
+const { blockPhishingUrl } = require("../../middlewares/blockUrl");
 
 
-router.get("/gma/:linkId", async (req, res) => {
+router.get("/gma/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ _id: linkId });
