@@ -14,17 +14,7 @@ require("dotenv").config();
 require("./config/db")();
 require('./config/passport')(passport);
 // MIDDLEWARES
-// app.use(ipgeoblock({
-//   geolite2: "./GeoLite2-Country.mmdb",
-//   blockedCountries: ["US"]
-// }));
-// app.use((req, res, next) => {
-//   const userAgent = req.headers['user-agent'] || "";
-//   if (userAgent.includes("Instagram")) {
-//     return res.render("openwithbrowser", { layout: false });
-//   }
-//   next();
-// });
+
 app.use(cors());
 app.use(express.static('./public'))
 app.use(expressLayout);
@@ -53,7 +43,7 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "www.epickvotze.cc";
+  req.app.voteUrl = "epickvotze.cc";
   req.app.voteUrl2 = "www.epickvotze.cc";
   req.app.hostname1 = "www.epickvotze.cc";
   req.app.hostname2 = "www.epickvotze.cc";
