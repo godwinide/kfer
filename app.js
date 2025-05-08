@@ -6,7 +6,7 @@ const session = require('express-session');
 const passport = require("passport")
 const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
-const ipgeoblock = require("node-ipgeoblock");
+const {IP2Location} = require("ip2location-nodejs");
 
 
 // CONFIGS
@@ -16,6 +16,7 @@ require('./config/passport')(passport);
 // MIDDLEWARES
 
 app.use(cors());
+app.set('trust proxy', true);
 app.use(express.static('./public'))
 app.use(expressLayout);
 app.set("view engine", "ejs");
@@ -32,6 +33,27 @@ app.use(
     saveUninitialized: true
   })
 );
+
+// IP2Location
+app.use((req, res, next) => {
+  let ip2location = new IP2Location();
+  // Load the IP2Location database
+  ip2location.open("./data/IP2LOCATION-LITE-DB1.BIN");
+  const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress;
+  let ipIndex = ip.split(":").length;
+  const result = ip2location.getCountryShort(ip.split(":")[ipIndex - 1]);
+
+  console.log("IP: ", ip.split(":")[ipIndex - 1], "Country: ", result);
+
+  ip2location.close();
+
+  if (result === 'US') {
+    return res.status(403).send('Access from the US is blocked.');
+  }
+
+  next();
+});
+
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
