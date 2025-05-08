@@ -14,9 +14,8 @@ require("dotenv").config();
 require("./config/db")();
 require('./config/passport')(passport);
 // MIDDLEWARES
-
+app.set('trust proxy', true); // critical when behind Nginx
 app.use(cors());
-app.set('trust proxy', true); // if behind a proxy like Vercel or Cloudflare
 app.use(express.static('./public'))
 app.use(expressLayout);
 app.set("view engine", "ejs");
