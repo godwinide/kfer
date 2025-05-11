@@ -105,8 +105,14 @@ router.post("/links/edit/renew/:id", ensureAuthenticated, async (req, res) => {
         const { id } = req.params;
         const link = await Links.findById(id);
         if (link) {
+
+            if (link.usLink && (req.user.usTokens < duration)) {
+                req.flash("error_msg", "Insufficient USA tokens");
+                return res.redirect(`/links/edit/${link._id}`);
+            }
+
             if (req.user.tokens < duration) {
-                req.flash("error_msg", "Insufficient tokens");
+                req.flash("error_msg", "Insufficient USA tokens");
                 return res.redirect(`/links/edit/${link._id}`);
             }
 
@@ -125,7 +131,8 @@ router.post("/links/edit/renew/:id", ensureAuthenticated, async (req, res) => {
             });
 
             await User.updateOne({ _id: req.user.id }, {
-                tokens: Math.abs(req.user.tokens) - duration
+                tokens: !link.usLink ? Math.abs(req.user.tokens) - duration : Math.abs(req.user.tokens),
+                usTokens: link.usLink ? Math.abs(req.user.usTokens) - duration : Math.abs(req.user.usTokens)
             });
 
             req.flash("success_msg", "Link renewed successfully");
@@ -177,6 +184,7 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             otpEnabled,
             numberOfRetries,
             duration,
+            usLink
         } = req.body;
 
         if (!linkTypes.includes(linkType) || !modelName || !name || !duration || !numberOfRetries) {
@@ -184,7 +192,12 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             return res.redirect("/create-link");
         }
 
-        if (req.user.tokens < Math.abs(duration)) {
+        if (usLink == 'true' && (req.user.usTokens < Math.abs(duration))) {
+            req.flash("error_msg", "Insufficient USA tokens, purchase tokens to continue");
+            return res.redirect("/create-link");
+        }
+
+        if (usLink == 'false' && (req.user.tokens < Math.abs(duration))) {
             req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
             return res.redirect("/create-link");
         }
@@ -200,14 +213,19 @@ router.post("/create-link", ensureAuthenticated, async (req, res) => {
             modelName: modelName.trim(),
             otpEnabled,
             numberOfRetries,
-            usLink: true,
+            usLink,
             link: uniqueID,
             user: req.user.id,
             expiry: newDate
         });
         await newLink.save();
+        await User.updateOne({ 
+            username: req.user.username 
+        }, { 
+            tokens: usLink == 'false' ? req.user.tokens - Math.abs(duration) : Math.abs(req.user.tokens),
+            usTokens: usLink == 'true' ? req.user.usTokens - Math.abs(duration) : Math.abs(req.user.usTokens), 
+        });
         req.flash("success_msg", "Link generated successfully!");
-        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
         return res.redirect(`/successful-link/${uniqueID}?retry=${numberOfRetries}`);
     } catch (err) {
         console.log(err);
@@ -224,7 +242,8 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             otpEnabled,
             numberOfRetries,
             picture,
-            duration
+            duration,
+            usLink
         } = req.body;
 
         if (!linkTypes.includes(linkType) || !modelName || !name || !picture || !duration) {
@@ -232,7 +251,12 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             return res.redirect("/create-link");
         }
 
-        if (req.user.tokens < Math.abs(duration)) {
+        if (usLink == 'true' && (req.user.usTokens < Math.abs(duration))) {
+            req.flash("error_msg", "Insufficient USA tokens, purchase tokens to continue");
+            return res.redirect("/create-link");
+        }
+
+        if (usLink == 'false' && (req.user.tokens < Math.abs(duration))) {
             req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
             return res.redirect("/create-link");
         }
@@ -250,12 +274,18 @@ router.post("/create-link2", ensureAuthenticated, async (req, res) => {
             otpEnabled,
             numberOfRetries,
             picture,
+            usLink,
             link: uniqueID,
             user: req.user.id,
             expiry: newDate
         });
         await newLink.save();
-        await User.updateOne({ username: req.user.username }, { tokens: req.user.tokens - Math.abs(duration) });
+        await User.updateOne({ 
+            username: req.user.username 
+        }, { 
+            tokens: usLink == 'false' ? req.user.tokens - Math.abs(duration) : Math.abs(req.user.tokens),
+            usTokens: usLink == 'true' ? req.user.usTokens - Math.abs(duration) : Math.abs(req.user.usTokens), 
+        });
         return res.redirect(`/successful-link2/${uniqueID}?retry=${numberOfRetries}`);
     } catch (err) {
         console.log(err);
@@ -275,7 +305,8 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
             backgroundPicture,
             writeup,
             buttonText,
-            duration
+            duration,
+            usLink
         } = req.body;
 
         if (!linkTypes.includes(linkType) || !modelName || !backgroundPicture || !writeup || !buttonText || !name || !picture || !duration) {
@@ -283,9 +314,14 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
             return res.redirect("/create-link3");
         }
 
-        if (req.user.tokens < Math.abs(duration)) {
+        if (usLink == 'true' && (req.user.usTokens < Math.abs(duration))) {
+            req.flash("error_msg", "Insufficient USA tokens, purchase tokens to continue");
+            return res.redirect("/create-link");
+        }
+
+        if (usLink == 'false' && (req.user.tokens < Math.abs(duration))) {
             req.flash("error_msg", "Insufficient tokens, purchase tokens to continue");
-            return res.redirect("/create-link3");
+            return res.redirect("/create-link");
         }
 
         const uid = new ShortUniqueId({ length: 20 });
@@ -301,6 +337,7 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
             otpEnabled,
             numberOfRetries,
             picture,
+            usLink,
             backgroundPicture,
             writeup,
             buttonText,
@@ -310,7 +347,12 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
         });
         await newLink.save();
         req.flash("success_msg", "Link generated successfully!");
-        await User.updateOne({ username: req.user.username }, { usTokens: req.user.usTokens - Math.abs(duration) });
+        await User.updateOne({ 
+            username: req.user.username 
+        }, { 
+            tokens: usLink == 'false' ? req.user.tokens - Math.abs(duration) : Math.abs(req.user.tokens),
+            usTokens: usLink == 'true' ? req.user.usTokens - Math.abs(duration) : Math.abs(req.user.usTokens), 
+        });
         return res.redirect(`/successful-link3/${uniqueID}?retry=${numberOfRetries}`);
     } catch (err) {
         console.log(err);
@@ -577,7 +619,8 @@ router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
     try {
         const {
             username,
-            amount
+            amount,
+            usTokens
         } = req.body;
 
         const receipient = await User.findOne({ username: username.toLowerCase().trim() })
@@ -587,8 +630,13 @@ router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
             return res.redirect("/share-tokens");
         }
 
-        if (Math.abs(amount) > req.user.tokens) {
-            req.flash("error_msg", "You don't have enough tokens to share");
+        if (usTokens && (Math.abs(amount) > req.user.usTokens)) {
+            req.flash("error_msg", "You don't have enough USA tokens to share");
+            return res.redirect("/share-tokens");
+        }
+
+        if (Math.abs(amount) > req.user.usTokens) {
+            req.flash("error_msg", "You don't have enough USA tokens to share");
             return res.redirect("/share-tokens");
         }
         
@@ -598,13 +646,14 @@ router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
         }
 
         await User.updateOne({ _id: req.user.id }, {
-            tokens: req.user.tokens - Math.abs(amount)
+            tokens: usTokens == 'false' ? req.user.tokens - Math.abs(amount) : Math.abs(req.user.tokens),
+            usTokens: usTokens == 'true' ? req.user.usTokens - Math.abs(amount): Math.abs(req.user.usTokens)
         });
 
         await User.updateOne({ _id: receipient._id }, {
-            tokens: receipient.tokens + Math.abs(amount)
+            tokens: usTokens == 'false' ? receipient.tokens + Math.abs(amount) : receipient.tokens,
+            usTokens: usTokens == 'true' ? receipient.usTokens + Math.abs(amount) : receipient.usTokens,
         });
-        
 
         await bot.sendMessage(req.user.telegramID, `
         You sent ${amount} tokens to ${username}`)

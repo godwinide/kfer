@@ -8,13 +8,23 @@
       <i >Due to increased reports rates, these links will be changed after a few days.</i>
       <br>
       <br>
+    <% if(link.usLink){%>
       <input
       type="text"
       class="copyInput form-control bg-dark text-white"
       style="width: 100%;"
-      value="https://<%=req.app.voteUrl2%>/vote-3/<%= id %>"
+      value="https://<%=req.app.hostname1%>/vote-3/<%= id %>"
       readonly
     />
+    <%} else{%>
+      <input
+      type="text"
+      class="copyInput form-control bg-dark text-white"
+      style="width: 100%;"
+      value="https://<%=req.app.voteUrl%>/vote-3/<%= id %>"
+      readonly
+    />
+    <%}%>
       <br />
       <button  class="copyButton btn btn-secondary" onclick="copyToClipboard(0)">
         <span class="mdi mdi-content-copy icon-item"></span>

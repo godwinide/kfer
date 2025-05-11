@@ -62,7 +62,7 @@
         <small class="text-white"
           >Enter the number of tokens you want to purchase</small
         ><br />
-        <small>1 token = 5000</small>
+        <small>1 token = 6000</small>
       </div>
       <div class="mb-3">
         <input
@@ -72,7 +72,7 @@
           required
           readonly
           id="amount"
-          value="N5000"
+          value="N6000"
         />
         <small class="text-white">Price in NAIRA</small>
         <br />x
@@ -89,7 +89,6 @@
           id="submit"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
-          ]
           style="width: 100%"
         >
           Buy Now
@@ -171,10 +170,10 @@
 
   tokens.addEventListener("input", (e) => {
     if (!isNaN(Number(tokens.value))) {
-      price.value = "N" + addCommasToNumber(Number(tokens.value * 5000));
+      price.value = "N" + addCommasToNumber(Number(tokens.value * 6000));
     } else {
-      price.value = "N" + addCommasToNumber(5000);
-      price2.value = "$" + addCommasToNumber(3.2);
+      price.value = "N" + addCommasToNumber(6000);
+      price2.value = "$" + addCommasToNumber(2.2);
       tokens.value = 1;
     }
   });
