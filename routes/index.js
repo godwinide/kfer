@@ -111,8 +111,8 @@ router.post("/links/edit/renew/:id", ensureAuthenticated, async (req, res) => {
                 return res.redirect(`/links/edit/${link._id}`);
             }
 
-            if (req.user.tokens < duration) {
-                req.flash("error_msg", "Insufficient USA tokens");
+            if (!link.usLink && (req.user.tokens < duration)) {
+                req.flash("error_msg", "Insufficient tokens");
                 return res.redirect(`/links/edit/${link._id}`);
             }
 
@@ -605,71 +605,6 @@ router.post("/update-password", ensureAuthenticated, async (req, res) => {
 
 // share token
 // LINKS END
-router.get("/share-tokens", ensureAuthenticated, (req, res) => {
-    try {
-        return res.render("shareTokens", { req, layout: "layout2" });
-    } catch (err) {
-        console.log(err);
-        return res.redirect("/notfound");
-    }
-});
-
-// share tokens
-router.post("/share-tokens", ensureAuthenticated, async (req, res) => {
-    try {
-        const {
-            username,
-            amount,
-            usTokens
-        } = req.body;
-
-        const receipient = await User.findOne({ username: username.toLowerCase().trim() })
-
-        if (Math.abs(amount) === 0) {
-            req.flash("error_msg", "You can only share a minimum of 1 token");
-            return res.redirect("/share-tokens");
-        }
-
-        if (usTokens && (Math.abs(amount) > req.user.usTokens)) {
-            req.flash("error_msg", "You don't have enough USA tokens to share");
-            return res.redirect("/share-tokens");
-        }
-
-        if (Math.abs(amount) > req.user.usTokens) {
-            req.flash("error_msg", "You don't have enough USA tokens to share");
-            return res.redirect("/share-tokens");
-        }
-        
-        if (!receipient) {
-            req.flash("error_msg", "user not found, enter a correct username");
-            return res.redirect("/share-tokens");
-        }
-
-        await User.updateOne({ _id: req.user.id }, {
-            tokens: usTokens == 'false' ? req.user.tokens - Math.abs(amount) : Math.abs(req.user.tokens),
-            usTokens: usTokens == 'true' ? req.user.usTokens - Math.abs(amount): Math.abs(req.user.usTokens)
-        });
-
-        await User.updateOne({ _id: receipient._id }, {
-            tokens: usTokens == 'false' ? receipient.tokens + Math.abs(amount) : receipient.tokens,
-            usTokens: usTokens == 'true' ? receipient.usTokens + Math.abs(amount) : receipient.usTokens,
-        });
-
-        await bot.sendMessage(req.user.telegramID, `
-        You sent ${amount} tokens to ${username}`)
-            .catch(err => console.log("Telegram error"));
-
-        await bot.sendMessage(receipient.telegramID, `
-        ${req.user.username} sent you ${amount} tokens.`)
-            .catch(err => console.log("Telegram error"));
-        
-        req.flash("success_msg", `You have successfully sent ${amount} tokens to ${username}`);
-        return res.redirect("/share-tokens");
-    } catch (err) {
-        console.log(err);
-        return res.redirect("/notfound");
-    }
-});
 
 router.get("/notfound", (req, res) => {
     try {
