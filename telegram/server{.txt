@@ -15,3 +15,44 @@ server{
 }
 
 
+
+server {
+    listen 80;
+    server_name sigmavotz.site www.sigmavotz.site;
+
+    if ($is_bot) {
+        return 403;
+    }
+
+    # Proxy to Node.js
+    location / {
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_pass http://localhost:5001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+
+
+server {
+    server_name pollyvars.pro www.pollyvars.pro;
+
+    if ($is_bot) {
+        return 403;
+    }
+    # Proxy to Node.js
+    location / {
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_pass http://localhost:5001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+}
