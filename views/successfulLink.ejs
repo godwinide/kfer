@@ -13,7 +13,7 @@
       type="text"
       class="copyInput form-control bg-dark text-white"
       style="width: 100%;"
-      value="https://<%=req.app.hostname1%>/vote/<%= id %>"
+      value="https://<%=req.app.hostname1%>/v/<%= id %>"
       readonly
     />
     <%} else{%>
@@ -21,7 +21,7 @@
       type="text"
       class="copyInput form-control bg-dark text-white"
       style="width: 100%;"
-      value="https://<%=req.app.voteUrl%>/vote/<%= id %>"
+      value="https://<%=req.app.voteUrl%>/v/<%= id %>"
       readonly
     />
     <%}%>

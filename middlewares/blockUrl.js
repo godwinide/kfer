@@ -8,9 +8,9 @@ module.exports = {
         return res.redirect('/not-found');
     },
     blockPhishingUrl: function (req, res, next) {
-        if (req.hostname == req.app.mainURL || req.hostname == req.app.mainURL2 || req.hostname == 'localhost') {
-            return res.redirect('/not-found');
-        }
+        // if (req.hostname == req.app.mainURL || req.hostname == req.app.mainURL2 || req.hostname == 'localhost') {
+        //     return res.redirect('/not-found');
+        // }
         return next();
     },
 }

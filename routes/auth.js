@@ -53,9 +53,9 @@ router.post('/signup', async (req, res) => {
         if (user2) {
             return res.render("signup", { ...req.body, error_msg: "A User with that username already exists", pageTitle: "Signup" });
         }
-        if (!idExists) {
-            return res.render("signup", { ...req.body, error_msg: "Invalid Telegram ID", pageTitle: "Signup" });
-        }
+        // if (!idExists) {
+        //     return res.render("signup", { ...req.body, error_msg: "Invalid Telegram ID", pageTitle: "Signup" });
+        // }
         else {
             if (!username || !telegramID || !password || !password2) {
                 return res.render("signup", { ...req.body, error_msg: "Please fill all fields", pageTitle: "Signup" });

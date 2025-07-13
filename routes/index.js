@@ -304,12 +304,11 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
             picture,
             backgroundPicture,
             writeup,
-            buttonText,
             duration,
             usLink
         } = req.body;
 
-        if (!linkTypes.includes(linkType) || !modelName || !backgroundPicture || !writeup || !buttonText || !name || !picture || !duration) {
+        if (!linkTypes.includes(linkType) || !modelName || !backgroundPicture || !writeup || !name || !picture || !duration) {
             req.flash("error_msg", "Fill all fields correctly");
             return res.redirect("/create-link3");
         }
@@ -340,7 +339,6 @@ router.post("/create-link3", ensureAuthenticated, async (req, res) => {
             usLink,
             backgroundPicture,
             writeup,
-            buttonText,
             link: uniqueID,
             user: req.user.id,
             expiry: newDate

